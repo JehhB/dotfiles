@@ -1,0 +1,13 @@
+{
+    "diagnostic.virtualText": true,
+    "diagnostic.virtualTextPrefix": ">>> ",
+    "diagnostic.virtualTextCurrentLineOnly": false,
+    "coc.preferences.formatOnSaveFiletypes": [
+        "typescript",
+        "javascript",
+        "typescriptreact",
+        "javascriptreact",
+        "html",
+        "json"
+    ]
+}
