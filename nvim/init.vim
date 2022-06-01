@@ -7,8 +7,9 @@ call plug#begin()
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
     Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-    Plug 'neoclide/coc-emmet', {'do': 'yarn install --frozen-lockfile'}
     Plug 'clangd/coc-clangd', {'do': 'npm ci'}
+    Plug 'neoclide/coc-emmet', {'do': 'yarn install --frozen-lockfile'}
+    Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
 call plug#end()
 
 " Mouse support
@@ -56,7 +57,9 @@ colorscheme gruvbox
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ CheckBackspace() ? "\<TAB>" :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ coc#refresh()
+
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! CheckBackspace() abort
@@ -85,3 +88,4 @@ nmap <leader>f  <Plug>(coc-format-selected)
 set signcolumn=number
 
 command! -nargs=0 Format :call CocActionAsync('format')
+let g:coc_snippet_next = '<tab>'
