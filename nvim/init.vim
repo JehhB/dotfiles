@@ -2,6 +2,8 @@
 call plug#begin()
     Plug 'itchyny/lightline.vim'
     Plug 'morhetz/gruvbox'
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
 
     " Conquer of Completion
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -89,3 +91,6 @@ set signcolumn=number
 
 command! -nargs=0 Format :call CocActionAsync('format')
 let g:coc_snippet_next = '<tab>'
+
+" FZF setting
+nnoremap <silent> <C-p> :Files<CR>
