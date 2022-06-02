@@ -1,21 +1,35 @@
 " Plugins
 call plug#begin()
+    " Eye Candy plugins
     Plug 'itchyny/lightline.vim'
     Plug 'morhetz/gruvbox'
+
+    " FZF plugins
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
 
-    " Conquer of Completion
+    " Conquer of Completion plugins
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
     Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
     Plug 'clangd/coc-clangd', {'do': 'npm ci'}
     Plug 'neoclide/coc-emmet', {'do': 'yarn install --frozen-lockfile'}
     Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+
+    " Nerd tree plugin 
+    Plug 'preservim/nerdtree'
+    Plug 'ryanoasis/vim-devicons'
+    Plug 'Xuyuanp/nerdtree-git-plugin'
+    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 call plug#end()
 
 " Mouse support
 set mouse=a
+
+" Selection menu
+set wildmode=longest,list,full
+set wildignore+=**/node_modules/*
+set wildignore+=**/.git/*
 
 " Set tab as space
 set tabstop=4 expandtab
@@ -41,7 +55,7 @@ endif
 set laststatus=2
 set noshowmode
 set background=dark
-let g:lightline = {'colorscheme': 'gruvbox'}
+let g:lightline={'colorscheme': 'gruvbox'}
 
 " Colorscheme
 if has('termguicolors')
@@ -65,7 +79,7 @@ inoremap <silent><expr> <TAB>
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! CheckBackspace() abort
-  let col = col('.') - 1
+  let col=col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
@@ -90,7 +104,29 @@ nmap <leader>f  <Plug>(coc-format-selected)
 set signcolumn=number
 
 command! -nargs=0 Format :call CocActionAsync('format')
-let g:coc_snippet_next = '<tab>'
+let g:coc_snippet_next='<tab>'
 
 " FZF setting
 nnoremap <silent> <C-p> :Files<CR>
+
+" Nerdtree settings
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif " Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | "If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+
+let g:NERDTreeGitStatusIndicatorMapCustom={
+    \ 'Modified'  :'✹',
+    \ 'Staged'    :'✚',
+    \ 'Untracked' :'✭',
+    \ 'Renamed'   :'➜',
+    \ 'Unmerged'  :'═',
+    \ 'Deleted'   :'✖',
+    \ 'Dirty'     :'✗',
+    \ 'Ignored'   :'☒',
+    \ 'Clean'     :'✔︎',
+    \ 'Unknown'   :'?',
+\ }
+let g:NERDTreeGitStatusUseNerdFonts=1
