@@ -27,6 +27,7 @@ call plug#end()
 set mouse=a
 
 " Selection menu
+set wildmenu
 set wildmode=longest,list,full
 set wildignore+=**/node_modules/*
 set wildignore+=**/.git/*
