@@ -1,0 +1,42 @@
+#!/bin/zsh
+HISTFILE=$XDG_CONFIG_HOME/zsh/history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt hist_ignore_all_dups hist_ignore_space
+setopt extendedglob nomatch
+unsetopt autocd beep notify
+bindkey -v
+
+autoload -Uz compinit
+zstyle ':completion:*' menu select
+compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
+
+autoload edit-command-line;
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
+function zle-keymap-select () {
+    case $KEYMAP in
+        vicmd) echo -ne '\e[1 q';;
+        viins|main) echo -ne '\e[5 q';;
+    esac
+}
+zle -N zle-keymap-select
+zle-line-init() {
+    zle -K viins
+    echo -ne "\e[5 q"
+}
+zle -N zle-line-init
+echo -ne '\e[5 q'
+preexec() { echo -ne '\e[5 q' ;}
+
+PS1='%B[%(!.%F{red}.%F{cyan})%n@%M%f %F{blue}%1~%f] %(!.#.$)%b '
+source $ZDOTDIR/aliasrc
+source $ZDOTDIR/zplugrc
+source $ZDOTDIR/sessionrc
+
+source /usr/share/doc/fzf/examples/key-bindings.zsh
+if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ] ; then
+    tmux attach || tmux >/dev/null 2>&1
+fi
+

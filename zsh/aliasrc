@@ -1,0 +1,18 @@
+#!/bin/zsh
+
+alias rss="newsboat"
+alias v="vim"
+alias q="exit"
+
+alias ls="ls -hN --color=auto --group-directories-first"
+alias ll="ls -l"
+alias l="ll -A"
+alias grep="grep --color=auto"
+alias diff="diff --color=auto"
+alias less="less -R"
+
+alias upd="sudo apt update"
+alias upg="sudo apt upgrade"
+alias ins="sudo apt install"
+alias rem="sudo apt purge"
+alias apt-clean="sudo apt autoremove --purge"

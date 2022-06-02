@@ -1,0 +1,46 @@
+#!/bin/dash
+
+# XDG Base Directory
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
+
+# XDG User Directory
+export XDG_DESKTOP_DIR="/tmp"
+export XDG_DOWNLOAD_DIR="$HOME/downloads"
+export XDG_TEMPLATES_DIR="/tmp"
+export XDG_PUBLICSHARE_DIR="/tmp"
+export XDG_DOCUMENTS_DIR="$HOME/files"
+export XDG_MUSIC_DIR="$HOME/files/music"
+export XDG_PICTURES_DIR="$HOME/files/pictures"
+export XDG_VIDEOS_DIR="$HOME/files/videos"
+
+# Custom paths
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.local/share/npm/bin"
+export ACAD="$HOME/files/academics/bscs"
+
+# Default apps
+export EDITOR="vi"
+export BROWSER="firefox"
+export TERMINAL="st"
+export TERM="st-256color"
+export READER="zathura"
+
+# XDG Configs
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export LESSHISTFILE=-
+export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+export ZPLUG_HOME="$XDG_DATA_HOME/zplug"
+export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
+export RXVT_SOCKET="$XDG_RUNTIME_DIR/urxvtd"
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+
+# Settings
+export QT_QPA_PLATFORMTHEME="qt5ct"
+
+if [[ "$(tty)" = "/dev/tty1" ]]; then
+    (pgrep dwm > /dev/null) || startx $XDG_CONFIG_HOME/xinitrc &> /dev/null
+fi

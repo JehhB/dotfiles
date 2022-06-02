@@ -1,0 +1,15 @@
+#!/bin/zsh
+
+source /usr/share/zplug/init.zsh
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-completions"
+zplug "plugins/command-not-found", from:oh-my-zsh
+zplug "junegunn/fzf"
+
+if ! zplug check > /dev/null; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+zplug load > /dev/null

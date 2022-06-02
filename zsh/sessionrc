@@ -1,0 +1,5 @@
+#!/bin/sh
+
+export PROJECT="~/Files/projects/tala"
+alias proj="cd $PROJECT"
+alias pproj="code $PROJECT && exit"
