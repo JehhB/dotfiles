@@ -52,6 +52,7 @@ set splitbelow splitright
 if !has('gui_running')
     set t_Co=256
 endif
+autocmd VimEnter * call lightline#update()
 
 set laststatus=2
 set noshowmode
