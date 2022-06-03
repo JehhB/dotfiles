@@ -24,8 +24,6 @@ export ACAD="$HOME/files/academics/bscs"
 # Default apps
 export EDITOR="vi"
 export BROWSER="firefox"
-export TERMINAL="st"
-export TERM="st-256color"
 export READER="zathura"
 
 # XDG Configs
