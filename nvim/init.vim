@@ -22,6 +22,9 @@ call plug#begin()
     Plug 'ryanoasis/vim-devicons'
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
+    " Misc plugin
+    Plug 'tpope/vim-dispatch'
 call plug#end()
 
 " Mouse support
