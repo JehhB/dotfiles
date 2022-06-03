@@ -34,8 +34,8 @@ set wildignore+=**/node_modules/*
 set wildignore+=**/.git/*
 
 " Set tab as space
-set tabstop=4 expandtab
-set shiftwidth=4
+set expandtab
+set shiftwidth=2 tabstop=2
 
 " Line numbers
 set number relativenumber
