@@ -156,3 +156,6 @@ let g:NERDTreeGitStatusIndicatorMapCustom={
     \ 'Unknown'   :'?',
 \ }
 let g:NERDTreeGitStatusUseNerdFonts=1
+
+" Nerd commenter settings
+let g:NERDDefaultAlign='left'
