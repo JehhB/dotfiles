@@ -25,7 +25,11 @@ call plug#begin()
 
     " Misc plugin
     Plug 'tpope/vim-dispatch'
+    Plug 'preservim/nerdcommenter'
 call plug#end()
+
+" Enable filetype plugins
+filetype plugin on
 
 " Mouse support
 set mouse=a
@@ -99,7 +103,23 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-nnoremap <silent> K :call ShowDocumentation()<CR>
+nnoremap <silent> K :call ShowDocumentation(1)<CR>
+
+function! ShowDocumentation(showManual)
+  try
+    if CocAction('hasProvider', 'hover')
+      call CocActionAsync('doHover')
+    elseif  a:showManual
+      call feedkeys('K', 'in')
+    endif
+  catch
+    echo "coc.nvim not ready yet"
+  endtry
+endfunction
+
+set updatetime=750
+autocmd CursorHold * silent call CocActionAsync('highlight')
+autocmd CursorHold * silent call ShowDocumentation(0)
 
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                           \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
