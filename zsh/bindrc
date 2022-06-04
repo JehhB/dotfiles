@@ -2,7 +2,7 @@
 
 bindkey -M vicmd v edit-command-line
 
-bindkey -M vicmd -s 'N' 'ggcGtmux-session "$PROJECT_1"^M'
-bindkey -M vicmd -s 'E' 'ggcGtmux-session "$PROJECT_2"^M'
-bindkey -M vicmd -s 'O' 'ggcGtmux-session "$PROJECT_3"^M'
-bindkey -M vicmd -s 'I' 'ggcGtmux-session "$PROJECT_4"^M'
+bindkey -M vicmd -s 'N' 'dditmux-session "$PROJECT_1"^M'
+bindkey -M vicmd -s 'E' 'dditmux-session "$PROJECT_2"^M'
+bindkey -M vicmd -s 'O' 'dditmux-session "$PROJECT_3"^M'
+bindkey -M vicmd -s 'I' 'dditmux-session "$PROJECT_4"^M'
