@@ -1,0 +1,8 @@
+#!/bin/zsh
+
+bindkey -M vicmd v edit-command-line
+
+bindkey -M vicmd -s 'N' 'ggcGtmux-session "$PROJECT_1"^M'
+bindkey -M vicmd -s 'E' 'ggcGtmux-session "$PROJECT_2"^M'
+bindkey -M vicmd -s 'O' 'ggcGtmux-session "$PROJECT_3"^M'
+bindkey -M vicmd -s 'I' 'ggcGtmux-session "$PROJECT_4"^M'

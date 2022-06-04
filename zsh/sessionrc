@@ -1,5 +1,8 @@
 #!/bin/sh
 
-export PROJECT="~/Files/projects/tala"
-alias proj="cd $PROJECT"
-alias pproj="code $PROJECT && exit"
+export PROJECT_1="$XDG_DOCUMENTS_DIR/projects/tala"
+export PROJECT_2=""
+export PROJCET_3=""
+export PROJECT_4="$XDG_CONFIG_HOME"
+
+export PROJ="$PROJECT_1"
