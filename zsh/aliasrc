@@ -9,7 +9,6 @@ alias ll="ls -l"
 alias l="ll -A"
 alias grep="grep --color=auto"
 alias diff="diff --color=auto"
-alias less="less -R"
 
 alias upd="sudo apt update"
 alias upg="sudo apt upgrade"
