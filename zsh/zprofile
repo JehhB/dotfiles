@@ -7,14 +7,14 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
 # XDG User Directory
-export XDG_DESKTOP_DIR="/tmp"
-export XDG_DOWNLOAD_DIR="$HOME/downloads"
-export XDG_TEMPLATES_DIR="/tmp"
-export XDG_PUBLICSHARE_DIR="/tmp"
-export XDG_DOCUMENTS_DIR="$HOME/files"
-export XDG_MUSIC_DIR="$HOME/files/music"
-export XDG_PICTURES_DIR="$HOME/files/pictures"
-export XDG_VIDEOS_DIR="$HOME/files/videos"
+export XDG_DESKTOP_DIR="$HOME/"
+export XDG_DOWNLOAD_DIR="$HOME/Downloads"
+export XDG_TEMPLATES_DIR="$HOME/"
+export XDG_PUBLICSHARE_DIR="$HOME/"
+export XDG_DOCUMENTS_DIR="$HOME/Files"
+export XDG_MUSIC_DIR="$HOME/Files/Music"
+export XDG_PICTURES_DIR="$HOME/Files/Pictures"
+export XDG_VIDEOS_DIR="$HOME/Files/Videos"
 
 # Custom paths
 export PATH="$PATH:$HOME/.local/bin"
