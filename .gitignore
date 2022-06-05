@@ -1,0 +1,6 @@
+/*
+!/**/.gitignore
+!/nvim/
+!/zsh/
+!/tmux/
+!/bin/
