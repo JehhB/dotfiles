@@ -28,6 +28,9 @@ call plug#begin()
     Plug 'preservim/nerdcommenter'
 call plug#end()
 
+" Allow for local config
+set secure exrc
+
 " Enable filetype plugins
 filetype plugin on
 
