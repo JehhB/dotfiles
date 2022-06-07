@@ -16,6 +16,7 @@ call plug#begin()
     Plug 'neoclide/coc-emmet', {'do': 'yarn install --frozen-lockfile'}
     Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
     Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+    Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
 
     " Nerd tree plugin 
     Plug 'preservim/nerdtree'
