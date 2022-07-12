@@ -1,32 +1,25 @@
 " Plugins
 call plug#begin()
-    " Eye Candy plugins
-    Plug 'itchyny/lightline.vim'
-    Plug 'morhetz/gruvbox'
+  " Eye Candy plugins
+  Plug 'itchyny/lightline.vim'
+  Plug 'morhetz/gruvbox'
 
-    " FZF plugins
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
+  " FZF plugins
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'junegunn/fzf.vim'
 
-    " Conquer of Completion plugins
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-    Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-    Plug 'clangd/coc-clangd', {'do': 'npm ci'}
-    Plug 'neoclide/coc-emmet', {'do': 'yarn install --frozen-lockfile'}
-    Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-    Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
-    Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
+  " Conquer of Completion plugins
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-    " Nerd tree plugin 
-    Plug 'preservim/nerdtree'
-    Plug 'ryanoasis/vim-devicons'
-    Plug 'Xuyuanp/nerdtree-git-plugin'
-    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+  " Nerd tree plugin 
+  Plug 'preservim/nerdtree'
+  Plug 'ryanoasis/vim-devicons'
+  Plug 'Xuyuanp/nerdtree-git-plugin'
+  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
-    " Misc plugin
-    Plug 'tpope/vim-dispatch'
-    Plug 'preservim/nerdcommenter'
+  " Misc plugin
+  Plug 'tpope/vim-dispatch'
+  Plug 'preservim/nerdcommenter'
 call plug#end()
 
 " Allow for local config
@@ -84,6 +77,16 @@ let g:gruvbox_italic=1
 colorscheme gruvbox
 
 " CoC settings
+let g:coc_global_extensions = [
+  \ 'coc-tsserver',
+  \ 'coc-json',
+  \ 'coc-clangd',
+  \ 'coc-emmet',
+  \ 'coc-snippets',
+  \ 'coc-prettier',
+  \ 'coc-css',
+\ ]
+
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ CheckBackspace() ? "\<TAB>" :
@@ -148,16 +151,16 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
 let g:NERDTreeGitStatusIndicatorMapCustom={
-    \ 'Modified'  :'✹',
-    \ 'Staged'    :'✚',
-    \ 'Untracked' :'✭',
-    \ 'Renamed'   :'➜',
-    \ 'Unmerged'  :'═',
-    \ 'Deleted'   :'✖',
-    \ 'Dirty'     :'✗',
-    \ 'Ignored'   :'☒',
-    \ 'Clean'     :'✔︎',
-    \ 'Unknown'   :'?',
+  \ 'Modified'  :'✹',
+  \ 'Staged'    :'✚',
+  \ 'Untracked' :'✭',
+  \ 'Renamed'   :'➜',
+  \ 'Unmerged'  :'═',
+  \ 'Deleted'   :'✖',
+  \ 'Dirty'     :'✗',
+  \ 'Ignored'   :'☒',
+  \ 'Clean'     :'✔︎',
+  \ 'Unknown'   :'?',
 \ }
 let g:NERDTreeGitStatusUseNerdFonts=1
 
