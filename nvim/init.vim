@@ -140,7 +140,7 @@ command! -nargs=0 Format :call CocActionAsync('format')
 let g:coc_snippet_next='<tab>'
 
 " FZF setting
-nnoremap <silent> <C-p> :Files<CR>
+nnoremap <expr> <C-p> (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
 
 " Nerdtree settings
 nnoremap <leader>n :NERDTreeFocus<CR>
