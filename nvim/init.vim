@@ -22,6 +22,9 @@ call plug#begin()
   Plug 'preservim/nerdcommenter'
 call plug#end()
 
+" Disable search highlighting
+set nohlsearch
+
 " Allow for local config
 set secure exrc
 
