@@ -1,3 +1,5 @@
+exec_always $XDG_CONFIG_HOME/i3/i3ipc-dynamic-tiling/i3ipc_dynamic_tiling.py
+
 set $mod Mod1
 font pango:monospace 8
 
