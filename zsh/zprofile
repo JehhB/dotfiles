@@ -28,6 +28,7 @@ export READER="zathura"
 
 # XDG Configs
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 export LESSHISTFILE=-
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 export ZPLUG_HOME="$XDG_DATA_HOME/zplug"
@@ -41,5 +42,5 @@ export LESS="--mouse -R"
 export QT_QPA_PLATFORMTHEME="qt5ct"
 
 if [[ "$(tty)" = "/dev/tty1" ]]; then
-    (pgrep dwm > /dev/null) || startx $XDG_CONFIG_HOME/xinitrc &> /dev/null
+    (pgrep startx > /dev/null) || startx $XDG_CONFIG_HOME/X11/xinitrc &> /dev/null
 fi
