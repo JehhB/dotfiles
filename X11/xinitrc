@@ -1,3 +1,6 @@
+source /etc/X11/xinit/xinitrc
+dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
+
 urxvtd&
 thunar --daemon&
 xrdb $XDG_CONFIG_HOME/X11/xresources
