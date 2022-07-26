@@ -31,9 +31,10 @@ preexec() { echo -ne '\e[5 q' ;}
 
 PS1='%B[%(!.%F{red}.%F{cyan})%n@%M%f %F{blue}%1~%f] %(!.#.$)%b '
 
-for file in $ZDOTDIR/[^z]*rc; do
-    source $file
-done
+source $ZDOTDIR/aliasrc
+source $ZDOTDIR/bindrc
+source $ZDOTDIR/plugrc
+source $ZDOTDIR/sessionrc
 
 source /usr/share/doc/fzf/examples/key-bindings.zsh
 source /usr/share/doc/fzf/examples/completion.zsh
