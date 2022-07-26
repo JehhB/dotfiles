@@ -1,7 +1,7 @@
 exec_always $XDG_CONFIG_HOME/i3/i3ipc-dynamic-tiling/i3ipc_dynamic_tiling.py
 
 set $mod Mod1
-font pango:monospace 8
+font pango:Iosevka 8
 
 floating_modifier $mod
 focus_follows_mouse no
@@ -10,6 +10,8 @@ bindsym $mod+q kill
 bindsym $mod+p exec --no-startup-id dmenu_run
 bindsym $mod+x exec x-terminal-emulator
 bindsym $mod+b exec x-www-browser
+bindsym $mod+f exec thunar
+bindsym Control+Mod1+Delete exec systemctl poweroff
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
