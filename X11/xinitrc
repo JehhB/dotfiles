@@ -1,2 +1,4 @@
+urxvtd&
+thunar --daemon&
 xrdb $XDG_CONFIG_HOME/X11/xresources
 exec i3
