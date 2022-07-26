@@ -17,10 +17,10 @@ URxvt.color14: #8ec07c
 URxvt.color7:  #a89984
 URxvt.color15: #ebdbb2
 
-URxvt.font: xft:Iosevka:style=Regular:size=10
-URxvt.boldFont: xft:Iosevka:style=Bold:size=10
-URxvt.italicFont: xft:Iosevka:style=Italic:size=10
-URxvt.boldItalicfont: xft:Iosevka:style=Bold Italic=10
+URxvt.font: xft:Fira Code:style=Regular:size=8
+URxvt.boldFont: xft:Fira Code:style=Bold:size=8
+URxvt.italicFont: xft:Fira Code:style=Italic:size=8
+URxvt.boldItalicfont: xft:Fira Code:style=Bold Italic=8
 URxvt.internalBorder: 8
 URxvt.cursorBlink: true
 URxvt.scrollBar: false
