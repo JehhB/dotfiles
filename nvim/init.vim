@@ -22,6 +22,9 @@ call plug#begin()
   Plug 'preservim/nerdcommenter'
 call plug#end()
 
+" Set spellchecking
+set spelllang=en_us spell
+
 " Disable search highlighting
 set nohlsearch
 
