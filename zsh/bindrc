@@ -7,3 +7,6 @@ bindkey -M vicmd -s 'J' 'dditmux-session "$PROJECT_1"^M'
 bindkey -M vicmd -s 'K' 'dditmux-session "$PROJECT_2"^M'
 bindkey -M vicmd -s 'L' 'dditmux-session "$PROJECT_3"^M'
 bindkey -M vicmd -s ':' 'dditmux-session "$PROJECT_4"^M'
+
+bindkey -M viins '^l' forward-char
+bindkey -M viins '^w' forward-word
