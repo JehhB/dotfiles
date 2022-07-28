@@ -1,9 +1,9 @@
 #!/bin/sh
 
 export PROJECTS="$XDG_DOCUMENTS_DIR/projects"
-export PROJECT_1="$PROJECTS/tala"
-export PROJECT_2="$PROJECTS/marka"
-export PROJCET_3=""
+export PROJECT_1="$PROJECTS/create"
+export PROJECT_2="$PROJECTS/tala"
+export PROJECT_3="$PROJECTS/marka"
 export PROJECT_4="$XDG_CONFIG_HOME"
 
 export PROJ="$PROJECT_1"
