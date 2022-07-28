@@ -11,7 +11,7 @@ bindsym $mod+p exec --no-startup-id dmenu_run
 bindsym $mod+x exec x-terminal-emulator
 bindsym $mod+b exec x-www-browser
 bindsym $mod+f exec thunar
-bindsym Control+Mod1+Delete exec systemctl poweroff
+bindsym Control+Mod1+Delete exec shutdown-prompt
 
 bindsym $mod+h nop i3ipc_move swap
 bindsym $mod+j nop i3ipc_focus next
@@ -84,6 +84,9 @@ bindsym $mod+r mode "resize"
 for_window [class=".*"] border pixel 2
 gaps inner 24
 gaps outer 8
+
+title_align center
+for_window [class="Yad"] floating enable, border normal 2
 
 bar {
         status_command i3status
