@@ -16,4 +16,4 @@ fi
 zplug load > /dev/null
 
 # Plugins settings
-export ZSH_AUTOSUGGEST_STRATEGY=(completion history)
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
