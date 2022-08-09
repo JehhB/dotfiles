@@ -1,0 +1,7 @@
+exec_always $XDG_CONFIG_HOME/i3/i3ipc-dynamic-tiling/i3ipc_dynamic_tiling.py
+
+bindsym $mod+h nop i3ipc_move swap
+bindsym $mod+j nop i3ipc_focus next
+bindsym $mod+k nop i3ipc_focus prev
+bindsym $mod+l nop i3ipc_focus toggle
+

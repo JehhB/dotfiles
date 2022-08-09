@@ -1,0 +1,10 @@
+bindsym $mod+p exec --no-startup-id dmenu_run
+bindsym $mod+x exec x-terminal-emulator
+bindsym $mod+b exec x-www-browser
+bindsym $mod+f exec thunar
+
+bindsym Control+Mod1+Delete exec shutdown-prompt
+bindsym XF86PowerOff exec shutdown-prompt
+
+bindsym XF86MonBrightnessUp exec xbacklight -inc 5
+bindsym XF86MonBrightnessDown exec xbacklight -dec 5
