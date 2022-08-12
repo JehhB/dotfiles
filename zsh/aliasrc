@@ -11,7 +11,6 @@ alias grep="grep --color=auto"
 alias diff="diff --color=auto"
 alias bat="batcat"
 
-alias apt="nala"
 alias upd="sudo nala update"
 alias upg="sudo nala upgrade"
 alias ins="sudo nala install"
