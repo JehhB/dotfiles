@@ -9,6 +9,7 @@ export ACAD="$HOME/files/academics/bscs"
 export EDITOR="vi"
 export BROWSER="firefox"
 export READER="zathura"
+export PAGER="less -Q"
 
 # XDG Configs
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
