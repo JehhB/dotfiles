@@ -1,0 +1,28 @@
+#!/bin/dash
+
+# Custom paths
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.local/share/npm/bin"
+export ACAD="$HOME/files/academics/bscs"
+
+# Default apps
+export EDITOR="vi"
+export BROWSER="firefox"
+export READER="zathura"
+
+# XDG Configs
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
+export LESSHISTFILE=-
+export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+export ZPLUG_HOME="$XDG_DATA_HOME/zplug"
+export ICEAUTHORITY="$XDG_CACHE_HOME/ICEauthority"
+export RXVT_SOCKET="$XDG_RUNTIME_DIR/urxvtd"
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+export LESS="--mouse -R"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+export WINEPREFIX="$XDG_DATA_HOME/wineprefixes/default"
+
+# Settings
+export QT_QPA_PLATFORMTHEME="qt5ct"
