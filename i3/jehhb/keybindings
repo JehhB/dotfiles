@@ -8,3 +8,7 @@ bindsym XF86PowerOff exec shutdown-prompt
 
 bindsym XF86MonBrightnessUp exec xbacklight -inc 5
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5
+
+bindsym XF86AudioMute exec changeVolume toggle
+bindsym XF86AudioRaiseVolume exec changeVolume +5%
+bindsym XF86AudioLowerVolume exec changeVolume -5%

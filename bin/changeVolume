@@ -1,0 +1,20 @@
+#!/bin/dash
+
+if [ "$1" = "toggle" ]; then 
+  pactl set-sink-mute 0 toggle
+else 
+  pactl set-sink-volume 0 $1
+fi
+
+volume=$(pactl get-sink-volume 0 | grep -Po '[0-9]+(?=%)' | head -1)
+mute=$(pactl get-sink-mute 0 | grep -Po '(?<=Mute: ).*')
+
+msgId=562190
+if [ "$mute" = "yes" ] || [ "$volume" -eq 0 ]; then
+  dunstify -a "changeVolume" -u low -i audio-volume-muted -r "$msgId" "Volume muted"
+else
+  dunstify -a "changeVolume" -u low -i audio-volume-high -r "$msgId" \
+    -h int:value:"$volume" "Volume: ${volume}%"
+  gsound-play -i audio-volume-change
+fi
+
