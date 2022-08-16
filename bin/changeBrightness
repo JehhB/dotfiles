@@ -1,0 +1,8 @@
+#!/bin/dash
+
+xbacklight $*
+
+level=$(xbacklight -get | cut -d '.' -f 1)
+msgId=562191
+  dunstify -a "changeBrightness" -u low -r "$msgId" \
+    -h int:value:"$level" "Brightness:: ${level}%"

@@ -6,8 +6,8 @@ bindsym $mod+f exec thunar
 bindsym Control+Mod1+Delete exec shutdown-prompt
 bindsym XF86PowerOff exec shutdown-prompt
 
-bindsym XF86MonBrightnessUp exec xbacklight -inc 5
-bindsym XF86MonBrightnessDown exec xbacklight -dec 5
+bindsym XF86MonBrightnessUp exec changeBrightness -inc 5
+bindsym XF86MonBrightnessDown exec changeBrightness -dec 5
 
 bindsym XF86AudioMute exec changeVolume toggle
 bindsym XF86AudioRaiseVolume exec changeVolume +5%
