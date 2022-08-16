@@ -4,7 +4,10 @@ dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XA
 urxvtd&
 dunst&
 thunar --daemon&
-xrdb $XDG_CONFIG_HOME/X11/xresources
 transwrap&
 nm-applet&
+
+xrdb $XDG_CONFIG_HOME/X11/xresources
+feh --no-fehbg --bg-fill $XDG_PICTURES_DIR/wallpaper
+
 exec i3
