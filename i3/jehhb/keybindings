@@ -12,3 +12,4 @@ bindsym XF86MonBrightnessDown exec changeBrightness -dec 5
 bindsym XF86AudioMute exec changeVolume toggle
 bindsym XF86AudioRaiseVolume exec changeVolume +5%
 bindsym XF86AudioLowerVolume exec changeVolume -5%
+bindsym XF86AudioMicMute exec pactl set-source-mute 1 toggle
