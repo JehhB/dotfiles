@@ -94,12 +94,12 @@ let g:coc_global_extensions = [
 \ ]
 
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ CheckBackspace() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
       \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ CheckBackspace() ? "\<TAB>" :
       \ coc#refresh()
 
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 function! CheckBackspace() abort
   let col=col('.') - 1
@@ -134,7 +134,7 @@ set updatetime=750
 autocmd CursorHold * silent call CocActionAsync('highlight')
 autocmd CursorHold * silent call ShowDocumentation(0)
 
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+inoremap <silent><expr> <cr> coc#pum#visible() ? coc#pum#confirm()
                           \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 xmap <leader>f  <Plug>(coc-format-selected)
