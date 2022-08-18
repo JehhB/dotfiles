@@ -1,0 +1,9 @@
+[init]
+	defaultBranch = main
+[user]
+	email = jwy.bayod@gmail.com
+	name = JehhB
+[credential]
+	helper = store --file ~/.local/share/git/credentials
+[alias]
+	graph = log --graph --oneline --color --all
