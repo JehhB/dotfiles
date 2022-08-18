@@ -1,9 +1,10 @@
 /*
 !/**/.gitignore
-!/nvim/
-!/zsh/
-!/tmux/
 !/bin/
+!/flameshot/
 !/i3/
 !/i3status/
+!/nvim/
+!/tmux/
 !/X11/
+!/zsh/
