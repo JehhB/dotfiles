@@ -1,3 +1,0 @@
-#!/bin/sh
-
-yad --center --borders=20 --title="Exit prompt" --button="🛑 Poweroff":"systemctl poweroff" --button="🔁 Reboot":"systemctl reboot" --button="🏃 Leave":"i3-msg exit" --close-on-unfocus

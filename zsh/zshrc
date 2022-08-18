@@ -1,5 +1,5 @@
 #!/bin/zsh
-HISTFILE=$XDG_CONFIG_HOME/zsh/history
+HISTFILE=$HOME/.config/zsh/history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt hist_ignore_all_dups hist_ignore_space
@@ -9,7 +9,7 @@ bindkey -v
 
 autoload -Uz compinit
 zstyle ':completion:*' menu select
-compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
+compinit -d $HOME/.cache/zsh/zcompdump-$ZSH_VERSION
 
 autoload edit-command-line;
 zle -N edit-command-line
