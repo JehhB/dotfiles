@@ -13,3 +13,6 @@ bindsym XF86AudioMute exec changeVolume toggle
 bindsym XF86AudioRaiseVolume exec changeVolume +5%
 bindsym XF86AudioLowerVolume exec changeVolume -5%
 bindsym XF86AudioMicMute exec pactl set-source-mute 1 toggle
+
+bindsym Control+Mod1+space exec dunstctl close
+bindsym Control+Mod1+Shift+space exec dunstctl close-all
