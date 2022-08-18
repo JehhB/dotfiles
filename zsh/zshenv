@@ -10,6 +10,7 @@ export EDITOR="vi"
 export BROWSER="firefox"
 export READER="zathura"
 export PAGER="less -Q"
+export BAT_PAGER="less -QRF"
 
 # XDG Configs
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
