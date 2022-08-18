@@ -6,6 +6,7 @@ dunst&
 thunar --daemon&
 transwrap&
 nm-applet&
+acpi_listener&
 
 xrdb $XDG_CONFIG_HOME/X11/xresources
 feh --no-fehbg --bg-fill $XDG_PICTURES_DIR/wallpaper
