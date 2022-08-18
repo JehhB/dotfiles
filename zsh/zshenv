@@ -4,10 +4,10 @@
 export EDITOR="vi"
 export BROWSER="firefox"
 export READER="zathura"
-export PAGER="less -Q"
-export BAT_PAGER="less -QRF"
+export PAGER="less --mouse -QR"
+export BAT_PAGER="less --mouse -QRF"
 
 # XDG Configs
 export LESSHISTFILE=-
 export ZPLUG_HOME="$home/.local/share/zplug"
-export LESS="--mouse -R"
+export LESS="--mouse -QR"

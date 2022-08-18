@@ -1,6 +1,6 @@
 /*
 !/**/.gitignore
+!/git/
 !/nvim/
-!/zsh/
 !/tmux/
-!/bin/
+!/zsh/
