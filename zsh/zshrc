@@ -7,6 +7,7 @@ setopt extendedglob nomatch
 unsetopt autocd beep notify
 bindkey -v
 
+FPATH="$FPATH:$XDG_DATA_HOME/zfunc"
 autoload -Uz compinit
 zstyle ':completion:*' menu select
 compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
