@@ -1,11 +1,12 @@
 /*
 !/**/.gitignore
+!/X11/
 !/bin/
 !/flameshot/
 !/git/
 !/i3/
 !/i3status/
 !/nvim/
+!/redshift/
 !/tmux/
-!/X11/
 !/zsh/
