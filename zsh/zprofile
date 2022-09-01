@@ -1,11 +1,5 @@
 #!/bin/dash
 
-# XDG Base Directory
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_STATE_HOME="$HOME/.local/state"
-
 # XDG User Directory
 export XDG_DESKTOP_DIR="$HOME/"
 export XDG_DOWNLOAD_DIR="$HOME/Downloads"
@@ -15,7 +9,3 @@ export XDG_DOCUMENTS_DIR="$HOME/Files"
 export XDG_MUSIC_DIR="$HOME/Files/Music"
 export XDG_PICTURES_DIR="$HOME/Files/Pictures"
 export XDG_VIDEOS_DIR="$HOME/Files/Videos"
-
-if [[ "$(tty)" = "/dev/tty1" ]]; then
-    (pgrep startx > /dev/null) || startx $XDG_CONFIG_HOME/X11/xinitrc &> /dev/null
-fi

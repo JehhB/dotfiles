@@ -1,0 +1,5 @@
+#!/bin/dash
+
+if [[ "$(tty)" = "/dev/tty1" ]]; then
+    (pgrep startx > /dev/null) || startx $XDG_CONFIG_HOME/X11/xinitrc &> /dev/null
+fi
