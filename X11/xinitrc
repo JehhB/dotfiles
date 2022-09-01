@@ -8,6 +8,8 @@ transwrap&
 nm-applet&
 acpi_listener&
 unclutter&
+/usr/libexec/geoclue-2.0/demos/agent&
+redshift&
 
 xrdb $XDG_CONFIG_HOME/X11/xresources
 feh --no-fehbg --bg-fill $XDG_PICTURES_DIR/wallpaper
