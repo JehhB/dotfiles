@@ -10,7 +10,7 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$XDG_DATA_HOME/npm/bin"
 export PATH="$PATH:$XDG_DATA_HOME/cargo/bin"
-export ACAD="$HOME/files/academics/bscs"
+export PATH="$PATH:$HOME/Files/projects/bin"
 
 # Default apps
 export EDITOR="vi"
