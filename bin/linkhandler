@@ -3,5 +3,21 @@
 [ -z "$1" ] && { "$BROWSER"; exit; }
 
 case "$1" in
-  magnet*) transmission-remote -a "$1"
+  magnet*) transmission-remote -a "$1";;
+  http?://thatnovelcorner*) 
+    tmpdir="/tmp/linkhandler-$(date +%s)"
+
+    mkdir -p "$tmpdir"
+    wget -O "$tmpdir/index.html" "$1" > /dev/null 2>&1
+
+    title=$(bs-select -s '.su-label' "$tmpdir/index.html" | awk 'NR == 2')
+    password=$(bs-select -s '.post-content code' "$tmpdir/index.html")
+
+    bs-select -s -a href '.post-content a' "$tmpdir/index.html" | awk -F '\t' '/Volume/ {print $2}' | xargs -n1 flyswat | xargs megatools dl --path "$tmpdir"
+    ls "$tmpdir"/*.zip | xargs -d '\n' -n1 unzip -d "$tmpdir" -P "$password" 
+
+    mkdir -p "$XDG_DOCUMENTS_DIR/books/Light Novel/$title"
+    cp -i "$tmpdir"/*.epub "$XDG_DOCUMENTS_DIR/books/Light Novel/$title"
+    rm -r "$tmpdir"
+  ;;
 esac
