@@ -134,7 +134,7 @@ set updatetime=750
 autocmd CursorHold * silent call CocActionAsync('highlight')
 autocmd CursorHold * silent call ShowDocumentation(0)
 
-inoremap <silent><expr> <cr> coc#pum#visible() ? coc#pum#confirm()
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                           \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 xmap <leader>f  <Plug>(coc-format-selected)
@@ -146,7 +146,8 @@ command! -nargs=0 Format :call CocActionAsync('format')
 let g:coc_snippet_next='<tab>'
 
 " FZF setting
-nnoremap <expr> <C-p> (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
+nnoremap <expr> <C-p> (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<CR>"
+nnoremap <silent> <leader>r :History:<CR>
 
 " Nerdtree settings
 nnoremap <leader>n :NERDTreeFocus<CR>
