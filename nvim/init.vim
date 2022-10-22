@@ -20,6 +20,7 @@ call plug#begin()
   " Misc plugin
   Plug 'tpope/vim-dispatch'
   Plug 'preservim/nerdcommenter'
+  Plug 'editorconfig/editorconfig-vim'
 call plug#end()
 
 " Set spellchecking
@@ -84,13 +85,14 @@ colorscheme gruvbox
 
 " CoC settings
 let g:coc_global_extensions = [
-  \ 'coc-tsserver',
-  \ 'coc-json',
+  \ 'coc-angular',
   \ 'coc-clangd',
-  \ 'coc-emmet',
-  \ 'coc-snippets',
-  \ 'coc-prettier',
   \ 'coc-css',
+  \ 'coc-emmet',
+  \ 'coc-json',
+  \ 'coc-prettier',
+  \ 'coc-snippets',
+  \ 'coc-tsserver',
 \ ]
 
 inoremap <silent><expr> <TAB>
