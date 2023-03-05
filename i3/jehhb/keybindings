@@ -19,4 +19,5 @@ bindsym Control+Mod1+Shift+space exec dunstctl close-all
 
 bindsym Control+Print exec flameshot launcher
 bindsym Shift+Print exec flameshot gui -c
+bindsym Shift+Control+Print exec flameshot gui
 bindsym Print exec flameshot full -c
