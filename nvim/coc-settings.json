@@ -3,12 +3,14 @@
   "diagnostic.virtualTextPrefix": ">>> ",
   "diagnostic.virtualTextCurrentLineOnly": false,
   "coc.preferences.formatOnSaveFiletypes": [
-    "typescript",
-    "javascript",
-    "typescriptreact",
-    "javascriptreact",
+    "css",
     "html",
+    "javascript",
+    "javascriptreact",
     "json",
-    "css"
+    "md",
+    "php",
+    "typescript",
+    "typescriptreact"
   ]
 }
