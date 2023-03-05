@@ -1,6 +1,7 @@
 #!/bin/zsh
 
 source /usr/share/zplug/init.zsh
+
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
@@ -16,4 +17,7 @@ fi
 zplug load > /dev/null
 
 # Plugins settings
+source /usr/share/doc/fzf/examples/key-bindings.zsh
+source /usr/share/doc/fzf/examples/completion.zsh
+
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
