@@ -16,3 +16,5 @@ alias upg="doas nala upgrade"
 alias ins="doas nala install"
 alias rem="doas nala purge"
 alias cln="doas nala autoremove --purge"
+
+alias tremc="tremc -X"

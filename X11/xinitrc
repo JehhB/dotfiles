@@ -1,7 +1,6 @@
 source /etc/X11/xinit/xinitrc
 dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
 
-urxvtd&
 dunst&
 thunar --daemon&
 transwrap&
@@ -11,7 +10,6 @@ unclutter&
 /usr/libexec/geoclue-2.0/demos/agent&
 redshift&
 
-xrdb $XDG_CONFIG_HOME/X11/xresources
 feh --no-fehbg --bg-fill $XDG_PICTURES_DIR/wallpaper
 
 exec i3

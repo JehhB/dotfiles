@@ -2,7 +2,7 @@
 call plug#begin()
   " Eye Candy plugins
   Plug 'itchyny/lightline.vim'
-  Plug 'morhetz/gruvbox'
+  Plug 'ellisonleao/gruvbox.nvim', { 'tag' : '0.1.0' }
 
   " FZF plugins
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -21,6 +21,10 @@ call plug#begin()
   Plug 'tpope/vim-dispatch'
   Plug 'preservim/nerdcommenter'
   Plug 'editorconfig/editorconfig-vim'
+
+  " Tree sitter
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'tag': 'v0.7.2'}
+  Plug 'nvim-treesitter/playground'
 call plug#end()
 
 " Set spellchecking
@@ -71,6 +75,7 @@ set noshowmode
 set background=dark
 let g:lightline={'colorscheme': 'gruvbox'}
 
+
 " Colorscheme
 if has('termguicolors')
     set termguicolors
@@ -78,7 +83,6 @@ endif
 
 set background=dark
 let g:gruvbox_contrast_dark='hard'
-let g:gruvbox_better_performance=1
 let g:gruvbox_italic=1
 
 colorscheme gruvbox
@@ -176,3 +180,17 @@ let g:NERDTreeGitStatusUseNerdFonts=1
 
 " Nerd commenter settings
 let g:NERDDefaultAlign='left'
+
+lua << HEREDOC
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "c", "cpp", "vim", "help", "javascript", "typescript", "tsx", "html", "css", "php", "query" },
+  sync_install = true,
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+  playground = {
+    enable = true,
+  },
+}
+HEREDOC
