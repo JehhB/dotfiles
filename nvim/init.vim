@@ -89,6 +89,7 @@ colorscheme gruvbox
 
 " CoC settings
 let g:coc_global_extensions = [
+  \ '@yaegassy/coc-volar',
   \ 'coc-angular',
   \ 'coc-clangd',
   \ 'coc-css',
@@ -97,6 +98,7 @@ let g:coc_global_extensions = [
   \ 'coc-phpls',
   \ 'coc-prettier',
   \ 'coc-snippets',
+  \ 'coc-sql',
   \ 'coc-tsserver',
 \ ]
 
@@ -183,7 +185,7 @@ let g:NERDDefaultAlign='left'
 
 lua << HEREDOC
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "c", "cpp", "vim", "help", "javascript", "typescript", "tsx", "html", "css", "php", "query" },
+  ensure_installed = { "c", "cpp", "vim", "help", "javascript", "typescript", "tsx", "html", "css", "php", "query","sql" },
   sync_install = true,
   highlight = {
     enable = true,

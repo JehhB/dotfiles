@@ -3,7 +3,7 @@
 [ -z "$1" ] && { "$BROWSER"; exit; }
 
 case "$1" in
-  magnet*) transmission-remote -a "$1";;
+  magnet*) echo $1;transmission-remote -a "$1";;
   http?://thatnovelcorner*) 
     tmpdir="/tmp/linkhandler-$(date +%s)"
 

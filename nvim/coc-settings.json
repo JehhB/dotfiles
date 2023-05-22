@@ -9,8 +9,8 @@
     "javascriptreact",
     "json",
     "md",
-    "php",
     "typescript",
     "typescriptreact"
-  ]
+  ],
+  "snippets.ultisnips.pythonPrompt": false
 }
