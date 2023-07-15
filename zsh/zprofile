@@ -1,11 +1,14 @@
 #!/bin/dash
 
+export D_DRIVE="/mnt/d"
+export DATA_DIR="$D_DRIVE/Eco"
+
 # XDG User Directory
-export XDG_DESKTOP_DIR="$HOME/"
-export XDG_DOWNLOAD_DIR="$HOME/Downloads"
-export XDG_TEMPLATES_DIR="$HOME/"
-export XDG_PUBLICSHARE_DIR="$HOME/"
-export XDG_DOCUMENTS_DIR="$HOME/Files"
-export XDG_MUSIC_DIR="$HOME/Files/Music"
-export XDG_PICTURES_DIR="$HOME/Files/Pictures"
-export XDG_VIDEOS_DIR="$HOME/Files/Videos"
+export XDG_DESKTOP_DIR="$DATA_DIR/Desktop"
+export XDG_DOWNLOAD_DIR="$DATA_DIR/Downloads"
+#export XDG_TEMPLATES_DIR="$DATA_DIR/"
+#export XDG_PUBLICSHARE_DIR="$DATA_DIR/"
+export XDG_DOCUMENTS_DIR="$DATA_DIR/Documents"
+export XDG_MUSIC_DIR="$DATA_DIR/Music"
+export XDG_PICTURES_DIR="$DATA_DIR/Pictures"
+export XDG_VIDEOS_DIR="$DATA_DIR/Videos"

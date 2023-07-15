@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 alias rss="newsboat"
-alias v="vim"
+alias v="vi"
 alias q="exit"
 
 alias ls="ls -hN --color=auto --group-directories-first"
@@ -11,10 +11,8 @@ alias grep="grep --color=auto"
 alias diff="diff --color=auto"
 alias bat="batcat"
 
-alias upd="doas nala update"
-alias upg="doas nala upgrade"
-alias ins="doas nala install"
-alias rem="doas nala purge"
-alias cln="doas nala autoremove --purge"
-
-alias tremc="tremc -X"
+alias upd="sudo apt update"
+alias upg="sudo apt upgrade"
+alias ins="sudo apt install"
+alias rem="sudo apt purge"
+alias cln="sudo apt autoremove --purge"

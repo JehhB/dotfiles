@@ -1,14 +1,6 @@
 /*
 !/**/.gitignore
-!/X11/
-!/bin/
-!/flameshot/
 !/git/
-!/i3/
-!/i3status/
-!/kitty/
 !/newsboat/
-!/nvim/
-!/redshift/
 !/tmux/
 !/zsh/
