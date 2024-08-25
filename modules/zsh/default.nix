@@ -23,7 +23,7 @@
     antidote = {
       enable = true;
       plugins = [
-        "junegunn/fzf"
+        "ohmyzsh/ohmyzsh path:plugins/command-not-found"
       ];
     };
 
@@ -55,6 +55,6 @@
   };
 
   home.sessionVariables = {
-    PS1 = "%B[%(!.%F{red}.%F{cyan})%n@%M%f %F{blue}%1~%f] %(!.#.$)%b ";
   };
+
 }
