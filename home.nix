@@ -3,6 +3,7 @@
 {
   imports = [
     modules/git
+    modules/kitty
     modules/neovim
     modules/tmux
     modules/zsh
