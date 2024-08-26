@@ -4,6 +4,7 @@
   imports = [
     modules/git
     modules/neovim
+    modules/tmux
     modules/zsh
   ];
 

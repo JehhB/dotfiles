@@ -20,19 +20,11 @@
       ];
     };
 
-    antidote = {
-      enable = true;
-      plugins = [
-        "ohmyzsh/ohmyzsh path:plugins/command-not-found"
-      ];
-    };
-
     history = {
       path = "${config.xdg.dataHome}/zsh/history";
       ignoreAllDups = true;
       ignoreSpace = true;
     };
-
 
     initExtra = ''
     ${builtins.readFile ./init-extra.zsh}
@@ -54,7 +46,5 @@
     };
   };
 
-  home.sessionVariables = {
-  };
-
+  programs.command-not-found.enable = true;
 }
