@@ -11,9 +11,9 @@
 
   home.username = "eco";
   home.homeDirectory = "/home/eco";
-  xdg.cacheHome = "/home/eco/.nix/cache";
-  xdg.configHome = "/home/eco/.nix/config";
-  xdg.dataHome = "/home/eco/.nix/data";
+  xdg.cacheHome = "/home/eco/.cache";
+  xdg.configHome = "/home/eco/.config";
+  xdg.dataHome = "/home/eco/.local/share";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
