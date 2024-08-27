@@ -12,6 +12,7 @@
       git
       curl
       nil
+      gcc13
     ];
 
     plugins = with pkgs.vimPlugins; [
