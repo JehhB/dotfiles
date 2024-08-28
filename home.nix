@@ -31,6 +31,8 @@
     firefox
     fzf
     nodejs_20
+    ripgrep
+    ripgrep-all
   ];
 
 
