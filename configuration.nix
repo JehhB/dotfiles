@@ -64,6 +64,7 @@
   services.xserver.xkb = {
     layout = "us";
     variant = "";
+    options = "caps:swapescape";
   };
 
   # Enable CUPS to print documents.
@@ -97,13 +98,11 @@
     ];
     shell = pkgs.zsh;
   };
+  console.useXkbConfig = true; 
 
   # Enable automatic login for the user.
   services.displayManager.autoLogin.enable = false;
   services.displayManager.autoLogin.user = "eco";
-
-  services.xserver.xkbOptions = "caps:swapescape";
-  console.useXkbConfig = true; 
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
