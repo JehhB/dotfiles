@@ -25,7 +25,7 @@
         alignment = "center";
         floating = false;
         lengthMode = "fill";
-        height = 44;
+        height = 45;
         widgets = [
           "org.kde.plasma.panelspacer"
           {
@@ -57,7 +57,7 @@
         alignment = "center";
         floating = false;
         lengthMode = "fill";
-        height = 27;
+        height = 28;
         widgets = [
           "org.kde.plasma.appmenu"
           "org.kde.plasma.panelspacer"
@@ -176,6 +176,26 @@
       recordRegion = "Meta+Alt+Shift+R";
       launch = "Meta+Shift+S";
     };
+
+    input.mice = [
+      {
+        name = "TPPS/2 IBM TrackPoint";
+        vendorId = "0002";
+        productId = "000a";
+        enable = true;
+        naturalScroll = true;
+      }
+    ];
+    input.touchpads = [
+      {
+        name = "SynPS/2 Synaptics TouchPad";
+        vendorId = "0002";
+        productId = "0007";
+        enable = true;
+        naturalScroll = true;
+      }
+    ];
+    input.keyboard.options = ["caps:swapescape"];
 
 
     configFile = {
