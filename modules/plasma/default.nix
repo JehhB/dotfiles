@@ -136,35 +136,16 @@
       };
     };
 
-    hotkeys.commands = {
-      "launch-broweser" = {
-        name = "Launch broweser";
-        key = "Alt+B";
-        command = "firefox";
-      };
-      "launch-terminal" = {
-        name = "Launch terminal";
-        key = "Alt+X";
-        command = "kitty";
-      };
-      "launch-filemanager" = {
-        name = "Launch filemanager";
-        key = "Alt+F";
-        command = "dolphin";
-      };
-      "launch-search" = {
-        name = "Launch search";
-        keys  = ["Alt+P" "Search"];
-        command = "krunner";
-      };
-    };
-
     shortcuts = {
       kwin = {
         "Overview" = ["Meta" "Meta+W"];
         "Window Close" = ["Alt+Q" "Alt+F4"];
         "Window Maximize" = "Alt+Space";
       };
+      "services/org.kde.dolphin.dekstop"._launch = ["Alt+B"];
+      "services/firefox.desktop"._launch = ["Alt+B"];
+      "services/kitty.desktop"._launch = ["Alt+X"];
+      "services/org.kde.krunner.desktop"._launch = ["Alt+P" "Search"];
     };
 
     spectacle.shortcuts = {
