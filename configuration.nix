@@ -12,7 +12,22 @@
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
-  # Bootloader.
+  boot = {
+    plymouth.enable = true;
+    consoleLogLevel = 0;
+    initrd.verbose = false;
+    kernelParams = [
+      "quiet"
+      "splash"
+      "boot.shell_on_fail"
+      "loglevel=3"
+      "rd.systemd.show_status=false"
+      "rd.udev.log_level=3"
+      "udev.log_priority=3"
+    ];
+  };
+
+  # Bootloader
   boot.loader = {
     timeout = 1;
     efi.canTouchEfiVariables = true;
@@ -20,10 +35,19 @@
       enable = true;
       device = "nodev";
       efiSupport = true;
-      useOSProber = true;
       default = "saved";
+      timeoutStyle = "hidden";
+      entryOptions = "--class nixos --unrestricted --hotkey='n'";
+      extraEntries = ''
+      menuentry 'Windows 11' --hotkey='w' {
+        savedefault
+        search --fs-uuid --no-floppy --set=root 912D-CC0F
+        chainloader (''${root})/EFI/Microsoft/Boot/bootmgfw.efi
+      }
+      '';
     };
   };
+
 
   boot.tmp.useTmpfs = true;
   networking.hostName = "nixos"; # Define your hostname.
@@ -38,6 +62,7 @@
 
   # Set your time zone.
   time.timeZone = "Asia/Manila";
+  time.hardwareClockInLocalTime = true;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_PH.UTF-8";
@@ -61,7 +86,8 @@
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.displayManager.lightdm.greeters.slick.enable = true;
   services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
@@ -109,7 +135,7 @@
   console.useXkbConfig = true; 
 
   # Enable automatic login for the user.
-  services.displayManager.autoLogin.enable = false;
+  services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "eco";
 
   # Allow unfree packages

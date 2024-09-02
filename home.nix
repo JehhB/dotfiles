@@ -34,6 +34,7 @@
     ripgrep
     ripgrep-all
     libreoffice-qt6-fresh
+    wl-clipboard
   ];
 
 

@@ -175,6 +175,13 @@
         enable = true;
         naturalScroll = true;
       }
+      {
+        name = "Synaptics TM2668-001";
+        vendorId = "06cb";
+        productId = "0000";
+        enable = true;
+        naturalScroll = true;
+      }
     ];
     input.keyboard.options = ["caps:swapescape"];
 
