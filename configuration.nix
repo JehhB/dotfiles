@@ -13,13 +13,17 @@
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # Bootloader.
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.enable = false;
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "nodev";
-  boot.loader.grub.efiSupport = true;
-  boot.loader.grub.useOSProber = true;
-  boot.loader.timeout = 1;
+  boot.loader = {
+    timeout = 1;
+    efi.canTouchEfiVariables = true;
+    grub = {
+      enable = true;
+      device = "nodev";
+      efiSupport = true;
+      useOSProber = true;
+      default = "saved";
+    };
+  };
 
   boot.tmp.useTmpfs = true;
   networking.hostName = "nixos"; # Define your hostname.
@@ -69,6 +73,10 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  services.printing.drivers = with pkgs; [
+    epson-escpr
+    epson-escpr2
+  ];
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;

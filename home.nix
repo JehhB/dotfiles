@@ -33,6 +33,7 @@
     nodejs_20
     ripgrep
     ripgrep-all
+    libreoffice-qt6-fresh
   ];
 
 
