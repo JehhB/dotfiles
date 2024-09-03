@@ -2,6 +2,7 @@
 
 {
   imports = [
+    modules/firefox
     modules/git
     modules/kitty
     modules/neovim
@@ -28,13 +29,13 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    firefox
     fzf
     nodejs_20
     ripgrep
     ripgrep-all
+    libreoffice-qt6-fresh
+    wl-clipboard
   ];
-
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.

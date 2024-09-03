@@ -13,15 +13,44 @@
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
-  # Bootloader.
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.enable = false;
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "nodev";
-  boot.loader.grub.efiSupport = true;
-  boot.loader.grub.useOSProber = true;
-  boot.loader.timeout = 1;
+  boot = {
+    plymouth.enable = true;
+    consoleLogLevel = 0;
+    initrd.verbose = false;
+    kernelParams = [
+      "quiet"
+      "splash"
+      "boot.shell_on_fail"
+      "loglevel=3"
+      "rd.systemd.show_status=false"
+      "rd.udev.log_level=3"
+      "udev.log_priority=3"
+    ];
+  };
 
+  # Bootloader
+  boot.loader = {
+    timeout = 1;
+    efi.canTouchEfiVariables = true;
+    grub = {
+      enable = true;
+      device = "nodev";
+      efiSupport = true;
+      default = "saved";
+      timeoutStyle = "hidden";
+      entryOptions = "--class nixos --unrestricted --hotkey='n'";
+      extraEntries = ''
+      menuentry 'Windows 11' --hotkey='w' {
+        savedefault
+        search --fs-uuid --no-floppy --set=root 912D-CC0F
+        chainloader (''${root})/EFI/Microsoft/Boot/bootmgfw.efi
+      }
+      '';
+    };
+  };
+
+
+  boot.tmp.useTmpfs = true;
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -34,6 +63,7 @@
 
   # Set your time zone.
   time.timeZone = "Asia/Manila";
+  time.hardwareClockInLocalTime = true;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_PH.UTF-8";
@@ -57,8 +87,10 @@
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.displayManager.lightdm.greeters.slick.enable = true;
   services.desktopManager.plasma6.enable = true;
+  programs.kdeconnect.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -69,6 +101,10 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  services.printing.drivers = with pkgs; [
+    epson-escpr
+    epson-escpr2
+  ];
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
@@ -101,7 +137,7 @@
   console.useXkbConfig = true; 
 
   # Enable automatic login for the user.
-  services.displayManager.autoLogin.enable = false;
+  services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "eco";
 
   # Allow unfree packages
