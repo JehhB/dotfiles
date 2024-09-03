@@ -89,6 +89,7 @@
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.displayManager.lightdm.greeters.slick.enable = true;
   services.desktopManager.plasma6.enable = true;
+  programs.kdeconnect.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {

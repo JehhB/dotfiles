@@ -5,6 +5,11 @@
     vanilla-dmz
   ];
 
+  services.kdeconnect = {
+    enable = true;
+    package = pkgs.kdePackages.kdeconnect-kde;
+  };
+
   programs.plasma = {
     enable = true;
 
