@@ -30,6 +30,7 @@
   # environment.
   home.packages = with pkgs; [
     fzf
+    vlc
     nodejs_20
     ripgrep
     ripgrep-all
