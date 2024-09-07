@@ -4,6 +4,8 @@
   imports = [ 
     ./colorscheme
     ./lsp
+
+    ./nix
   ];
 
   programs.neovim = {

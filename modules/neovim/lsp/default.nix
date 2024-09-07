@@ -7,7 +7,7 @@
       cmp-nvim-lsp
       {
         plugin = nvim-lspconfig;
-        runtime."after/plugin/nvim-lspconfig.lua".source = ./lspconfig.lua;
+        runtime."after/plugin/nvim-lspconfig.lua".source = ./nvim-lspconfig.lua;
       }
       {
         plugin = nvim-cmp;
