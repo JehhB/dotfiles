@@ -1,6 +1,11 @@
 { config, pkgs, ... } :
 
 {
+  imports = [ 
+    ./colorscheme
+    ./lsp
+  ];
+
   programs.neovim = {
   	enable = true;
     viAlias = true;
@@ -8,20 +13,9 @@
     vimdiffAlias = true;
     defaultEditor = true;
 
-    extraPackages = with pkgs; [
-      git
-      curl
-      nil
-      gcc13
-    ];
-
-    plugins = with pkgs.vimPlugins; [
-      packer-nvim
-    ];
-  };
-
-  xdg.configFile.nvim = {
-    source = ./nvim;
-    recursive = true;
+    extraLuaConfig = ''
+    ${builtins.readFile ./set.lua}
+    ${builtins.readFile ./keymap.lua}
+    '';
   };
 }
