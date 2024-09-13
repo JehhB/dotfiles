@@ -2,10 +2,8 @@
 
 {
   imports = [ 
-    ./colorscheme
     ./lsp
-
-    ./nix
+    ./colorscheme
   ];
 
   programs.neovim = {
@@ -19,5 +17,9 @@
     ${builtins.readFile ./set.lua}
     ${builtins.readFile ./keymap.lua}
     '';
+  };
+
+  nvim-config.languages = {
+    nix.enable = true;
   };
 }

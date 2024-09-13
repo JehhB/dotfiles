@@ -1,5 +1,4 @@
 local cmp = require('cmp')
-local cmp_action = require('lsp-zero').cmp_action()
 local luasnip = require('luasnip')
 
 local function luasnip_supertab(select_opts) 

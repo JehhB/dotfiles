@@ -3,19 +3,19 @@ local conform = require('conform')
 local slow_format_filetypes = {}
 conform.setup({
   formatters_by_ft = {
-    angular = { "prettier" },
-    css = { "prettier" },
-    html = { "prettier" },
-    javascript = { "prettier" },
-    javascriptreact = { "prettier" },
-    json = { "prettier" },
-    markdown = { "prettier" },
-    svelte = { "prettier" },
-    twig = { "prettier" },
-    typescript = { "prettier" },
-    typescriptreact = { "prettier" },
-    vue = { "prettier" },
-    yaml = { "prettier" },
+    angular = { "prettier", "prettierd" },
+    css = { "prettier", "prettierd" },
+    html = { "prettier", "prettierd" },
+    javascript = { "prettier", "prettierd" },
+    javascriptreact = { "prettier", "prettierd" },
+    json = { "prettier", "prettierd" },
+    markdown = { "prettier", "prettierd" },
+    svelte = { "prettier", "prettierd" },
+    twig = { "prettier", "prettierd" },
+    typescript = { "prettier", "prettierd" },
+    typescriptreact = { "prettier", "prettierd" },
+    vue = { "prettier", "prettierd" },
+    yaml = { "prettier", "prettierd" },
   },
   format_on_save = function(bufnr)
     if slow_format_filetypes[vim.bo[bufnr].filetype] then
