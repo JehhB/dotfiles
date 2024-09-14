@@ -232,7 +232,7 @@ in
         vueSupport = config.nvim-config.languages.vue.enable;
       in
       ''
-        lspconfig.ts_ls.setup{
+        lspconfig.tsserver.setup{
           init_options = {
             plugins = {
               ${
