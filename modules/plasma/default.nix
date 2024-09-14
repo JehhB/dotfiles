@@ -1,4 +1,4 @@
-{ config, pkgs, ... } :
+{ config, pkgs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -14,7 +14,7 @@
     enable = true;
 
     workspace = {
-      colorScheme =  "BreezeDark";
+      colorScheme = "BreezeDark";
       theme = "breeze-dark";
       lookAndFeel = "org.kde.breezedark.desktop";
       iconTheme = "breeze-dark";
@@ -143,14 +143,23 @@
 
     shortcuts = {
       kwin = {
-        "Overview" = ["Meta" "Meta+W"];
-        "Window Close" = ["Alt+Q" "Alt+F4"];
+        "Overview" = [
+          "Meta"
+          "Meta+W"
+        ];
+        "Window Close" = [
+          "Alt+Q"
+          "Alt+F4"
+        ];
         "Window Maximize" = "Alt+Space";
       };
-      "services/org.kde.dolphin.dekstop"._launch = ["Alt+B"];
-      "services/firefox.desktop"._launch = ["Alt+B"];
-      "services/kitty.desktop"._launch = ["Alt+X"];
-      "services/org.kde.krunner.desktop"._launch = ["Alt+P" "Search"];
+      "services/org.kde.dolphin.dekstop"._launch = [ "Alt+B" ];
+      "services/firefox.desktop"._launch = [ "Alt+B" ];
+      "services/kitty.desktop"._launch = [ "Alt+X" ];
+      "services/org.kde.krunner.desktop"._launch = [
+        "Alt+P"
+        "Search"
+      ];
     };
 
     spectacle.shortcuts = {
@@ -188,8 +197,7 @@
         naturalScroll = true;
       }
     ];
-    input.keyboard.options = ["caps:swapescape"];
-
+    input.keyboard.options = [ "caps:swapescape" ];
 
     configFile = {
       kwinrc.Desktops.Number = {

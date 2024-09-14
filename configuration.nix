@@ -5,12 +5,15 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   boot = {
     plymouth.enable = true;
@@ -39,15 +42,14 @@
       timeoutStyle = "hidden";
       entryOptions = "--class nixos --unrestricted --hotkey='n'";
       extraEntries = ''
-      menuentry 'Windows 11' --hotkey='w' {
-        savedefault
-        search --fs-uuid --no-floppy --set=root 912D-CC0F
-        chainloader (''${root})/EFI/Microsoft/Boot/bootmgfw.efi
-      }
+        menuentry 'Windows 11' --hotkey='w' {
+          savedefault
+          search --fs-uuid --no-floppy --set=root 912D-CC0F
+          chainloader (''${root})/EFI/Microsoft/Boot/bootmgfw.efi
+        }
       '';
     };
   };
-
 
   boot.tmp.useTmpfs = true;
   networking.hostName = "nixos"; # Define your hostname.
@@ -66,7 +68,7 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_PH.UTF-8";
-  i18n.supportedLocales = ["en_PH.UTF-8/UTF-8"];
+  i18n.supportedLocales = [ "en_PH.UTF-8/UTF-8" ];
 
   i18n.extraLocaleSettings = {
     LANGUAGE = "en_PH.UTF-8";
@@ -128,12 +130,19 @@
   users.users.eco = {
     isNormalUser = true;
     description = "eco";
-    extraGroups = [ "networkmanager" "wheel" "video" "audio" ];
-    packages = with pkgs; [
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "video"
+      "audio"
     ];
+    packages =
+      with pkgs;
+      [
+      ];
     shell = pkgs.zsh;
   };
-  console.useXkbConfig = true; 
+  console.useXkbConfig = true;
 
   # Enable automatic login for the user.
   services.displayManager.autoLogin.enable = true;
@@ -145,8 +154,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
   ];
 
   programs.zsh.enable = true;

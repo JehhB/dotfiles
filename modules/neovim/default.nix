@@ -1,21 +1,21 @@
-{ config, pkgs, ... } :
+{ config, pkgs, ... }:
 
 {
-  imports = [ 
+  imports = [
     ./lsp
     ./colorscheme
   ];
 
   programs.neovim = {
-  	enable = true;
+    enable = true;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
     defaultEditor = true;
 
     extraLuaConfig = ''
-    ${builtins.readFile ./set.lua}
-    ${builtins.readFile ./keymap.lua}
+      ${builtins.readFile ./set.lua}
+      ${builtins.readFile ./keymap.lua}
     '';
   };
 
