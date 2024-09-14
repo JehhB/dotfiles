@@ -4,6 +4,7 @@
   imports = [
     ./lsp
     ./colorscheme
+    ./telescope
   ];
 
   programs.neovim = {
