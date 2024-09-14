@@ -7,7 +7,7 @@
 
 let
   cfg = config.nvim-config.languages;
-  defaultLanguages = import ./default-languages.nix { inherit pkgs; };
+  defaultLanguages = import ./default-languages.nix { inherit config pkgs; };
 
   languageOptions =
     { name, config, ... }:
@@ -16,11 +16,41 @@ let
         enable = lib.mkEnableOption "Enable support for ${name}";
         treesitterGrammars = lib.mkOption {
           type = lib.types.functionTo (lib.types.listOf lib.types.anything);
-          default = defaultLanguages.${name}.treesitterGrammars or (p: [ p.${name} ]);
+          default = defaultLanguages.${name}.treesitterGrammars or (p: [ ]);
           description = "Function to select TreeSitter grammars for ${name}";
         };
         formatters = lib.mkOption {
-          type = lib.types.attrsOf (lib.types.listOf lib.types.str);
+          type = lib.types.attrsOf (
+            lib.types.either (lib.types.listOf lib.types.str) (
+              lib.types.submodule {
+                options = {
+                  formatters = lib.mkOption {
+                    type = lib.types.listOf lib.types.str;
+                    default = [ ];
+                    description = "List of formatters for ${name}";
+                  };
+                  stop_after_first = lib.mkOption {
+                    type = lib.types.nullOr lib.types.bool;
+                    default = null;
+                    description = "Stop after the first successful formatter";
+                  };
+                  lsp_format = lib.mkOption {
+                    type = lib.types.nullOr (
+                      lib.types.enum [
+                        "never"
+                        "fallback"
+                        "prefer"
+                        "first"
+                        "last"
+                      ]
+                    );
+                    default = null;
+                    description = "LSP format option for ${name}";
+                  };
+                };
+              }
+            )
+          );
           default = defaultLanguages.${name}.formatters or { };
         };
         extraPackages = lib.mkOption {
@@ -49,12 +79,40 @@ let
   enabledLanguages = lib.filterAttrs (name: lang: lang.enable) cfg;
 
   formattersToLua =
-    lang: formatters:
+    lang: formatterConfig:
     let
+      isSimpleList = builtins.isList formatterConfig;
+      formatters = if isSimpleList then formatterConfig else formatterConfig.formatters;
       quotedFormatters = map (f: ''"${f}"'') formatters;
       formattersList = lib.concatStringsSep ", " quotedFormatters;
+      optionsStr =
+        if isSimpleList then
+          ""
+        else
+          lib.concatStringsSep ", " (
+            lib.remove null [
+              (
+                if formatterConfig.stop_after_first != null then
+                  "stop_after_first = ${if formatterConfig.stop_after_first then "true" else "false"}"
+                else
+                  null
+              )
+              (
+                if formatterConfig.lsp_format != null then
+                  ''lsp_format = "${formatterConfig.lsp_format}"''
+                else
+                  null
+              )
+            ]
+          );
+      allOptions = lib.concatStringsSep ", " (
+        lib.remove null [
+          (if formattersList != "" then formattersList else null)
+          (if optionsStr != "" then optionsStr else null)
+        ]
+      );
     in
-    ''["${lang}"] = { ${formattersList} },'';
+    ''["${lang}"] = { ${allOptions} },'';
 
   formatterEntries = lib.concatStringsSep "\n" (
     lib.mapAttrsToList formattersToLua (
