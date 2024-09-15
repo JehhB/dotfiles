@@ -15,9 +15,9 @@ let
       options = {
         enable = lib.mkEnableOption "Enable support for ${name}";
         treesitterGrammars = lib.mkOption {
-          type = lib.types.functionTo (lib.types.listOf lib.types.anything);
-          default = defaultLanguages.${name}.treesitterGrammars or (p: [ ]);
-          description = "Function to select TreeSitter grammars for ${name}";
+          type = lib.types.listOf lib.types.anything;
+          default = defaultLanguages.${name}.treesitterGrammars or [ ];
+          description = "List of TreeSitter grammars for ${name}";
         };
         formatters = lib.mkOption {
           type = lib.types.attrsOf (
@@ -132,13 +132,12 @@ in
     programs.neovim = {
       plugins =
         lib.lists.unique (lib.concatMap (lang: lang.extraPlugins) (lib.attrValues enabledLanguages))
+        ++ lib.lists.unique (
+          lib.concatMap (lang: lang.treesitterGrammars) (lib.attrValues enabledLanguages)
+        )
         ++ [
           {
-            plugin = (
-              pkgs.vimPlugins.nvim-treesitter.withPlugins (
-                p: lib.concatMap (lang: lang.treesitterGrammars p) (lib.attrValues enabledLanguages)
-              )
-            );
+            plugin = pkgs.vimPlugins.nvim-treesitter;
             runtime."after/plugin/nvim-treesitter.lua".source = ./nvim-treesitter.lua;
           }
           {

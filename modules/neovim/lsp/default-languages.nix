@@ -12,9 +12,9 @@ let
 in
 {
   clang = {
-    treesitterGrammars = p: [
-      p.c
-      p.cpp
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+      c
+      cpp
     ];
     extraPackages = with pkgs; [ clang-tools ];
     formatters = {
@@ -28,8 +28,8 @@ in
     '';
   };
   css = {
-    treesitterGrammars = p: [
-      p.css
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+      css
     ];
     extraPackages = with pkgs; [
       eslint_d
@@ -69,7 +69,9 @@ in
     '';
   };
   glsl = {
-    treesitterGrammar = p: [ p.glsl ];
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+      glsl
+    ];
     extraPackages = with pkgs; [
       glsl_analyzer
       clang-tools
@@ -90,8 +92,8 @@ in
     '';
   };
   html = {
-    treesitterGrammars = p: [
-      p.html
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+      html
     ];
     extraPackages = with pkgs; [
       eslint_d
@@ -104,7 +106,9 @@ in
     '';
   };
   lua = {
-    treesitterGrammars = p: [ p.lua ];
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+      lua
+    ];
     extraPackages = with pkgs; [
       lua-language-server
       stylua
@@ -133,7 +137,7 @@ in
     '';
   };
   nix = {
-    treesitterGrammars = p: [ p.nix ];
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [ nix ];
     extraPackages = with pkgs; [
       nil
       nixfmt-rfc-style
@@ -155,9 +159,9 @@ in
     '';
   };
   php = {
-    treesitterGrammars = p: [
-      p.php_only
-      p.phpdoc
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+      php
+      phpdoc
     ];
     extraPackages = with pkgs; [
       nodePackages.intelephense
@@ -210,11 +214,11 @@ in
     '';
   };
   typescript = {
-    treesitterGrammars = p: [
-      p.javascript
-      p.tsx
-      p.typescript
-      p.jsdoc
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+      javascript
+      tsx
+      typescript
+      jsdoc
     ];
     extraPackages = with pkgs; [
       eslint_d
@@ -258,7 +262,7 @@ in
       '';
   };
   vue = {
-    treesitterGrammars = p: [ p.vue ];
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [ vue ];
     extraPackages = with pkgs; [
       eslint_d
       prettierd
