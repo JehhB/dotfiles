@@ -1,4 +1,4 @@
-{ config, pkgs, ... } :
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -32,6 +32,7 @@
     fzf
     vlc
     nodejs_20
+    pnpm
     ripgrep
     ripgrep-all
     libreoffice-qt6-fresh
@@ -39,11 +40,11 @@
     zoom-us
   ];
 
-
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  home.file = {
-  };
+  home.file =
+    {
+    };
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a

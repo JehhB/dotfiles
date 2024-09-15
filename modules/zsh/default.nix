@@ -1,8 +1,8 @@
-{ config, pkgs, ... } :
+{ config, pkgs, ... }:
 
 {
   programs.zsh = {
-  	enable = true;
+    enable = true;
 
     defaultKeymap = "viins";
 
@@ -27,9 +27,9 @@
     };
 
     initExtra = ''
-    ${builtins.readFile ./init-extra.zsh}
-    source ${pkgs.fzf}/share/fzf/key-bindings.zsh
-    source ${pkgs.fzf}/share/fzf/completion.zsh
+      ${builtins.readFile ./init-extra.zsh}
+      source ${pkgs.fzf}/share/fzf/key-bindings.zsh
+      source ${pkgs.fzf}/share/fzf/completion.zsh
     '';
 
     shellAliases = {
