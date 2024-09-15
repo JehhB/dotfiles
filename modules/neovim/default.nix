@@ -21,6 +21,7 @@
   };
 
   nvim-config.languages = {
+    angular.enable = true;
     clang.enable = true;
     css.enable = true;
     emmet.enable = true;

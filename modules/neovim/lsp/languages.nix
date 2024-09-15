@@ -7,7 +7,7 @@
 
 let
   cfg = config.nvim-config.languages;
-  defaultLanguages = import ./default-languages.nix { inherit config pkgs; };
+  defaultLanguages = import ./default-languages.nix { inherit config lib pkgs; };
 
   languageOptions =
     { name, config, ... }:
