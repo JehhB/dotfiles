@@ -21,17 +21,17 @@ require('mason-lspconfig').setup({
     "intelephense",
     "lua_ls",
     "tailwindcss",
-    "tsserver",
+    "ts_ls",
     "twiggy_language_server",
     "volar",
   },
   handlers = {
     lsp_zero.default_setup,
-    tsserver = function()
+    ts_ls = function()
       local vue_language_server_path = require('mason-registry').get_package('vue-language-server'):get_install_path() ..
           '/node_modules/@vue/language-server'
 
-      require('lspconfig').tsserver.setup {
+      require('lspconfig').ts_ls.setup {
         init_options = {
           plugins = {
             {
@@ -135,7 +135,7 @@ require('mason-tool-installer').setup {
     "lua_ls",
     "php-cs-fixer",
     "tailwindcss",
-    "tsserver",
+    "ts_ls",
     "twiggy_language_server",
     "volar",
   },
