@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 
-{
+rec {
   imports = [
     modules/firefox
     modules/git
@@ -62,6 +62,13 @@
   #
   #  /etc/profiles/per-user/eco/etc/profile.d/hm-session-vars.sh
   #
+  home.sessionVariables = {
+    PNPM_HOME = "${xdg.dataHome}/pnpm";
+  };
+
+  home.sessionPath = [
+    home.sessionVariables.PNPM_HOME
+  ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
