@@ -123,6 +123,37 @@ in
       }
     '';
   };
+  docker-compose = {
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+      yaml
+    ];
+    extraPackages = with pkgs; [
+      prettierd
+      docker-compose-language-service
+    ];
+    formatters."yaml.docker-compose" = prettier_format;
+    extraLuaConfig = ''
+      vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+        pattern = {"docker-compose.yaml", "docker-compose.yml", "compose.yaml", "compose.yml"},
+        command = "setfiletype yaml.docker-compose"
+      })
+    '';
+    lspConfig = ''
+      lspconfig.docker_compose_language_service.setup{}
+    '';
+  };
+  dockerfile = {
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+      dockerfile
+    ];
+    extraPackages = with pkgs; [
+      dockerfile-language-server-nodejs
+    ];
+    formatters.dockerfile.lsp_format = "prefer";
+    lspConfig = ''
+      lspconfig.dockerls.setup{}
+    '';
+  };
   emmet = {
     extraPackages = with pkgs; [
       emmet-language-server
@@ -185,6 +216,21 @@ in
       lspconfig.html.setup{}
     '';
   };
+  json = {
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+      json
+    ];
+    extraPackages = with pkgs; [
+      prettierd
+      vscode-langservers-extracted
+    ];
+    formatters.json = prettier_format;
+    lspConfig = ''
+      lspconfig.jsonls.setup {
+        capabilities = lsp_capabilities,
+      }
+    '';
+  };
   lua = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
       lua
@@ -238,11 +284,55 @@ in
     extraPackages = with pkgs; [
       nodePackages.intelephense
     ];
-    formatters.php = {
-      lsp_format = "prefer";
-    };
+    formatters.php.lsp_format = "prefer";
     lspConfig = ''
       lspconfig.intelephense.setup{}
+    '';
+  };
+  python = {
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+      python
+    ];
+    extraPackages = with pkgs; [
+      black
+      isort
+      pyright
+    ];
+    formatters.python = [
+      "isort"
+      "black"
+    ];
+    lspConfig = ''
+      lspconfig.pyright.setup{}
+    '';
+  };
+  sql = {
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+      sql
+    ];
+    extraPlugins = with pkgs; [
+      (vimUtils.buildVimPlugin {
+        pname = "sqls-nvim";
+        version = "2024-09-17";
+        src = fetchFromGitHub {
+          owner = "nanotee";
+          repo = "sqls.nvim";
+          rev = "4b1274b5b44c48ce784aac23747192f5d9d26207";
+          sha256 = "jKFut6NZAf/eIeIkY7/2EsjsIhvZQKCKAJzeQ6XSr0s=";
+        };
+      })
+    ];
+    extraPackages = with pkgs; [
+      nodePackages.sql-formatter
+      sqls
+    ];
+    formatters.sql = [ "sql_formatter" ];
+    lspConfig = ''
+      require'lspconfig'.sqls.setup{
+        on_attach = function(client, bufnr)
+          require('sqls').on_attach(client, bufnr)
+        end
+      }
     '';
   };
   tailwindcss = {
@@ -339,6 +429,19 @@ in
     formatters.vue = prettier_format;
     lspConfig = ''
       lspconfig.volar.setup{}
+    '';
+  };
+  yaml = {
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+      yaml
+    ];
+    extraPackages = with pkgs; [
+      prettierd
+      yaml-language-server
+    ];
+    formatters.yaml = prettier_format;
+    lspConfig = ''
+      lspconfig.yamlls.setup{}
     '';
   };
 }
