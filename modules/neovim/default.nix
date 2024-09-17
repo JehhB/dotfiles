@@ -20,18 +20,5 @@
     '';
   };
 
-  nvim-config.languages = {
-    angular.enable = true;
-    clang.enable = true;
-    css.enable = true;
-    emmet.enable = true;
-    glsl.enable = true;
-    html.enable = true;
-    lua.enable = true;
-    nix.enable = true;
-    php.enable = true;
-    tailwindcss.enable = true;
-    typescript.enable = true;
-    vue.enable = true;
-  };
+  nvim-config.allLanguages.enable = true;
 }

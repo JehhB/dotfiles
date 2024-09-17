@@ -7,6 +7,7 @@
 
 let
   cfg = config.nvim-config.languages;
+  enabledAll = config.nvim-config.allLanguages.enable;
   defaultLanguages = import ./default-languages.nix { inherit config lib pkgs; };
 
   languageOptions =
@@ -15,74 +16,91 @@ let
       options = {
         enable = lib.mkEnableOption "Enable support for ${name}";
         treesitterGrammars = lib.mkOption {
-          type = lib.types.listOf lib.types.anything;
-          default = defaultLanguages.${name}.treesitterGrammars or [ ];
+          type = lib.types.nullOr (lib.types.listOf lib.types.anything);
+          default = null;
           description = "List of TreeSitter grammars for ${name}";
         };
         formatters = lib.mkOption {
-          type = lib.types.attrsOf (
-            lib.types.either (lib.types.listOf lib.types.str) (
-              lib.types.submodule {
-                options = {
-                  formatters = lib.mkOption {
-                    type = lib.types.listOf lib.types.str;
-                    default = [ ];
-                    description = "List of formatters for ${name}";
+          type = lib.types.nullOr (
+            lib.types.attrsOf (
+              lib.types.either (lib.types.listOf lib.types.str) (
+                lib.types.submodule {
+                  options = {
+                    formatters = lib.mkOption {
+                      type = lib.types.listOf lib.types.str;
+                      default = [ ];
+                      description = "List of formatters for ${name}";
+                    };
+                    stop_after_first = lib.mkOption {
+                      type = lib.types.nullOr lib.types.bool;
+                      default = null;
+                      description = "Stop after the first successful formatter";
+                    };
+                    lsp_format = lib.mkOption {
+                      type = lib.types.nullOr (
+                        lib.types.enum [
+                          "never"
+                          "fallback"
+                          "prefer"
+                          "first"
+                          "last"
+                        ]
+                      );
+                      default = null;
+                      description = "LSP format option for ${name}";
+                    };
                   };
-                  stop_after_first = lib.mkOption {
-                    type = lib.types.nullOr lib.types.bool;
-                    default = null;
-                    description = "Stop after the first successful formatter";
-                  };
-                  lsp_format = lib.mkOption {
-                    type = lib.types.nullOr (
-                      lib.types.enum [
-                        "never"
-                        "fallback"
-                        "prefer"
-                        "first"
-                        "last"
-                      ]
-                    );
-                    default = null;
-                    description = "LSP format option for ${name}";
-                  };
-                };
-              }
+                }
+              )
             )
           );
-          default = defaultLanguages.${name}.formatters or { };
+          default = null;
         };
         extraPackages = lib.mkOption {
-          type = lib.types.listOf lib.types.package;
-          default = defaultLanguages.${name}.extraPackages or [ ];
+          type = lib.types.nullOr (lib.types.listOf lib.types.package);
+          default = null;
           description = "Extra packages to install for ${name} (e.g., LSP)";
         };
         extraPlugins = lib.mkOption {
-          type = lib.types.listOf lib.types.package;
-          default = defaultLanguages.${name}.extraPlugins or [ ];
+          type = lib.types.nullOr (lib.types.listOf lib.types.package);
+          default = null;
           description = "Extra Neovim plugins for ${name}";
         };
         extraLuaConfig = lib.mkOption {
-          type = lib.types.lines;
-          default = defaultLanguages.${name}.extraLuaConfig or "";
+          type = lib.types.nullOr (lib.types.lines);
+          default = null;
           description = "Extra Neovim configuration for ${name}";
         };
         lspConfig = lib.mkOption {
-          type = lib.types.lines;
-          default = defaultLanguages.${name}.lspConfig or "";
+          type = lib.types.nullOr (lib.types.lines);
+          default = null;
           description = "LSP configuration for ${name}";
         };
       };
     };
 
-  enabledLanguages = lib.filterAttrs (name: lang: lang.enable) cfg;
+  enabledLanguages = lib.filterAttrs (name: lang: lang.enable) (
+    lib.mapAttrs (
+      name: lang:
+      {
+        enable = enabledAll;
+        treesitterGrammars = [ ];
+        formatters = { };
+        extraPackages = [ ];
+        extraPlugins = [ ];
+        extraLuaConfig = "";
+        lspConfig = "";
+      }
+      // lang
+      // (lib.filterAttrs (n: v: v != null) (lib.attrByPath [ name ] { } cfg))
+    ) defaultLanguages
+  );
 
   formattersToLua =
     lang: formatterConfig:
     let
       isSimpleList = builtins.isList formatterConfig;
-      formatters = if isSimpleList then formatterConfig else formatterConfig.formatters;
+      formatters = if isSimpleList then formatterConfig else formatterConfig.formatters or [ ];
       quotedFormatters = map (f: ''"${f}"'') formatters;
       formattersList = lib.concatStringsSep ", " quotedFormatters;
       optionsStr =
@@ -92,13 +110,13 @@ let
           lib.concatStringsSep ", " (
             lib.remove null [
               (
-                if formatterConfig.stop_after_first != null then
+                if formatterConfig.stop_after_first or null != null then
                   "stop_after_first = ${if formatterConfig.stop_after_first then "true" else "false"}"
                 else
                   null
               )
               (
-                if formatterConfig.lsp_format != null then
+                if formatterConfig.lsp_format or null != null then
                   ''lsp_format = "${formatterConfig.lsp_format}"''
                 else
                   null
@@ -122,6 +140,7 @@ let
 
 in
 {
+  options.nvim-config.allLanguages.enable = lib.mkEnableOption "Enable all default language support";
   options.nvim-config.languages = lib.mkOption {
     type = lib.types.attrsOf (lib.types.submodule languageOptions);
     default = { };

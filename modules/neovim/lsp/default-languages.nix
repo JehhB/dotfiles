@@ -8,11 +8,19 @@ let
   prettier_format = {
     stop_after_first = true;
     formatters = [
-      "eslint_d"
       "prettierd"
       "prettier"
     ];
   };
+  enabledAll = config.nvim-config.allLanguages.enable;
+  hasLanguageSupport =
+    lang:
+    enabledAll
+    || lib.attrByPath [
+      lang
+      "enable"
+    ] false config.nvim-config.languages;
+  ifSupported = lang: text: if hasLanguageSupport lang then text else "";
 in
 {
   angular =
@@ -52,7 +60,6 @@ in
       extraPackages = with pkgs; [
         ngserver
         typescript
-        eslint_d
         prettierd
       ];
       formatters.angular = prettier_format;
@@ -70,7 +77,7 @@ in
           "--tsProbeLocations", "${pkgs.typescript}/lib/",
           "--ngProbeLocations", "${ngserver}/lib/node_modules/@angular/language-server/"
         }
-        require'lspconfig'.angularls.setup{
+        lspconfig.angularls.setup{
           cmd = angular_cmd,
           on_new_config = function(new_config,new_root_dir)
             new_config.cmd = angular_cmd;
@@ -106,7 +113,6 @@ in
       css
     ];
     extraPackages = with pkgs; [
-      eslint_d
       prettierd
       vscode-langservers-extracted
     ];
@@ -124,19 +130,20 @@ in
     lspConfig = ''
       lspconfig.emmet_language_server.setup{
         filetypes = {
-          "css",
-          "eruby",
-          "html",
-          "htmldjango",
-          "javascriptreact",
-          "less",
-          "php",
-          "pug",
-          "sass",
-          "scss",
-          "twig",
-          "typescriptreact",
-          "vue",
+          ${ifSupported "css" ''
+            "css",
+            "less",
+            "sass",
+            "scss",
+          ''}
+          ${ifSupported "html" ''"html",''}
+          ${ifSupported "typescript" ''
+            "javascriptreact",
+            "typescriptreact",
+          ''}
+          ${ifSupported "vue" ''"vue",''}
+          ${ifSupported "php" ''"php",''}
+          ${ifSupported "twig" ''"twig",''}
         },
         single_file_support = true
       }
@@ -170,7 +177,6 @@ in
       html
     ];
     extraPackages = with pkgs; [
-      eslint_d
       prettierd
       vscode-langservers-extracted
     ];
@@ -217,14 +223,6 @@ in
       nixfmt-rfc-style
     ];
     formatters.nix = [ "nixfmt" ];
-    extraLuaConfig = ''
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "php",
-        callback = function()
-          vim.cmd("TSBufDisable highlight")
-        end,
-      })
-    '';
     lspConfig = ''
       lspconfig.nil_ls.setup{
         cmd = { 'nil' },
@@ -255,33 +253,40 @@ in
       lspconfig.tailwindcss.setup{
         init_options = {
           userLanguages = {
-            angular = "html",
-            vue = "html",
+            ${ifSupported "angular" ''angular = "html",''}
+            ${ifSupported "vue" ''vue = "html",''}
           },
         },
         filetypes = {
-          "html",
-          "angular",
-          "css",
-          "html",
-          "javascript",
-          "javascriptreact",
-          "less",
-          "markdown",
-          "mdx",
-          "php",
-          "postcss",
-          "sass",
-          "scss",
-          "svelte",
-          "twig",
-          "typescript",
-          "typescriptreact",
-          "vue",
+          ${ifSupported "angular" ''"angular",''}
+          ${ifSupported "html" ''"html",''}
+          ${ifSupported "css" ''
+            "css",
+            "less",
+            "sass",
+            "scss",
+          ''}
+          ${ifSupported "typescript" ''
+            "javascript",
+            "javascriptreact",
+            "typescript",
+            "typescriptreact",
+          ''}
+          ${ifSupported "markdown" ''"markdown",''}
+          ${ifSupported "php" ''"php",''}
+          ${ifSupported "svelte" ''"svelte",''}
+          ${ifSupported "twig" ''"twig",''}
+          ${ifSupported "vue" ''"vue",''}
         },
         settings = {
           tailwindCSS = {
-            classAttributes = { "class", "className", "classList", "ngClass", "[a-z-]+-class" }
+            classAttributes = {
+              "class",
+              "className",
+              "classList",
+              "[a-z-]+-class",
+              ${ifSupported "angular" ''"ngClass",''}
+            }
           }
         }
       }
@@ -295,7 +300,6 @@ in
       jsdoc
     ];
     extraPackages = with pkgs; [
-      eslint_d
       prettierd
       typescript-language-server
     ];
@@ -305,40 +309,30 @@ in
       typescript = prettier_format;
       typescriptreact = prettier_format;
     };
-    lspConfig =
-      let
-        vueSupport = config.nvim-config.languages.vue.enable;
-      in
-      ''
-        lspconfig.ts_ls.setup{
-          init_options = {
-            plugins = {
-              ${
-                if vueSupport then
-                  ''
-                    {
-                      name = "@vue/typescript-plugin",
-                      location = "${pkgs.vue-language-server}/lib/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin",
-                      languages = {"javascript", "typescript", "vue"},
-                    },
-                  ''
-                else
-                  ""
-              }
-            },
+    lspConfig = ''
+      lspconfig.ts_ls.setup{
+        init_options = {
+          plugins = {
+            ${ifSupported "vue" ''
+              {
+                name = "@vue/typescript-plugin",
+                location = "${pkgs.vue-language-server}/lib/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin",
+                languages = {"javascript", "typescript", "vue"},
+              },
+            ''}
           },
-          filetypes = {
-            "javascript",
-            "typescript",
-            ${if vueSupport then ''"vue",'' else ""}
-          },
-        }
-      '';
+        },
+        filetypes = {
+          "javascript",
+          "typescript",
+          ${ifSupported "vue" ''"vue",''}
+        },
+      }
+    '';
   };
   vue = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [ vue ];
     extraPackages = with pkgs; [
-      eslint_d
       prettierd
       vue-language-server
     ];
