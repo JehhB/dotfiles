@@ -22,6 +22,11 @@
       plasma-manager,
       ...
     }:
+    let
+      overlay = final: prev: {
+        userPackages = final.callPackage ./packages { };
+      };
+    in
     {
       nixosConfigurations = {
         nixos = nixpkgs.lib.nixosSystem {
@@ -30,6 +35,7 @@
             ./configuration.nix
             home-manager.nixosModules.home-manager
             {
+              nixpkgs.overlays = [ overlay ];
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];

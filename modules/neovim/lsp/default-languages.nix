@@ -23,75 +23,45 @@ let
   ifSupported = lang: text: if hasLanguageSupport lang then text else "";
 in
 {
-  angular =
-    let
-      ngserver = (
-        pkgs.buildNpmPackage rec {
-          pname = "angular-language-server";
-          version = "18.2.0";
-
-          src = pkgs.fetchurl {
-            url = "https://registry.npmjs.org/@angular/language-server/-/language-server-${version}.tgz";
-            hash = "sha256-UvYOxs59jOO9Yf0tvX96P4R/36qPeEne+NQAFkg9Eis=";
-          };
-
-          npmDepsHash = "sha256-avuVL7PI2uP5Y9hdHRCs10pBYUkTG0W6gqwZjM11Wjc=";
-
-          postPatch = ''
-            cp -s ${./angular.package-lock.json} package-lock.json
-          '';
-
-          dontNpmBuild = true;
-
-          meta = {
-            description = "Official Angular language server";
-            homepage = "https://github.com/angular/vscode-ng-language-service#readme";
-            changelog = "https://github.com/angular/vscode-ng-language-service/releases/tag/v${version}";
-            license = lib.licenses.mit;
-            mainProgram = "angular-language-server";
-          };
-        }
-      );
-    in
-    {
-      treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
-        angular
-      ];
-      extraPackages = with pkgs; [
-        ngserver
-        typescript
-        prettierd
-      ];
-      formatters.angular = prettier_format;
-      extraLuaConfig = ''
-        vim.api.nvim_create_autocmd({ "BufRead", "BufEnter" }, {
-          pattern = { "*.component.html", "*.page.html" },
-          callback = function()
-            vim.bo.filetype = "angular"
-          end
-        });
-      '';
-      lspConfig = ''
-        local angular_cmd = {
-          "ngserver", "--stdio",
-          "--tsProbeLocations", "${pkgs.typescript}/lib/",
-          "--ngProbeLocations", "${ngserver}/lib/node_modules/@angular/language-server/"
-        }
-        lspconfig.angularls.setup{
-          cmd = angular_cmd,
-          on_new_config = function(new_config,new_root_dir)
-            new_config.cmd = angular_cmd;
-          end,
-          filetypes = {
-            "typescript",
-            "angular",
-            "typescriptreact",
-            "typescript.tsx",
-            "htmlangular"
-          },
-        }
-      '';
-    };
+  angular = {
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+      angular
+    ];
+    extraPackages = with pkgs; [
+      userPackages.angular-language-server
+      typescript
+      prettierd
+    ];
+    formatters.angular = prettier_format;
+    extraLuaConfig = ''
+      vim.api.nvim_create_autocmd({ "BufRead", "BufEnter" }, {
+        pattern = { "*.component.html", "*.page.html" },
+        callback = function()
+          vim.bo.filetype = "angular"
+        end
+      });
+    '';
+    lspConfig = ''
+      local angular_cmd = {
+        "ngserver", "--stdio",
+        "--tsProbeLocations", "${pkgs.typescript}/lib/",
+        "--ngProbeLocations", "${pkgs.userPackages.angular-language-server}/lib/node_modules/@angular/language-server/"
+      }
+      lspconfig.angularls.setup{
+        cmd = angular_cmd,
+        on_new_config = function(new_config,new_root_dir)
+          new_config.cmd = angular_cmd;
+        end,
+        filetypes = {
+          "typescript",
+          "angular",
+          "typescriptreact",
+          "typescript.tsx",
+          "htmlangular"
+        },
+      }
+    '';
+  };
   clang = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
       c
@@ -311,16 +281,7 @@ in
       sql
     ];
     extraPlugins = with pkgs; [
-      (vimUtils.buildVimPlugin {
-        pname = "sqls-nvim";
-        version = "2024-09-17";
-        src = fetchFromGitHub {
-          owner = "nanotee";
-          repo = "sqls.nvim";
-          rev = "4b1274b5b44c48ce784aac23747192f5d9d26207";
-          sha256 = "jKFut6NZAf/eIeIkY7/2EsjsIhvZQKCKAJzeQ6XSr0s=";
-        };
-      })
+      userPackages.sqls-nvim
     ];
     extraPackages = with pkgs; [
       nodePackages.sql-formatter
