@@ -7,11 +7,17 @@
 let
   prettier_format = {
     stop_after_first = true;
+    packages = [ pkgs.prettierd ];
     formatters = [
       "prettierd"
       "prettier"
     ];
   };
+  clang_format = {
+    packages = [ pkgs.clang-tools ];
+    formatters = [ "clang-format" ];
+  };
+
   enabledAll = config.nvim-config.allLanguages.enable;
   hasLanguageSupport =
     lang:
@@ -30,7 +36,6 @@ in
     extraPackages = with pkgs; [
       userPackages.angular-language-server
       typescript
-      prettierd
     ];
     formatters.angular = prettier_format;
     extraLuaConfig = ''
@@ -68,10 +73,8 @@ in
       cpp
     ];
     extraPackages = with pkgs; [ clang-tools ];
-    formatters = {
-      c = [ "clang-format" ];
-      cpp = [ "clang-format" ];
-    };
+    formatters.c = clang_format;
+    formatters.cpp = clang_format;
     lspConfig = ''
       lspconfig.clangd.setup{
         capabilities = lsp_capabilities;
@@ -83,7 +86,6 @@ in
       css
     ];
     extraPackages = with pkgs; [
-      prettierd
       vscode-langservers-extracted
     ];
     formatters.css = prettier_format;
@@ -98,7 +100,6 @@ in
       yaml
     ];
     extraPackages = with pkgs; [
-      prettierd
       docker-compose-language-service
     ];
     formatters."yaml.docker-compose" = prettier_format;
@@ -156,9 +157,8 @@ in
     ];
     extraPackages = with pkgs; [
       glsl_analyzer
-      clang-tools
     ];
-    formatters.glsl = [ "clang-format" ];
+    formatters.glsl = clang_format;
     lspConfig = ''
       lspconfig.glsl_analyzer.setup{
         capabilities = lsp_capabilities
@@ -178,7 +178,6 @@ in
       html
     ];
     extraPackages = with pkgs; [
-      prettierd
       vscode-langservers-extracted
     ];
     formatters.html = prettier_format;
@@ -191,7 +190,6 @@ in
       json
     ];
     extraPackages = with pkgs; [
-      prettierd
       vscode-langservers-extracted
     ];
     formatters.json = prettier_format;
@@ -207,9 +205,11 @@ in
     ];
     extraPackages = with pkgs; [
       lua-language-server
-      stylua
     ];
-    formatters.lua = [ "stylua" ];
+    formatters.lua = {
+      packages = [ pkgs.stylua ];
+      formatters = [ "stylua" ];
+    };
     lspConfig = ''
       lspconfig.lua_ls.setup{
         on_init = function(client)
@@ -236,9 +236,11 @@ in
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [ nix ];
     extraPackages = with pkgs; [
       nil
-      nixfmt-rfc-style
     ];
-    formatters.nix = [ "nixfmt" ];
+    formatters.nix = {
+      packages = [ pkgs.nixfmt-rfc-style ];
+      formatters = [ "nixfmt" ];
+    };
     lspConfig = ''
       lspconfig.nil_ls.setup{
         cmd = { 'nil' },
@@ -264,14 +266,18 @@ in
       python
     ];
     extraPackages = with pkgs; [
-      black
-      isort
       pyright
     ];
-    formatters.python = [
-      "isort"
-      "black"
-    ];
+    formatters.python = {
+      packages = [
+        pkgs.black
+        pkgs.isort
+      ];
+      formatters = [
+        "isort"
+        "black"
+      ];
+    };
     lspConfig = ''
       lspconfig.pyright.setup{}
     '';
@@ -284,12 +290,14 @@ in
       userPackages.sqls-nvim
     ];
     extraPackages = with pkgs; [
-      nodePackages.sql-formatter
       sqls
     ];
-    formatters.sql = [ "sql_formatter" ];
+    formatters.sql = {
+      packages = [ pkgs.nodePackages.sql-formatter ];
+      formatters = [ "sql_formatter" ];
+    };
     lspConfig = ''
-      require'lspconfig'.sqls.setup{
+      lspconfig.sqls.setup{
         on_attach = function(client, bufnr)
           require('sqls').on_attach(client, bufnr)
         end
@@ -343,6 +351,18 @@ in
       }
     '';
   };
+  twig = {
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+      twig
+    ];
+    extraPackages = with pkgs; [
+      userPackages.twiggy-language-server
+    ];
+    formatters.twig = prettier_format;
+    lspConfig = ''
+      lspconfig.twiggy_language_server.setup{};
+    '';
+  };
   typescript = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
       javascript
@@ -351,7 +371,6 @@ in
       jsdoc
     ];
     extraPackages = with pkgs; [
-      prettierd
       typescript-language-server
     ];
     formatters = {
@@ -384,7 +403,6 @@ in
   vue = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [ vue ];
     extraPackages = with pkgs; [
-      prettierd
       vue-language-server
     ];
     formatters.vue = prettier_format;
@@ -397,7 +415,6 @@ in
       yaml
     ];
     extraPackages = with pkgs; [
-      prettierd
       yaml-language-server
     ];
     formatters.yaml = prettier_format;

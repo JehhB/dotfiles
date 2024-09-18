@@ -20,5 +20,10 @@
     '';
   };
 
-  nvim-config.allLanguages.enable = true;
+  nvim-config.allLanguages.grammars = true;
+  nvim-config.allLanguages.formatters = true;
+  nvim-config.languages = {
+    nix.enable = true;
+    python.enable = true;
+  };
 }
