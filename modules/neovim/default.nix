@@ -23,7 +23,9 @@
   nvim-config.allLanguages.grammars = true;
   nvim-config.allLanguages.formatters = true;
   nvim-config.languages = {
+    angular.enable = true;
     nix.enable = true;
     python.enable = true;
+    typescript.enable = true;
   };
 }

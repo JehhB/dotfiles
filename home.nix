@@ -2,6 +2,7 @@
 
 rec {
   imports = [
+    modules/android-studio
     modules/firefox
     modules/git
     modules/kitty
@@ -31,7 +32,8 @@ rec {
   home.packages = with pkgs; [
     fzf
     vlc
-    nodejs_20
+    nodejs
+    nodePackages.ts-node
     pnpm
     ripgrep
     ripgrep-all

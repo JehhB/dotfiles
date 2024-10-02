@@ -96,7 +96,7 @@
         autoSuspend.action = "nothing";
         dimDisplay = {
           enable = true;
-          idleTimeOut = 300;
+          idleTimeout = 300;
         };
         powerButtonAction = "showLogoutScreen";
         turnOffDisplay = {
@@ -112,7 +112,7 @@
         };
         dimDisplay = {
           enable = true;
-          idleTimeOut = 150;
+          idleTimeout = 150;
         };
         powerButtonAction = "showLogoutScreen";
         turnOffDisplay = {
@@ -129,7 +129,7 @@
         };
         dimDisplay = {
           enable = true;
-          idleTimeOut = 60;
+          idleTimeout = 60;
         };
         powerButtonAction = "showLogoutScreen";
         turnOffDisplay = {
