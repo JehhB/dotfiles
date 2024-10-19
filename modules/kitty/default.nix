@@ -7,7 +7,7 @@
     font = {
       package = pkgs.fira-code-nerdfont;
       name = "FiraCode Nerd Font Mono";
-      size = 10;
+      size = 12;
     };
     keybindings = {
       "kitty_mod+6" = "no_op";

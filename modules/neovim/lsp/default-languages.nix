@@ -395,6 +395,7 @@ in
         filetypes = {
           "javascript",
           "typescript",
+          "typescriptreact",
           ${ifSupported "vue" ''"vue",''}
         },
       }

@@ -153,7 +153,7 @@
         ];
         "Window Maximize" = "Alt+Space";
       };
-      "services/org.kde.dolphin.dekstop"._launch = [ "Alt+B" ];
+      "services/org.kde.dolphin.dekstop"._launch = [ "Alt+F" ];
       "services/firefox.desktop"._launch = [ "Alt+B" ];
       "services/kitty.desktop"._launch = [ "Alt+X" ];
       "services/org.kde.krunner.desktop"._launch = [
@@ -202,6 +202,33 @@
     configFile = {
       kwinrc.Desktops.Number = {
         value = 3;
+      };
+    };
+
+    fonts = {
+      general = {
+        family = "Noto Sans";
+        pointSize = 12;
+      };
+      fixedWidth = {
+        family = "Hack";
+        pointSize = 12;
+      };
+      small = {
+        family = "Noto Sans";
+        pointSize = 10;
+      };
+      toolbar = {
+        family = "Noto Sans";
+        pointSize = 12;
+      };
+      menu = {
+        family = "Noto Sans";
+        pointSize = 12;
+      };
+      windowTitle = {
+        family = "Noto Sans";
+        pointSize = 12;
       };
     };
   };

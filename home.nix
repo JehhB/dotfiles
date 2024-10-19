@@ -2,7 +2,6 @@
 
 rec {
   imports = [
-    modules/android-studio
     modules/firefox
     modules/git
     modules/kitty
