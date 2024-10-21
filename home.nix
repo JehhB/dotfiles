@@ -30,13 +30,14 @@ rec {
   # environment.
   home.packages = with pkgs; [
     fzf
-    vlc
-    nodejs
+    libreoffice-qt6-fresh
     nodePackages.ts-node
+    nodejs
     pnpm
+    qpwgraph
     ripgrep
     ripgrep-all
-    libreoffice-qt6-fresh
+    vlc
     wl-clipboard
     zoom-us
   ];
