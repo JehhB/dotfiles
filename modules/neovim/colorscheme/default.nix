@@ -3,13 +3,18 @@
 {
   programs.neovim = {
     plugins = with pkgs.vimPlugins; [
+      rainbow-delimiters-nvim
       {
-        plugin = gruvbox-nvim;
-        runtime."after/plugin/gruvbox.lua".source = ./gruvbox.lua;
+        plugin = indent-blankline-nvim;
+        runtime."after/plugin/indent-blankline.lua".source = ./indent-blankline.lua;
       }
       {
-        plugin = lightline-vim;
-        runtime."after/plugin/lightline.lua".source = ./lightline.lua;
+        plugin = gruvbox-material-nvim;
+        runtime."after/plugin/gruvbox-material.lua".source = ./gruvbox-material.lua;
+      }
+      {
+        plugin = lualine-nvim;
+        runtime."after/plugin/lualine.lua".source = ./lualine.lua;
       }
     ];
   };

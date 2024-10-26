@@ -21,23 +21,24 @@
       modify_font underline_thickness 50%
 
       background #1d2021
-      foreground #ebdbb2
+      foreground #d4be98
+
       color0     #282828
       color8     #928374
-      color1     #cc241d
-      color9     #fb4934
-      color2     #98971a
-      color10    #b8bb26
-      color3     #d79921
-      color11    #fabd2f
-      color4     #458588
-      color12    #83a598
-      color5     #b16286
-      color13    #d3869b
-      color6     #689d6a
+      color1     #ea6962
+      color9     #f38ba8
+      color2     #a9b665
+      color10    #b4b680
+      color3     #d8a657
+      color11    #e3a84f
+      color4     #7daea3
+      color12    #89b482
+      color5     #d3869b
+      color13    #d4879c
+      color6     #89b482
       color14    #8ec07c
-      color7     #a89984
-      color15    #ebdbb2
+      color7     #d4be98
+      color15    #e9d9a7
     '';
   };
 }

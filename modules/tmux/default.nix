@@ -11,17 +11,21 @@
     plugins = with pkgs.tmuxPlugins; [
       yank
       sensible
-      (mkTmuxPlugin {
-        pluginName = "gruvbox-truecolor";
-        rtpFilePath = "colorscheme-tpm.tmux";
-        version = "unstable-2023-08-03";
-        src = pkgs.fetchFromGitHub {
-          owner = "LawAbidingCactus";
-          repo = "tmux-gruvbox-truecolor";
-          rev = "bcc1d78310c94de59be860f3d5ec277878e34e73";
-          sha256 = "d04457297dd18ec2534c709edb1d19b6f4ae5d1c5a53bc7d0be229a8a94a9c21";
-        };
-      })
+      {
+        plugin = pkgs.userPackages.tmux-gruvbox-z3z1ma;
+        extraConfig = ''
+          set -g @gruvbox_flavour "material"
+
+          set -g @gruvbox_window_default_text "#W"
+          set -g @gruvbox_window_current_text "#W"
+
+          set -g @gruvbox_status_modules_right "session date_time"
+          set -g @gruvbox_date_time_text "%Y-%m-%d %H:%M:%S"
+
+          set -g @gruvbox_status_left_separator "█"
+          set -g @gruvbox_status_right_separator "█"
+        '';
+      }
     ];
 
     shell = "${pkgs.zsh}/bin/zsh";
