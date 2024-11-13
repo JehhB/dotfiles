@@ -32,9 +32,9 @@ rec {
     chromium
     fzf
     libreoffice-qt6-fresh
-    nodePackages.ts-node
-    nodejs
+    nodejs_22
     pnpm
+    yarn
     qpwgraph
     ripgrep
     ripgrep-all

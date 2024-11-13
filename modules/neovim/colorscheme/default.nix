@@ -3,7 +3,13 @@
 {
   programs.neovim = {
     plugins = with pkgs.vimPlugins; [
-      rainbow-delimiters-nvim
+      {
+        plugin = rainbow-delimiters-nvim;
+        config = ''
+          require('rainbow-delimiters.setup').setup()
+        '';
+        type = "lua";
+      }
       {
         plugin = nvim-colorizer-lua;
         config = ''
