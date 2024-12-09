@@ -23,9 +23,11 @@
       ...
     }:
     let
-      overlay = final: prev: {
-        userPackages = final.callPackage ./packages { };
-      };
+      overlays = [
+        (final: prev: {
+          userPackages = final.callPackage ./packages { };
+        })
+      ];
     in
     {
       nixosConfigurations = {
@@ -35,7 +37,7 @@
             ./configuration.nix
             home-manager.nixosModules.home-manager
             {
-              nixpkgs.overlays = [ overlay ];
+              nixpkgs.overlays = overlays;
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];

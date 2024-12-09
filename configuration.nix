@@ -51,7 +51,7 @@
     };
   };
 
-  boot.tmp.useTmpfs = true;
+  boot.tmp.cleanOnBoot = true;
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -65,6 +65,7 @@
   # Set your time zone.
   time.timeZone = "Asia/Manila";
   time.hardwareClockInLocalTime = true;
+  services.ntp.enable = true;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_PH.UTF-8";

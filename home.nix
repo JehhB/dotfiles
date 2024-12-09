@@ -41,6 +41,16 @@ rec {
     vlc
     wl-clipboard
     zoom-us
+    (python3.withPackages (
+      ps: with ps; [
+        (opencv4.override {
+          enableContrib = true;
+          enableGtk3 = true;
+        })
+        numpy
+        matplotlib
+      ]
+    ))
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
