@@ -23,9 +23,10 @@
   nvim-config.allLanguages.grammars = true;
   nvim-config.allLanguages.formatters = true;
   nvim-config.languages = {
+    astro.enable = true;
+    json.enable = true;
     nix.enable = true;
     python.enable = true;
     typescript.enable = true;
-    json.enable = true;
   };
 }

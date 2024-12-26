@@ -67,6 +67,25 @@ in
       }
     '';
   };
+  astro = {
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+      astro
+    ];
+    extraPackages = with pkgs; [
+      typescript
+      astro-language-server
+    ];
+    formatters.dockerfile.lsp_format = "prefer";
+    lspConfig = ''
+      lspconfig.astro.setup{
+        init_options = {
+          typescript = {
+            tsdk = "${pkgs.typescript}/lib/node_modules/typescript/lib",
+          },
+        },
+      }
+    '';
+  };
   clang = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
       c
@@ -132,6 +151,7 @@ in
     lspConfig = ''
       lspconfig.emmet_language_server.setup{
         filetypes = {
+          ${ifSupported "astro" ''"astro",''}
           ${ifSupported "css" ''
             "css",
             "less",
@@ -312,11 +332,13 @@ in
       lspconfig.tailwindcss.setup{
         init_options = {
           userLanguages = {
+            ${ifSupported "astro" ''astro = "html",''}
             ${ifSupported "angular" ''angular = "html",''}
             ${ifSupported "vue" ''vue = "html",''}
           },
         },
         filetypes = {
+          ${ifSupported "astro" ''"astro",''}
           ${ifSupported "angular" ''"angular",''}
           ${ifSupported "html" ''"html",''}
           ${ifSupported "css" ''
