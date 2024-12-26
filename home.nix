@@ -32,32 +32,22 @@ rec {
     chromium
     fzf
     libreoffice-qt6-fresh
+    linux-wifi-hotspot
     nodejs_22
     pnpm
-    yarn
     qpwgraph
     ripgrep
     ripgrep-all
     vlc
     wl-clipboard
-    zoom-us
-    (python3.withPackages (
-      ps: with ps; [
-        (opencv4.override {
-          enableContrib = true;
-          enableGtk3 = true;
-        })
-        numpy
-        matplotlib
-      ]
-    ))
+    yarn
+    android-studio
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  home.file =
-    {
-    };
+  home.file = {
+  };
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a

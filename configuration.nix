@@ -64,8 +64,6 @@
 
   # Set your time zone.
   time.timeZone = "Asia/Manila";
-  time.hardwareClockInLocalTime = true;
-  services.ntp.enable = true;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_PH.UTF-8";
@@ -139,10 +137,8 @@
       "video"
       "wheel"
     ];
-    packages =
-      with pkgs;
-      [
-      ];
+    packages = with pkgs; [
+    ];
     shell = pkgs.zsh;
   };
   console.useXkbConfig = true;
@@ -190,6 +186,13 @@
     corefonts
     vistafonts
   ];
+
+  virtualisation.containers.enable = true;
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+    defaultNetwork.settings.dns_enabled = true;
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
