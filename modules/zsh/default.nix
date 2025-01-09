@@ -30,7 +30,6 @@
       ${builtins.readFile ./init-extra.zsh}
       source ${pkgs.fzf}/share/fzf/key-bindings.zsh
       source ${pkgs.fzf}/share/fzf/completion.zsh
-      source /usr/share/doc/pkgfile/command-not-found.zsh
     '';
 
     shellAliases = {
