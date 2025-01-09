@@ -42,6 +42,14 @@ rec {
     wl-clipboard
     yarn
     android-studio
+    (python3.withPackages (
+      ps: with ps; [
+        opencv4
+        numpy
+        matplotlib
+        customtkinter
+      ]
+    ))
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

@@ -24,9 +24,16 @@
   nvim-config.allLanguages.formatters = true;
   nvim-config.languages = {
     astro.enable = true;
+    css.enable = true;
+    emmet.enable = true;
+    html.enable = true;
     json.enable = true;
+    mdx.enable = true;
     nix.enable = true;
     python.enable = true;
+    tailwindcss.enable = true;
     typescript.enable = true;
+    vue.enable = true;
+    yaml.enable = true;
   };
 }

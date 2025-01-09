@@ -78,6 +78,7 @@ in
     formatters.dockerfile.lsp_format = "prefer";
     lspConfig = ''
       lspconfig.astro.setup{
+        capabilities = lsp_capabilities,
         init_options = {
           typescript = {
             tsdk = "${pkgs.typescript}/lib/node_modules/typescript/lib",
@@ -110,7 +111,7 @@ in
     formatters.css = prettier_format;
     lspConfig = ''
       lspconfig.cssls.setup{
-        capabilities = lsp_capabilities;
+        capabilities = lsp_capabilities,
       }
     '';
   };
@@ -159,13 +160,14 @@ in
             "scss",
           ''}
           ${ifSupported "html" ''"html",''}
+          ${ifSupported "mdx" ''"mdx",''}
+          ${ifSupported "php" ''"php",''}
+          ${ifSupported "twig" ''"twig",''}
           ${ifSupported "typescript" ''
             "javascriptreact",
             "typescriptreact",
           ''}
           ${ifSupported "vue" ''"vue",''}
-          ${ifSupported "php" ''"php",''}
-          ${ifSupported "twig" ''"twig",''}
         },
         single_file_support = true
       }
@@ -181,7 +183,7 @@ in
     formatters.glsl = clang_format;
     lspConfig = ''
       lspconfig.glsl_analyzer.setup{
-        capabilities = lsp_capabilities
+        capabilities = lsp_capabilities,
       }
     '';
     extraLuaConfig = ''
@@ -251,6 +253,31 @@ in
         end,
       }
     '';
+  };
+  mdx = {
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [ markdown ];
+    extraPackages = with pkgs; [
+      userPackages.mdx-language-server
+      typescript
+    ];
+    formatters.mdx = prettier_format;
+    lspConfig = ''
+      lspconfig.mdx_analyzer.setup{
+        capabilities = lsp_capabilities,
+        filetypes = { "mdx" },
+        init_options = {
+          typescript = {
+            tsdk = "${pkgs.typescript}/lib/node_modules/typescript/lib",
+          },
+        },
+      }
+    '';
+    extraPlugins = with pkgs; [
+      {
+        plugin = userPackages.treesitter-mdx-nvim;
+        runtime."after/plugin/treesitter-mdx-nvim.lua".text = ''require('mdx').setup()'';
+      }
+    ];
   };
   nix = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [ nix ];
@@ -353,7 +380,7 @@ in
             "typescript",
             "typescriptreact",
           ''}
-          ${ifSupported "markdown" ''"markdown",''}
+          ${ifSupported "mdx" ''"mdx",''}
           ${ifSupported "php" ''"php",''}
           ${ifSupported "svelte" ''"svelte",''}
           ${ifSupported "twig" ''"twig",''}
@@ -418,6 +445,8 @@ in
           "javascript",
           "typescript",
           "typescriptreact",
+          ${ifSupported "astro" ''"astro",''}
+          ${ifSupported "mdx" ''"mdx",''}
           ${ifSupported "vue" ''"vue",''}
         },
       }
@@ -427,10 +456,18 @@ in
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [ vue ];
     extraPackages = with pkgs; [
       vue-language-server
+      typescript
     ];
     formatters.vue = prettier_format;
     lspConfig = ''
-      lspconfig.volar.setup{}
+      lspconfig.volar.setup{
+        capabilities = lsp_capabilities,
+        init_options = {
+          typescript = {
+            tsdk = "${pkgs.typescript}/lib/node_modules/typescript/lib",
+          },
+        },
+      }
     '';
   };
   yaml = {
