@@ -5,11 +5,6 @@
     vanilla-dmz
   ];
 
-  services.kdeconnect = {
-    enable = true;
-    package = pkgs.kdePackages.kdeconnect-kde;
-  };
-
   programs.plasma = {
     enable = true;
 
@@ -47,6 +42,7 @@
             config = {
               General = {
                 launchers = [
+                  "applications:firefox.desktop"
                   "applications:kitty.desktop"
                   "applications:org.kde.dolphin.desktop"
                 ];

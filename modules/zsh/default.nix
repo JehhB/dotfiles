@@ -30,10 +30,7 @@
       ${builtins.readFile ./init-extra.zsh}
       source ${pkgs.fzf}/share/fzf/key-bindings.zsh
       source ${pkgs.fzf}/share/fzf/completion.zsh
-
-      command_not_found_handler() {
-        /run/current-system/sw/bin/command-not-found "$@"
-      }
+      source /usr/share/doc/pkgfile/command-not-found.zsh
     '';
 
     shellAliases = {

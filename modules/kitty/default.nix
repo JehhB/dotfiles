@@ -3,6 +3,7 @@
 {
   programs.kitty = {
     enable = true;
+    package = pkgs.emptyDirectory;
     shellIntegration.enableZshIntegration = true;
     font = {
       package = pkgs.nerd-fonts.fira-code;
