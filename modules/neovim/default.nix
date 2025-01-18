@@ -27,6 +27,10 @@
     css.enable = true;
     emmet.enable = true;
     html.enable = true;
+<<<<<<< HEAD
+=======
+    htmldjango.enable = true;
+>>>>>>> de95b82 (Added html django)
     json.enable = true;
     mdx.enable = true;
     nix.enable = true;

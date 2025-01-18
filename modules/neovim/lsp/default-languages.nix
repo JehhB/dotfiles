@@ -163,6 +163,7 @@ in
           ${ifSupported "mdx" ''"mdx",''}
           ${ifSupported "php" ''"php",''}
           ${ifSupported "twig" ''"twig",''}
+          ${ifSupported "htmldjango" ''"htmldjango",''}
           ${ifSupported "typescript" ''
             "javascriptreact",
             "typescriptreact",
@@ -206,6 +207,17 @@ in
     lspConfig = ''
       lspconfig.html.setup{}
     '';
+  };
+  htmldjango = {
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+      htmldjango
+    ];
+    formatters.htmldjango = {
+      packages = [
+        pkgs.djlint
+      ];
+      formatters = [ "djlint" ];
+    };
   };
   json = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
@@ -362,12 +374,14 @@ in
             ${ifSupported "astro" ''astro = "html",''}
             ${ifSupported "angular" ''angular = "html",''}
             ${ifSupported "vue" ''vue = "html",''}
+            ${ifSupported "htmldjango" ''htmldjango = "html",''}
           },
         },
         filetypes = {
           ${ifSupported "astro" ''"astro",''}
           ${ifSupported "angular" ''"angular",''}
           ${ifSupported "html" ''"html",''}
+          ${ifSupported "htmldjango" ''"htmldjango",''}
           ${ifSupported "css" ''
             "css",
             "less",
