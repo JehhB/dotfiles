@@ -31,6 +31,10 @@
   nvim-config.allLanguages.formatters = true;
   nvim-config.languages = {
     astro.enable = true;
+    css.enable = true;
+    emmet.enable = true;
+    html.enable = true;
+    htmldjango.enable = true;
     json.enable = true;
     nix.enable = true;
     python.enable = true;
