@@ -58,6 +58,7 @@ rec {
   #
   home.sessionVariables = {
     PNPM_HOME = "${xdg.dataHome}/pnpm";
+    NIXPKGS_ALLOW_UNFREE = 1;
   };
 
   home.sessionPath = [

@@ -14,6 +14,34 @@ let
 
   languageOptions =
     { name, config, ... }:
+    let
+      pluginWithConfigType = lib.types.submodule {
+        options = {
+          config = lib.mkOption {
+            type = lib.types.nullOr lib.types.lines;
+            description = "Script to configure this plugin. The scripting language should match type.";
+            default = null;
+          };
+
+          type = lib.mkOption {
+            type = lib.types.either (lib.types.enum [
+              "lua"
+              "viml"
+              "teal"
+              "fennel"
+            ]) lib.types.str;
+            description = "Language used in config. Configurations are aggregated per-language.";
+            default = "viml";
+          };
+
+          plugin = lib.mkOption {
+            type = lib.types.package;
+            description = "vim plugin";
+          };
+
+        };
+      };
+    in
     {
       options = {
         enable = lib.mkEnableOption "Enable support for ${name}";
@@ -67,7 +95,14 @@ let
           description = "Extra packages to install for ${name} (e.g., LSP)";
         };
         extraPlugins = lib.mkOption {
-          type = lib.types.nullOr (lib.types.listOf lib.types.package);
+          type = lib.types.nullOr (
+            lib.types.listOf (
+              lib.types.oneOf [
+                lib.types.package
+                pluginWithConfigType
+              ]
+            )
+          );
           default = null;
           description = "Extra Neovim plugins for ${name}";
         };

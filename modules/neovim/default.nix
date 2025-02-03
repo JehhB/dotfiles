@@ -33,11 +33,19 @@
     astro.enable = true;
     css.enable = true;
     emmet.enable = true;
+    eslint.enable = true;
     html.enable = true;
     htmldjango.enable = true;
     json.enable = true;
+    markdown.enable = true;
+    mdx.enable = true;
     nix.enable = true;
+    php.enable = true;
     python.enable = true;
+    tailwindcss.enable = true;
+    twig.enable = true;
     typescript.enable = true;
+    vue.enable = true;
+    yaml.enable = true;
   };
 }
