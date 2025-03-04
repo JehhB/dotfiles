@@ -402,6 +402,7 @@ in
         },
         settings = {
           tailwindCSS = {
+            showPixelEquivalents = true,
             classAttributes = {
               "class",
               "className",
