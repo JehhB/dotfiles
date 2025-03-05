@@ -31,6 +31,7 @@
   nvim-config.allLanguages.formatters = true;
   nvim-config.languages = {
     astro.enable = true;
+    clang.enable = true;
     css.enable = true;
     emmet.enable = true;
     eslint.enable = true;
