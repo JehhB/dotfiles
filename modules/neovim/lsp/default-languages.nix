@@ -101,6 +101,40 @@ in
       }
     '';
   };
+  csharp = {
+    treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+      c_sharp
+    ];
+    extraPackages = with pkgs; [
+      omnisharp-roslyn
+      dotnet-sdk
+      mono
+    ];
+    formatters.cs.lsp_format = "prefer";
+    lspConfig = ''
+      require'lspconfig'.omnisharp.setup {
+        cmd = { "OmniSharp" },
+        settings = {
+          FormattingOptions = {
+            EnableEditorConfigSupport = true,
+            OrganizeImports = nil,
+          },
+          MsBuild = {
+            LoadProjectsOnDemand = nil,
+          },
+          RoslynExtensionsOptions = {
+            EnableAnalyzersSupport = nil,
+            EnableImportCompletion = nil,
+            AnalyzeOpenDocumentsOnly = nil,
+          },
+          Sdk = {
+            IncludePrereleases = true,
+          },
+        },
+      }
+    '';
+
+  };
   css = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
       css
@@ -313,11 +347,13 @@ in
       phpdoc
     ];
     extraPackages = with pkgs; [
-      nodePackages.intelephense
+      phpactor
     ];
     formatters.php.lsp_format = "prefer";
     lspConfig = ''
-      lspconfig.intelephense.setup{}
+      lspconfig.phpactor.setup{
+        capabilities = lsp_capabilities,
+      }
     '';
   };
   python = {
@@ -325,7 +361,7 @@ in
       python
     ];
     extraPackages = with pkgs; [
-      pyright
+      basedpyright
     ];
     formatters.python = {
       packages = [
@@ -338,7 +374,9 @@ in
       ];
     };
     lspConfig = ''
-      lspconfig.pyright.setup{}
+      lspconfig.basedpyright.setup{
+        capabilities = lsp_capabilities,
+      }
     '';
   };
   sql = {

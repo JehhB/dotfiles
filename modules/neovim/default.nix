@@ -25,6 +25,7 @@
   nvim-config.languages = {
     astro.enable = true;
     clang.enable = true;
+    csharp.enable = true;
     css.enable = true;
     emmet.enable = true;
     html.enable = true;
