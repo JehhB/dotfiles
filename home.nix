@@ -9,7 +9,6 @@ rec {
     modules/git
     modules/kitty
     modules/neovim
-    modules/plasma
     modules/tmux
     modules/zsh
   ];
