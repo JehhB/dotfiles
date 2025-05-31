@@ -26,7 +26,7 @@
       ignoreSpace = true;
     };
 
-    initExtra = ''
+    initContent = ''
       ${builtins.readFile ./init-extra.zsh}
       source ${pkgs.fzf}/share/fzf/key-bindings.zsh
       source ${pkgs.fzf}/share/fzf/completion.zsh
