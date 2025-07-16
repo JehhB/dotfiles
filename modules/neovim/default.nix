@@ -20,13 +20,6 @@
     '';
   };
 
-  home.packages = with pkgs; [
-    ripgrep
-    fzf
-    ripgrep-all
-    wl-clipboard
-  ];
-
   nvim-config.allLanguages.grammars = true;
   nvim-config.allLanguages.formatters = true;
   nvim-config.languages = {
