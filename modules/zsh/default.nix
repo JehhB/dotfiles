@@ -1,5 +1,12 @@
-{ config, pkgs, ... }:
-
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  isInstalled = pkg: lib.any (p: p == pkg) config.home.packages;
+in
 {
   programs.zsh = {
     enable = true;
@@ -28,8 +35,18 @@
 
     initContent = ''
       ${builtins.readFile ./init-extra.zsh}
-      source ${pkgs.fzf}/share/fzf/key-bindings.zsh
-      source ${pkgs.fzf}/share/fzf/completion.zsh
+
+      ${lib.optionalString (isInstalled pkgs.fzf) ''
+        source ${pkgs.fzf}/share/fzf/key-bindings.zsh
+        source ${pkgs.fzf}/share/fzf/completion.zsh
+      ''}
+
+      ${lib.optionalString (isInstalled pkgs.fnm) ''
+        FNM_PATH="${pkgs.fzf}/bin"
+        if [ -d "$FNM_PATH" ]; then
+          eval "`fnm env`"
+        fi
+      ''}
 
       command_not_found_handler() {
         /run/current-system/sw/bin/command-not-found "$@"

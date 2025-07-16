@@ -29,7 +29,9 @@ rec {
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+    android-studio
     chromium
+    fnm
     fzf
     libreoffice-qt6-fresh
     linux-wifi-hotspot
@@ -41,7 +43,6 @@ rec {
     vlc
     wl-clipboard
     yarn
-    android-studio
     (python3.withPackages (
       ps: with ps; [
         opencv4
