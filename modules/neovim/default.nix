@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./lsp
+    ./languages
     ./colorscheme
     ./telescope
   ];

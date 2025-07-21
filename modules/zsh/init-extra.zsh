@@ -23,6 +23,12 @@ preexec() { echo -ne '\e[5 q' ;}
 setopt PROMPT_SUBST
 export PS1="%B[%(!.%F{red}.%F{cyan})%n@%M%f %F{blue}%1~%f] %(!.#.$)%b "
 
+function psh() {
+  powershell.exe -Command "$*"
+}
 
-[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
-[ -f /usr/share/doc/pkgfile/command-not-found.zsh ] && source /usr/share/doc/pkgfile/command-not-found.zsh
+function cmd() {
+  cmd.exe /C "$*"
+}
+
+[ -f /etc/zsh_command_not_found ] && source /etc/zsh_command_not_found
