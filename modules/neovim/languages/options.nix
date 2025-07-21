@@ -88,11 +88,12 @@ let
             )
           );
           default = null;
+          description = "Formatter configuration for ${name}";
         };
         extraPackages = lib.mkOption {
           type = lib.types.nullOr (lib.types.listOf lib.types.package);
           default = null;
-          description = "Extra packages to install for ${name} (e.g., LSP)";
+          description = "Extra packages to install for ${name} (e.g. LSP)";
         };
         extraPlugins = lib.mkOption {
           type = lib.types.nullOr (
@@ -116,6 +117,48 @@ let
           default = null;
           description = "LSP configuration for ${name}";
         };
+        dapConfig = lib.mkOption {
+          type = lib.types.nullOr (
+            lib.types.attrsOf (
+              lib.types.submodule {
+                options = {
+                  packages = lib.mkOption {
+                    type = lib.types.listOf lib.types.packages;
+                    default = [ ];
+                    description = "Package for launching debugee";
+                  };
+                  config = lib.mkOptions {
+                    type = lib.types.commas;
+                    default = "";
+                    description = "DAP debugee configuration for ${name}";
+                  };
+                };
+              }
+            )
+          );
+          default = null;
+        };
+        adapterConfig = lib.mkOption {
+          type = lib.types.nullOr (
+            lib.types.attrsOf (
+              lib.types.submodule {
+                options = {
+                  packages = lib.mkOption {
+                    type = lib.types.listOf lib.types.packages;
+                    default = [ ];
+                    description = "Package for DAP adapter";
+                  };
+                  config = lib.mkOptions {
+                    type = lib.types.commas;
+                    default = "";
+                    description = "DAP adapter configuration for ${name}";
+                  };
+                };
+              }
+            )
+          );
+          default = null;
+        };
       };
     };
 
@@ -129,6 +172,8 @@ let
       extraPlugins = [ ];
       extraLuaConfig = "";
       lspConfig = "";
+      adapterConfig = { };
+      dapConfig = { };
     }
     // lang
     // (lib.filterAttrs (n: v: v != null) (lib.attrByPath [ name ] { } cfg))
@@ -174,6 +219,79 @@ let
     )
   );
 
+  mergedDapConfigs =
+    let
+      allDapConfigs = lib.filter (x: x != null) (
+        lib.mapAttrsToList (name: config: config.dapConfig or null) enabledLanguages
+      );
+
+      allDebugTypes = lib.unique (
+        lib.concatLists (map (dapConfig: lib.attrNames dapConfig) allDapConfigs)
+      );
+
+      mergeDebugType =
+        debugType:
+        let
+          configs = lib.filter (x: x != "" && x != null) (
+            map (dapConfig: dapConfig.${debugType}.config or "") allDapConfigs
+          );
+        in
+        if configs == [ ] then null else lib.concatStringsSep ",\n" configs;
+
+      mergedConfig = lib.listToAttrs (
+        map (debugType: {
+          name = debugType;
+          value = mergeDebugType debugType;
+        }) allDebugTypes
+      );
+
+      finalConfig = lib.filterAttrs (name: value: value != null) mergedConfig;
+    in
+    finalConfig;
+
+  dapConfigToLua = lang: config: ''
+    dap.configurations["${lang}"] = {
+        ${config}
+    }
+  '';
+
+  dapConfigs = lib.concatStringsSep "\n" (lib.mapAttrsToList dapConfigToLua mergedDapConfigs);
+
+  mergedAdapterConfigs =
+    let
+      allAdapterConfigs = lib.filter (x: x != null) (
+        lib.mapAttrsToList (name: config: config.adapterConfig or null) enabledLanguages
+      );
+
+      allAdapterTypes = lib.unique (
+        lib.concatLists (map (adapterConfig: lib.attrNames adapterConfig) allAdapterConfigs)
+      );
+
+      mergeAdapterType =
+        adapterType:
+        let
+          configs = lib.filter (x: x != "" && x != null) (
+            map (adapterConfig: adapterConfig.${adapterType}.config or null) allAdapterConfigs
+          );
+        in
+        if configs == [ ] then null else lib.head configs;
+
+      mergedConfig = lib.listToAttrs (
+        map (adapterType: {
+          name = adapterType;
+          value = mergeAdapterType adapterType;
+        }) allAdapterTypes
+      );
+
+      finalConfig = lib.filterAttrs (name: value: value != null) mergedConfig;
+    in
+    finalConfig;
+
+  adapterConfigToLua = adapter: config: ''dap.adapters["${adapter}"] = ${config}'';
+
+  adapterConfigs = lib.concatStringsSep "\n" (
+    lib.mapAttrsToList adapterConfigToLua mergedAdapterConfigs
+  );
 in
 {
   options.nvim-config.allLanguages = {
@@ -198,10 +316,7 @@ in
             lib.lists.unique (lib.concatMap (lang: lang.treesitterGrammars) (lib.attrValues enabledLanguages))
         )
         ++ [
-          {
-            plugin = pkgs.vimPlugins.nvim-treesitter;
-            runtime."after/plugin/nvim-treesitter.lua".source = ./nvim-treesitter.lua;
-          }
+          # lsp
           {
             plugin = pkgs.vimPlugins.nvim-lspconfig;
             runtime."after/plugin/nvim-lspconfig.lua".text = ''
@@ -212,6 +327,19 @@ in
               ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: lang: lang.lspConfig) enabledLanguages)}
             '';
           }
+
+          # dap
+          {
+            plugin = pkgs.vimPlugins.nvim-dap;
+            runtime."after/plugin/nvim-dap.lua".text = ''
+              ${builtins.readFile ./nvim-dap.lua}
+
+              ${adapterConfigs}
+              ${dapConfigs}
+            '';
+          }
+
+          # formating
           {
             plugin = pkgs.vimPlugins.conform-nvim;
             runtime."after/plugin/conform.lua".text = ''
@@ -261,6 +389,12 @@ in
       lib.concatMap (
         lang: lib.concatMap (formatters: formatters.packages or [ ]) (lib.attrValues lang.formatters)
       ) (lib.attrValues enabledFormatters)
+      ++ lib.concatMap (
+        lang: lib.concatMap (adapter: adapter.packages or [ ]) (lib.attrValues lang.adapterConfig)
+      ) (lib.attrValues enabledLanguages)
+      ++ lib.concatMap (
+        lang: lib.concatMap (config: config.packages or [ ]) (lib.attrValues lang.dapConfig)
+      ) (lib.attrValues enabledLanguages)
       ++ lib.concatMap (lang: lang.extraPackages) (lib.attrValues enabledLanguages)
     );
   };

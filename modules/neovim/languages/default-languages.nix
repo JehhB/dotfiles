@@ -27,6 +27,68 @@ let
       "enable"
     ] false config.nvim-config.languages;
   ifSupported = lang: text: if hasLanguageSupport lang then text else "";
+
+  nodeAdapter = {
+    "pwa-node" = {
+      packages = [ pkgs.vscode-js-debug ];
+      config = ''
+        {
+          type = "server",
+          host = "localhost",
+          port = "$${port}",
+          executable = {
+            command = "${pkgs.vscode-js-debug}/bin/js-debug",
+            args = {"$${port}"}
+          },
+        }
+      '';
+    };
+  };
+
+  firefoxAdapter =
+    let
+      adapter = pkgs.vscode-extensions.firefox-devtools.vscode-firefox-debug;
+    in
+    {
+      "firefox" = {
+        packages = [ adapter ];
+        config = ''
+          {
+            type = "executable",
+            command = "node",
+            args = "${adapter}/share/vscode/extensions/firefox-devtools.vscode-firefox-debug/dist/adapter.bundle.js",
+          }
+        '';
+      };
+    };
+
+  gdbAdapter = {
+    "gdb" = {
+      packages = [ pkgs.gdb ];
+      config = ''
+        {
+          type = "executable",
+          command = "${pkgs.gdb}/bin/gdb",
+          args = { "--interpreter=dap", "--eval-command", "set print pretty on" }
+        }
+      '';
+    };
+  };
+
+  gdbConfig = {
+    config = ''
+      {
+        name = "Launch",
+        type = "gdb",
+        request = "launch",
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        cwd = "$${workspaceFolder}",
+        stopAtBeginningOfMainSubprogram = false, 
+      }
+    '';
+  };
 in
 {
   angular = {
@@ -75,7 +137,7 @@ in
       typescript
       astro-language-server
     ];
-    formatters.dockerfile.lsp_format = "prefer";
+    formatters.astro.lsp_format = "prefer";
     lspConfig = ''
       lspconfig.astro.setup{
         capabilities = lsp_capabilities,
@@ -100,6 +162,9 @@ in
         capabilities = lsp_capabilities;
       }
     '';
+    adapterConfig = gdbAdapter;
+    dapConfig.c = gdbConfig;
+    dapConfig.cpp = gdbConfig;
   };
   csharp = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
@@ -355,6 +420,52 @@ in
         capabilities = lsp_capabilities,
       }
     '';
+    adapterConfig.php =
+      let
+        adapter = pkgs.vscode-extensions.xdebug.php-debug;
+      in
+      {
+        packages = [
+          adapter
+        ];
+        config = ''
+          {
+            type = "executable",
+            command = "node",
+            args = { "${adapter}/share/vscode/extensions/xdebug.php-debug/out/phpDebug.js"},
+          }
+        '';
+      };
+    dapConfig.php =
+      let
+        php = (
+          pkgs.php.buildEnv {
+            extensions = (
+              { enabled, all }:
+              enabled
+              ++ (with all; [
+                xdebug
+              ])
+            );
+            extraConfig = ''
+              xdebug.mode=debug
+              xdebug.start_with_request = yes
+              xdebug.remote_port = 9003
+            '';
+          }
+        );
+      in
+      {
+        packages = [ php ];
+        config = ''
+          {
+            type = "php",
+            request = "launch",
+            name = "Listen for Xdebug",
+            port = 9003,
+          }
+        '';
+      };
   };
   python = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
@@ -504,6 +615,7 @@ in
         },
       }
     '';
+    adapterConfig = firefoxAdapter // nodeAdapter;
   };
   vue = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [ vue ];
