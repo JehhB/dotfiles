@@ -35,10 +35,10 @@ let
         {
           type = "server",
           host = "localhost",
-          port = "$${port}",
+          port = "''${port}",
           executable = {
             command = "${pkgs.vscode-js-debug}/bin/js-debug",
-            args = {"$${port}"}
+            args = {"''${port}"}
           },
         }
       '';
@@ -84,7 +84,7 @@ let
         program = function()
           return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
         end,
-        cwd = "$${workspaceFolder}",
+        cwd = "''${workspaceFolder}",
         stopAtBeginningOfMainSubprogram = false, 
       }
     '';
@@ -489,6 +489,50 @@ in
         capabilities = lsp_capabilities,
       }
     '';
+    adapterConfig.python.config = ''
+      function(cb, config)
+        if config.request == 'attach' then
+          local port = (config.connect or config).port
+          local host = (config.connect or config).host or '127.0.0.1'
+          cb({
+            type = 'server',
+            port = assert(port, '`connect.port` is required for a python `attach` configuration'),
+            host = host,
+            options = {
+              source_filetype = 'python',
+            },
+          })
+        else
+          cb({
+            type = 'executable',
+            command = config.pythonPath,
+            args = { '-m', 'debugpy.adapter' },
+            options = {
+              source_filetype = 'python',
+            },
+          })
+        end
+      end
+    '';
+    dapConfig.python.config = ''
+      {
+        type = 'python';
+        request = 'launch';
+        name = "Launch file";
+
+        program = "''${file}";
+        pythonPath = function()
+          local cwd = vim.fn.getcwd()
+          if vim.fn.executable(cwd .. '/venv/bin/python') == 1 then
+            return cwd .. '/venv/bin/python'
+          elseif vim.fn.executable(cwd .. '/.venv/bin/python') == 1 then
+            return cwd .. '/.venv/bin/python'
+          else
+            return '/usr/bin/python'
+          end
+        end;
+      },
+    '';
   };
   sql = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
@@ -552,13 +596,20 @@ in
         settings = {
           tailwindCSS = {
             showPixelEquivalents = true,
+            emmetCompletions = true,
             classAttributes = {
               "class",
               "className",
+              "[a-z]+ClassName",
               "classList",
               "[a-z-]+-class",
               ${ifSupported "angular" ''"ngClass",''}
-            }
+            },
+            classFunctions: {
+              "tw",
+              "clsx",
+              "tw\\.[a-z]+",
+            },
           }
         }
       }
