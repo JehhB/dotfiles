@@ -600,12 +600,12 @@ in
             classAttributes = {
               "class",
               "className",
-              "[a-z]+ClassName",
+              "[a-zA-Z]+ClassName",
               "classList",
               "[a-z-]+-class",
               ${ifSupported "angular" ''"ngClass",''}
             },
-            classFunctions: {
+            classFunctions = {
               "tw",
               "clsx",
               "tw\\.[a-z]+",

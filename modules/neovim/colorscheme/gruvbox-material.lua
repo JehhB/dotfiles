@@ -12,7 +12,7 @@ require("gruvbox-material").setup({
 		background_color = nil,
 	},
 	signs = {
-		highlight = true,
+		force_background = true,
 	},
 	customize = nil,
 })
