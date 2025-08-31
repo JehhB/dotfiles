@@ -6,14 +6,14 @@
 
 buildNpmPackage rec {
   pname = "twiggy-language-server";
-  version = "0.14.0";
+  version = "0.19.1";
 
   src = fetchurl {
     url = "https://registry.npmjs.org/twiggy-language-server/-/twiggy-language-server-${version}.tgz";
-    hash = "sha256-l9O0UEAIxQiqI9fcF1izBXEEC1G9UBZ61D6YMqNCwCY=";
+    hash = "sha256-zdV6WdzLfDRvrkfC3QDxQIxcoJUcElPiQH8uGykc7HQ=";
   };
 
-  npmDepsHash = "sha256-qOcmD7S4PPJsBYHF727IsPn7etW4jEgQFzMXv9SrKFI=";
+  npmDepsHash = "sha256-Q8CxQzbAh1L6ltwNN6tskTCm3OAbSUroi90FYP/1Xl4=";
 
   postPatch = ''
     cp -s ${./package-lock.json} package-lock.json

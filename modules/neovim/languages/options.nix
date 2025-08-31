@@ -112,6 +112,11 @@ let
           default = null;
           description = "Extra Neovim configuration for ${name}";
         };
+        lspServers = lib.mkOption {
+          type = lib.types.nullOr (lib.types.listOf (lib.types.str));
+          default = null;
+          description = "Name of lsp server to enable for ${name}";
+        };
         lspConfig = lib.mkOption {
           type = lib.types.nullOr (lib.types.lines);
           default = null;
@@ -171,6 +176,7 @@ let
       extraPackages = [ ];
       extraPlugins = [ ];
       extraLuaConfig = "";
+      lspServers = [ ];
       lspConfig = "";
       adapterConfig = { };
       dapConfig = { };
@@ -292,6 +298,9 @@ let
   adapterConfigs = lib.concatStringsSep "\n" (
     lib.mapAttrsToList adapterConfigToLua mergedAdapterConfigs
   );
+
+  enabledLspServers = lib.concatLists (lib.mapAttrsToList (_: v: v.lspServers) enabledLanguages);
+
 in
 {
   options.nvim-config.allLanguages = {
@@ -323,8 +332,15 @@ in
               ${builtins.readFile ./nvim-lspconfig.lua}
 
               local lspconfig = require('lspconfig')
-              local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+              local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
+              lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(lsp_capabilities)
+              vim.lsp.config('*', lsp_capabilities)
+
               ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: lang: lang.lspConfig) enabledLanguages)}
+
+              vim.lsp.enable({
+                ${lib.concatStringsSep ",\n" (map (s: "  '${s}'") enabledLspServers)}
+              })
             '';
           }
 

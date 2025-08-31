@@ -114,11 +114,11 @@ in
         "--tsProbeLocations", "${pkgs.typescript}/lib/",
         "--ngProbeLocations", "${pkgs.userPackages.angular-language-server}/lib/node_modules/@angular/language-server/"
       }
-      lspconfig.angularls.setup{
-        cmd = angular_cmd,
+      vim.lsp.config('angularls', {
         on_new_config = function(new_config,new_root_dir)
           new_config.cmd = angular_cmd;
         end,
+        cmd = angular_cmd,
         filetypes = {
           "typescript",
           "angular",
@@ -126,8 +126,9 @@ in
           "typescript.tsx",
           "htmlangular"
         },
-      }
+      })
     '';
+    lspServers = [ "angularls" ];
   };
   astro = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
@@ -139,15 +140,15 @@ in
     ];
     formatters.astro.lsp_format = "prefer";
     lspConfig = ''
-      lspconfig.astro.setup{
-        capabilities = lsp_capabilities,
+      vim.lsp.config('astro', {
         init_options = {
           typescript = {
             tsdk = "${pkgs.typescript}/lib/node_modules/typescript/lib",
           },
         },
-      }
+      })
     '';
+    lspServers = [ "astro" ];
   };
   clang = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
@@ -157,11 +158,7 @@ in
     extraPackages = with pkgs; [ clang-tools ];
     formatters.c = clang_format;
     formatters.cpp = clang_format;
-    lspConfig = ''
-      lspconfig.clangd.setup{
-        capabilities = lsp_capabilities;
-      }
-    '';
+    lspServers = [ "clangd" ];
     adapterConfig = gdbAdapter;
     dapConfig.c = gdbConfig;
     dapConfig.cpp = gdbConfig;
@@ -177,7 +174,7 @@ in
     ];
     formatters.cs.lsp_format = "prefer";
     lspConfig = ''
-      require'lspconfig'.omnisharp.setup {
+      vim.lsp.config('omnisharp', {
         cmd = { "OmniSharp" },
         settings = {
           FormattingOptions = {
@@ -196,9 +193,9 @@ in
             IncludePrereleases = true,
           },
         },
-      }
+      })
     '';
-
+    lspServers = [ "omnisharp" ];
   };
   css = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
@@ -208,11 +205,7 @@ in
       vscode-langservers-extracted
     ];
     formatters.css = prettier_format;
-    lspConfig = ''
-      lspconfig.cssls.setup{
-        capabilities = lsp_capabilities,
-      }
-    '';
+    lspServers = [ "cssls" ];
   };
   docker-compose = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
@@ -228,9 +221,7 @@ in
         command = "setfiletype yaml.docker-compose"
       })
     '';
-    lspConfig = ''
-      lspconfig.docker_compose_language_service.setup{}
-    '';
+    lspServers = [ "docker_compose_language_service" ];
   };
   dockerfile = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
@@ -240,16 +231,14 @@ in
       dockerfile-language-server-nodejs
     ];
     formatters.dockerfile.lsp_format = "prefer";
-    lspConfig = ''
-      lspconfig.dockerls.setup{}
-    '';
+    lspServers = [ "dockerls" ];
   };
   emmet = {
     extraPackages = with pkgs; [
       emmet-language-server
     ];
     lspConfig = ''
-      lspconfig.emmet_language_server.setup{
+      vim.lsp.config('emmet_language_server', {
         filetypes = {
           ${ifSupported "astro" ''"astro",''}
           ${ifSupported "css" ''
@@ -270,17 +259,16 @@ in
           ''}
           ${ifSupported "vue" ''"vue",''}
         },
-        single_file_support = true
-      }
+      })
     '';
+    lspServers = [ "emmet_language_server" ];
   };
   eslint = {
     extraPackages = with pkgs; [
       vscode-langservers-extracted
     ];
     lspConfig = ''
-      lspconfig.eslint.setup({
-        capabilities = lsp_capabilities,
+      vim.lsp.config('eslint', {
         filetypes = {
           ${ifSupported "astro" ''"astro",''}
           ${ifSupported "typescript" ''
@@ -293,14 +281,9 @@ in
           ''}
           ${ifSupported "vue" ''"vue",''}
         },
-        on_attach = function(client, bufnr)
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            buffer = bufnr,
-            command = "EslintFixAll",
-          })
-        end,
       })
     '';
+    lspServers = [ "eslint" ];
   };
   glsl = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
@@ -310,11 +293,7 @@ in
       glsl_analyzer
     ];
     formatters.glsl = clang_format;
-    lspConfig = ''
-      lspconfig.glsl_analyzer.setup{
-        capabilities = lsp_capabilities,
-      }
-    '';
+    lspServers = [ "glsl_analyzer" ];
     extraLuaConfig = ''
       vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
         pattern = {"*.glsl", "*.vert", "*.tesc", "*.tese", "*.frag", "*.geom", "*.comp"},
@@ -332,9 +311,7 @@ in
       vscode-langservers-extracted
     ];
     formatters.html = prettier_format;
-    lspConfig = ''
-      lspconfig.html.setup{}
-    '';
+    lspServers = [ "html" ];
   };
   htmldjango = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
@@ -355,11 +332,7 @@ in
       vscode-langservers-extracted
     ];
     formatters.json = prettier_format;
-    lspConfig = ''
-      lspconfig.jsonls.setup {
-        capabilities = lsp_capabilities,
-      }
-    '';
+    lspServers = [ "jsonls" ];
   };
   lua = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
@@ -373,26 +346,40 @@ in
       formatters = [ "stylua" ];
     };
     lspConfig = ''
-      lspconfig.lua_ls.setup{
+      vim.lsp.config('lua_ls', {
         on_init = function(client)
-          local path = client.workspace_folders[1].name
-          if not vim.loop.fs_stat(path .. '/.luarc.json') and not vim.loop.fs_stat(path .. '/.luarc.jsonc') then
-            client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
-              Lua = {
-                runtime = {
-                  version = 'LuaJIT'
-                },
-                workspace = {
-                  checkThirdParty = false,
-                  library = vim.api.nvim_get_runtime_file("", true)
-                }
-              }
-            })
+          if client.workspace_folders then
+            local path = client.workspace_folders[1].name
+            if
+              path ~= vim.fn.stdpath('config')
+              and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+            then
+              return
+            end
           end
-          return true
+
+          client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+            runtime = {
+              version = 'LuaJIT',
+              path = {
+                'lua/?.lua',
+                'lua/?/init.lua',
+              },
+            },
+            workspace = {
+              checkThirdParty = false,
+              library = {
+                vim.env.VIMRUNTIME
+              }
+            }
+          })
         end,
-      }
+        settings = {
+          Lua = {}
+        }
+      })
     '';
+    lspServers = [ "lua_ls" ];
   };
   markdown = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [ markdown ];
@@ -400,12 +387,7 @@ in
       marksman
     ];
     formatters.markdown = prettier_format;
-    lspConfig = ''
-      lspconfig.marksman.setup{
-        capabilities = lsp_capabilities,
-        filetypes = { "markdown" },
-      }
-    '';
+    lspServers = [ "marksman" ];
   };
   mdx = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [ markdown ];
@@ -415,16 +397,15 @@ in
     ];
     formatters.mdx = prettier_format;
     lspConfig = ''
-      lspconfig.mdx_analyzer.setup{
-        capabilities = lsp_capabilities,
-        filetypes = { "mdx" },
+      vim.lsp.config('mdx_analyzer', {
         init_options = {
           typescript = {
             tsdk = "${pkgs.typescript}/lib/node_modules/typescript/lib",
           },
         },
-      }
+      })
     '';
+    lspServers = [ "mdx_analyzer" ];
     extraPlugins = with pkgs; [
       {
         plugin = userPackages.treesitter-mdx-nvim;
@@ -441,12 +422,7 @@ in
       packages = [ pkgs.nixfmt-rfc-style ];
       formatters = [ "nixfmt" ];
     };
-    lspConfig = ''
-      lspconfig.nil_ls.setup{
-        cmd = { 'nil' },
-        filetypes = { 'nix' },
-      }
-    '';
+    lspServers = [ "nil_ls" ];
   };
   php = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
@@ -457,11 +433,7 @@ in
       phpactor
     ];
     formatters.php.lsp_format = "prefer";
-    lspConfig = ''
-      lspconfig.phpactor.setup{
-        capabilities = lsp_capabilities,
-      }
-    '';
+    lspServers = [ "phpactor" ];
     adapterConfig.php =
       let
         adapter = pkgs.vscode-extensions.xdebug.php-debug;
@@ -526,11 +498,7 @@ in
         "black"
       ];
     };
-    lspConfig = ''
-      lspconfig.basedpyright.setup{
-        capabilities = lsp_capabilities,
-      }
-    '';
+    lspServers = [ "basedpyright" ];
     adapterConfig.python.config = ''
       function(cb, config)
         if config.request == 'attach' then
@@ -591,27 +559,20 @@ in
       formatters = [ "sql_formatter" ];
     };
     lspConfig = ''
-      lspconfig.sqls.setup{
+      vim.lsp.config('sqls', {
         on_attach = function(client, bufnr)
           require('sqls').on_attach(client, bufnr)
         end
-      }
+      })
     '';
+    lspServers = [ "sqls" ];
   };
   tailwindcss = {
     extraPackages = with pkgs; [
       tailwindcss-language-server
     ];
     lspConfig = ''
-      lspconfig.tailwindcss.setup{
-        init_options = {
-          userLanguages = {
-            ${ifSupported "astro" ''astro = "html",''}
-            ${ifSupported "angular" ''angular = "html",''}
-            ${ifSupported "vue" ''vue = "html",''}
-            ${ifSupported "htmldjango" ''htmldjango = "html",''}
-          },
-        },
+      vim.lsp.config('tailwindcss', {
         filetypes = {
           ${ifSupported "astro" ''"astro",''}
           ${ifSupported "angular" ''"angular",''}
@@ -637,6 +598,12 @@ in
         },
         settings = {
           tailwindCSS = {
+            includeLanguages = {
+              ${ifSupported "astro" ''astro = "html",''}
+              ${ifSupported "angular" ''angular = "html",''}
+              ${ifSupported "vue" ''vue = "html",''}
+              ${ifSupported "htmldjango" ''htmldjango = "html",''}
+            },
             showPixelEquivalents = true,
             emmetCompletions = true,
             classAttributes = {
@@ -654,8 +621,9 @@ in
             },
           }
         }
-      }
+      })
     '';
+    lspServers = [ "tailwindcss" ];
   };
   twig = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
@@ -665,9 +633,7 @@ in
       userPackages.twiggy-language-server
     ];
     formatters.twig = prettier_format;
-    lspConfig = ''
-      lspconfig.twiggy_language_server.setup{};
-    '';
+    lspServers = [ "twiggy_language_server" ];
   };
   typescript = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
@@ -677,7 +643,7 @@ in
       jsdoc
     ];
     extraPackages = with pkgs; [
-      typescript-language-server
+      vtsls
     ];
     formatters = {
       javascript = prettier_format;
@@ -686,47 +652,44 @@ in
       typescriptreact = prettier_format;
     };
     lspConfig = ''
-      lspconfig.ts_ls.setup{
-        init_options = {
-          plugins = {
-            ${ifSupported "vue" ''
-              {
-                name = "@vue/typescript-plugin",
-                location = "${pkgs.vue-language-server}/lib/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin",
-                languages = {"javascript", "typescript", "vue"},
+      vim.lsp.config('vtsls', {
+        settings = {
+          vtsls = {
+            tsserver = {
+              globalPlugins = {
+                ${ifSupported "vue" ''
+                  {
+                    name = "@vue/typescript-plugin",
+                    location = "${pkgs.vue-language-server}/lib/language-tools/packages/language-server",
+                    languages = { "vue" },
+                    configNamespace = "typescript",
+                  },
+                ''}
               },
-            ''}
+            },
           },
         },
         filetypes = {
           "javascript",
           "typescript",
+          "javascriptreact",
           "typescriptreact",
           ${ifSupported "astro" ''"astro",''}
           ${ifSupported "mdx" ''"mdx",''}
           ${ifSupported "vue" ''"vue",''}
         },
-      }
+      })
     '';
+    lspServers = [ "vtsls" ];
     adapterConfig = firefoxAdapter // nodeAdapter;
   };
   vue = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [ vue ];
     extraPackages = with pkgs; [
       vue-language-server
-      typescript
     ];
     formatters.vue = prettier_format;
-    lspConfig = ''
-      lspconfig.volar.setup{
-        capabilities = lsp_capabilities,
-        init_options = {
-          typescript = {
-            tsdk = "${pkgs.typescript}/lib/node_modules/typescript/lib",
-          },
-        },
-      }
-    '';
+    lspServers = [ "vue_ls" ];
   };
   yaml = {
     treesitterGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
@@ -736,8 +699,6 @@ in
       yaml-language-server
     ];
     formatters.yaml = prettier_format;
-    lspConfig = ''
-      lspconfig.yamlls.setup{}
-    '';
+    lspServers = [ "yamlls" ];
   };
 }
