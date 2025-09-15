@@ -29,8 +29,12 @@ rec {
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+<<<<<<< HEAD
     android-studio
     chromium
+=======
+    fd
+>>>>>>> 8eb3da5 (added fuzzy match for cmd)
     fnm
     fzf
     libreoffice-qt6-fresh

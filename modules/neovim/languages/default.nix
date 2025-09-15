@@ -7,6 +7,7 @@
     plugins = with pkgs.vimPlugins; [
       luasnip
       cmp-nvim-lsp
+      cmp-fuzzy-path
       {
         plugin = nvim-cmp;
         runtime."after/plugin/nvim-cmp.lua".source = ./nvim-cmp.lua;
