@@ -33,7 +33,6 @@ end
 cmp.setup({
 	sources = {
 		{ name = "nvim_lsp" },
-		{ name = "fuzzy_path" },
 	},
 	preselect = "item",
 	mapping = cmp.mapping.preset.insert({
@@ -54,17 +53,23 @@ cmp.setup({
 
 cmp.setup.cmdline(":", {
 	sources = {
-		{ name = "fuzzy_path", option = { fd_timeout_msec = 1500 } },
+		{
+			name = "fuzzy_path",
+			option = {
+				fd_cmd = { "fd", "--hidden", "-t", "d", "-t", "f", "-d", "20", "-p" },
+				fd_timeout_msec = 1500,
+			},
+		},
 	},
 	mapping = cmp.mapping.preset.cmdline({
-		["<CR>"] = {
+		["<C-l>"] = {
 			c = cmp.mapping.confirm({ select = false }),
 		},
 		["<Down>"] = {
-			c = cmp.mapping.select_next_item({ behavior = types.cmp.SelectBehavior.Select }),
+			c = cmp.mapping.select_next_item({ behavior = types.cmp.SelectBehavior.Insert }),
 		},
 		["<Up>"] = {
-			c = cmp.mapping.select_prev_item({ behavior = types.cmp.SelectBehavior.Select }),
+			c = cmp.mapping.select_prev_item({ behavior = types.cmp.SelectBehavior.Insert }),
 		},
 	}),
 })

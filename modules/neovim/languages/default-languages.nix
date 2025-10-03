@@ -485,7 +485,7 @@ in
       python
     ];
     extraPackages = with pkgs; [
-      basedpyright
+      pyright
     ];
     formatters.python = {
       packages = [
@@ -497,7 +497,7 @@ in
         "black"
       ];
     };
-    lspServers = [ "basedpyright" ];
+    lspServers = [ "pyright" ];
     adapterConfig.python.config = ''
       function(cb, config)
         if config.request == 'attach' then
