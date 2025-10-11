@@ -70,6 +70,9 @@ cmp.setup({
 })
 
 cmp.setup.cmdline(":", {
+	completion = {
+		completeopt = "noselect",
+	},
 	sources = {
 		{
 			name = "fuzzy_path",
@@ -79,7 +82,7 @@ cmp.setup.cmdline(":", {
 			},
 		},
 	},
-	preselect = "none",
+	preselect = cmp.PreselectMode.None,
 	mapping = cmp.mapping.preset.cmdline({
 		["<C-l>"] = {
 			c = cmp.mapping.confirm({ select = false }),

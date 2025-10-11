@@ -9,8 +9,8 @@ let
     stop_after_first = true;
     packages = [ pkgs.prettierd ];
     formatters = [
-      "prettierd"
       "prettier"
+      "prettierd"
     ];
   };
   clang_format = {
