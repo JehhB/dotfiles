@@ -5,11 +5,6 @@
     vanilla-dmz
   ];
 
-  services.kdeconnect = {
-    enable = true;
-    package = pkgs.kdePackages.kdeconnect-kde;
-  };
-
   programs.plasma = {
     enable = true;
 
@@ -47,6 +42,7 @@
             config = {
               General = {
                 launchers = [
+                  "applications:firefox-esr.desktop"
                   "applications:kitty.desktop"
                   "applications:org.kde.dolphin.desktop"
                 ];
@@ -154,7 +150,7 @@
         "Window Maximize" = "Alt+Space";
       };
       "services/org.kde.dolphin.desktop"._launch = [ "Alt+F" ];
-      "services/firefox.desktop"._launch = [ "Alt+B" ];
+      "services/firefox-esr.desktop"._launch = [ "Alt+B" ];
       "services/kitty.desktop"._launch = [ "Alt+X" ];
       "services/org.kde.krunner.desktop"._launch = [
         "Alt+P"
