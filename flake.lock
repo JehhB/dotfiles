@@ -79,12 +79,12 @@
         "type": "github"
       }
     },
-    "plasma-manager": {
+    "nuschtosSearch": {
       "inputs": {
-        "home-manager": [
-          "home-manager"
-        ],
+        "flake-utils": "flake-utils",
+        "ixx": "ixx",
         "nixpkgs": [
+          "nixvim",
           "nixpkgs"
         ]
       },
@@ -97,8 +97,8 @@
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "plasma-manager",
+        "owner": "NuschtOS",
+        "repo": "search",
         "type": "github"
       }
     },
@@ -106,8 +106,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nixvim": "nixvim",
-        "plasma-manager": "plasma-manager"
+        "nixvim": "nixvim"
       }
     },
     "systems": {
