@@ -1,11 +1,7 @@
-{
-  pkgs,
-  ...
-}:
+{ pkgs, ... }:
 
 {
   imports = [
-    modules/firefox
     modules/git
     modules/kitty
     modules/neovim
@@ -20,6 +16,8 @@
   xdg.configHome = "/home/eco/.config";
   xdg.dataHome = "/home/eco/.local/share";
 
+  targets.genericLinux.enable = true;
+
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
@@ -32,27 +30,13 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    android-studio
-    chromium
     fd
     fnm
     fzf
-    libreoffice-qt6-fresh
-    linux-wifi-hotspot
-    qpwgraph
     platformio-core
     ripgrep
     ripgrep-all
-    vlc
     wl-clipboard
-    (python3.withPackages (
-      ps: with ps; [
-        opencv4
-        numpy
-        matplotlib
-        customtkinter
-      ]
-    ))
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
