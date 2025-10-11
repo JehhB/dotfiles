@@ -3,9 +3,7 @@
 {
   imports = [
     modules/git
-    modules/kitty
     modules/neovim
-    modules/plasma
     modules/tmux
     modules/zsh
   ];
@@ -36,7 +34,6 @@
     platformio-core
     ripgrep
     ripgrep-all
-    wl-clipboard
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
