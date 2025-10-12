@@ -13,6 +13,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -20,6 +24,7 @@
       nixpkgs,
       home-manager,
       plasma-manager,
+      nixvim,
       ...
     }:
     let
@@ -41,6 +46,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
+              home-manager.extraSpecialArgs = { inherit nixvim; };
               home-manager.users.eco = import ./home.nix;
             }
           ];

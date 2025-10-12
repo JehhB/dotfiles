@@ -73,12 +73,10 @@ rec {
   #  /etc/profiles/per-user/eco/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    PNPM_HOME = "${xdg.dataHome}/pnpm";
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+    TERMINAL = "kitty";
   };
-
-  home.sessionPath = [
-    home.sessionVariables.PNPM_HOME
-  ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
