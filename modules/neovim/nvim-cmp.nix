@@ -4,6 +4,7 @@
   programs.nixvim = {
     plugins = {
       luasnip.enable = true;
+      hardtime.enable = true;
     };
   };
 
@@ -11,12 +12,12 @@
     plugins = {
       cmp = {
         enable = true;
-        luaConfig.pre = #lua
-        ''
-          local luasnip = require("luasnip")
-          local cmp_types = require("cmp.types")
-          local cmp_compare = require("cmp.config.compare")
-        '';
+        luaConfig.pre = # lua
+          ''
+            local luasnip = require("luasnip")
+            local cmp_types = require("cmp.types")
+            local cmp_compare = require("cmp.config.compare")
+          '';
         settings = {
           preselect = "cmp.PreselectMode.Item";
           sources = [
@@ -25,51 +26,51 @@
             { name = "path"; }
             { name = "buffer"; }
           ];
-          snippet.expand = #lua
-          ''
-            function(args)
-              luasnip.lsp_expand(args.body)
-            end
-          '';
-          mapping.__raw = #lua
-          ''
-            cmp.mapping.preset.insert({
-              ['<CR>'] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                  if luasnip.expandable() then
-                    luasnip.expand()
+          snippet.expand = # lua
+            ''
+              function(args)
+                luasnip.lsp_expand(args.body)
+              end
+            '';
+          mapping.__raw = # lua
+            ''
+              cmp.mapping.preset.insert({
+                ['<CR>'] = cmp.mapping(function(fallback)
+                  if cmp.visible() then
+                    if luasnip.expandable() then
+                      luasnip.expand()
+                    else
+                      cmp.confirm({
+                        select = true,
+                      })
+                    end
                   else
-                    cmp.confirm({
-                      select = true,
-                    })
+                    fallback()
                   end
-                else
-                  fallback()
-                end
-              end),
+                end),
 
-              ["<Tab>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                  cmp.select_next_item()
-                elseif luasnip.locally_jumpable(1) then
-                  luasnip.jump(1)
-                else
-                  fallback()
-                end
-              end, { "i", "s" }),
+                ["<Tab>"] = cmp.mapping(function(fallback)
+                  if cmp.visible() then
+                    cmp.select_next_item()
+                  elseif luasnip.locally_jumpable(1) then
+                    luasnip.jump(1)
+                  else
+                    fallback()
+                  end
+                end, { "i", "s" }),
 
-              ["<S-Tab>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                  cmp.select_prev_item()
-                elseif luasnip.locally_jumpable(-1) then
-                  luasnip.jump(-1)
-                else
-                  fallback()
-                end
-              end, { "i", "s" }),
-              ["<C-n>"] = cmp.mapping.complete(),
-            })
-          '';
+                ["<S-Tab>"] = cmp.mapping(function(fallback)
+                  if cmp.visible() then
+                    cmp.select_prev_item()
+                  elseif luasnip.locally_jumpable(-1) then
+                    luasnip.jump(-1)
+                  else
+                    fallback()
+                  end
+                end, { "i", "s" }),
+                ["<C-n>"] = cmp.mapping.complete(),
+              })
+            '';
           completeopt = "menu,menuone,noinsert";
         };
         cmdline.":" = {
@@ -80,13 +81,23 @@
             {
               name = "fuzzy_path";
               option = {
-                fd_cmd = [ "fd" "--hidden" "-t" "d" "-t" "f" "-d" "20" "-p" ];
+                fd_cmd = [
+                  "fd"
+                  "--hidden"
+                  "-t"
+                  "d"
+                  "-t"
+                  "f"
+                  "-d"
+                  "20"
+                  "-p"
+                ];
                 fd_timeout_msec = 1500;
               };
             }
             { name = "cmdline"; }
           ];
-          mapping.__raw = #lua
+          mapping.__raw = # lua
             ''
               cmp.mapping.preset.cmdline({
                 ["<C-l>"] = {
@@ -139,7 +150,7 @@
           sources = [
             { name = "buffer"; }
           ];
-          mapping.__raw = #lua
+          mapping.__raw = # lua
             ''
               cmp.mapping.preset.cmdline({
                 ["<C-l>"] = {

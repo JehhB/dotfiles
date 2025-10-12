@@ -21,7 +21,7 @@
     html.enable = true;
     htmldjango.enable = true;
     json.enable = true;
-    mdx.enable = true;
+    markdown.enable = true;
     nix.enable = true;
     python.enable = true;
     sql.enable = true;

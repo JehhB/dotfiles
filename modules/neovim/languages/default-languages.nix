@@ -97,10 +97,11 @@ in
               "sass"
               "scss"
             ]
+            ++ optIf "django" [ "htmldjango" ]
             ++ optIf "html" [ "html" ]
+            ++ optIf "markdown" [ "markdown" ]
             ++ optIf "php" [ "php" ]
             ++ optIf "twig" [ "twig" ]
-            ++ optIf "htmldjango" [ "htmldjango" ]
             ++ optIf "typescript" [
               "javascriptreact"
               "typescriptreact"
@@ -167,8 +168,27 @@ in
       plugins.conform-nvim.settings.formatters_by_ft.lua = [ "stylua" ];
     })
     (mkIfEn "markdown" {
+      extraConfigLuaPre = # lua
+        ''
+          vim.cmd([[
+            function OpenMarkdownPreview (url)
+              execute "silent ! firefox --new-window " . shellescape(a:url)
+            endfunction
+          ]])
+        '';
       lsp.servers.marksman.enable = true;
       plugins.conform-nvim.settings.formatters_by_ft.markdown = prettier_format;
+      plugins.markdown-preview = {
+        enable = true;
+        settings.browserfunc = "OpenMarkdownPreview";
+      };
+      keymaps = [
+        {
+          mode = "n";
+          key = "<leader>mp";
+          action = "<Plug>MarkdownPreviewToggle";
+        }
+      ];
     })
     (mkIfEn "nix" {
       lsp.servers.nil_ls.enable = true;
