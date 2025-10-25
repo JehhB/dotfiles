@@ -10,7 +10,7 @@
     keymaps = [
       {
         mode = "n";
-        key = "<leader>j";
+        key = "<leader><leader>";
         action = "<cmd>b#<cr>";
         options = {
           silent = true;
@@ -29,8 +29,7 @@
       {
         mode = "n";
         key = "<leader>a";
-        action.__raw = # lua
-          ''vim.lsp.buf.code_action'';
+        action.__raw = "vim.lsp.buf.code_action";
         options = {
           silent = true;
           noremap = true;

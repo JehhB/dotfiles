@@ -4,7 +4,7 @@
   programs.tmux = {
     enable = true;
     mouse = true;
-    prefix = "C-a";
+    prefix = "M-a";
     baseIndex = 1;
     keyMode = "vi";
 

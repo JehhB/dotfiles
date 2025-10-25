@@ -4,8 +4,7 @@
   programs.nixvim = {
     plugins.lspconfig.enable = true;
     lsp = {
-      luaConfig.pre = # lua
-      ''
+      luaConfig.pre = ''
         local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
         lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(lsp_capabilities)
       '';

@@ -48,8 +48,7 @@
       {
         mode = "n";
         key = "<leader>ff";
-        action.__raw = #lua
-        ''
+        action.__raw = ''
           function()
             local telescope = require("telescope.builtin")
             local handle = io.popen("git rev-parse --is-inside-work-tree 3> /dev/null")

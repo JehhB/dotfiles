@@ -3,6 +3,7 @@
 {
   imports = [
     ./conform.nix
+    ./grapple.nix
     ./keymap.nix
     ./lsp.nix
     ./nvim-cmp.nix
@@ -18,6 +19,7 @@
     css.enable = true;
     docker.enable = true;
     emmet.enable = true;
+    eslint.enable = true;
     html.enable = true;
     htmldjango.enable = true;
     json.enable = true;

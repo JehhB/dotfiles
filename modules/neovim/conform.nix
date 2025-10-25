@@ -4,10 +4,9 @@
   programs.nixvim = {
     plugins.conform-nvim = {
       enable = true;
-      luaConfig.pre = # lua
-        ''
-          local conform_slow_format_filetypes = {}
-        '';
+      luaConfig.pre = ''
+        local conform_slow_format_filetypes = {}
+      '';
       autoInstall = {
         enable = true;
         overrides = {
@@ -51,15 +50,14 @@
           "v"
         ];
         key = "<leader>fm";
-        action.__raw = # lua
-          ''
-            function()
-              require('conform').format({
-                lsp_fallback = true,
-                timeout_ms = 1500,
-              })
-            end
-          '';
+        action.__raw = ''
+          function()
+            require('conform').format({
+              lsp_fallback = true,
+              timeout_ms = 1500,
+            })
+          end
+        '';
       }
     ];
   };

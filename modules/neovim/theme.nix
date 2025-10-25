@@ -6,7 +6,6 @@
       enable = true;
       grammarPackages = pkgs.vimPlugins.nvim-treesitter.passthru.allGrammars;
       settings = {
-        indent.enable = true;
         incremental_selection = {
           enable = true;
           keymaps = {

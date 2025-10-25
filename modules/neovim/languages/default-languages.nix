@@ -30,12 +30,11 @@ in
             "*.component.html"
             "*.page.html"
           ];
-          callback.__raw = # lua
-            ''
-              function()
-                vim.bo.filetype = "htmlangular"
-              end
-            '';
+          callback.__raw = ''
+            function()
+              vim.bo.filetype = "htmlangular"
+            end
+          '';
         }
       ];
       plugins.conform-nvim.settings.formatters_by_ft.htmlangular = prettier_format;
@@ -74,12 +73,11 @@ in
             "compose.yaml"
             "compose.yml"
           ];
-          callback.__raw = # lua
-            ''
-              function()
-                vim.bo.filetype = "yaml.docker-compose"
-              end
-            '';
+          callback.__raw = ''
+            function()
+              vim.bo.filetype = "yaml.docker-compose"
+            end
+          '';
         }
       ];
       lsp.servers.docker_language_server.enable = true;
@@ -144,12 +142,11 @@ in
             "*.geom"
             "*.comp"
           ];
-          callback.__raw = # lua
-            ''
-              function()
-                vim.bo.filetype = "glsl"
-              end
-            '';
+          callback.__raw = ''
+            function()
+              vim.bo.filetype = "glsl"
+            end
+          '';
         }
       ];
       lsp.servers.glsl_analyzer.enable = true;
@@ -168,27 +165,8 @@ in
       plugins.conform-nvim.settings.formatters_by_ft.lua = [ "stylua" ];
     })
     (mkIfEn "markdown" {
-      extraConfigLuaPre = # lua
-        ''
-          vim.cmd([[
-            function OpenMarkdownPreview (url)
-              execute "silent ! firefox --new-window " . shellescape(a:url)
-            endfunction
-          ]])
-        '';
       lsp.servers.marksman.enable = true;
       plugins.conform-nvim.settings.formatters_by_ft.markdown = prettier_format;
-      plugins.markdown-preview = {
-        enable = true;
-        settings.browserfunc = "OpenMarkdownPreview";
-      };
-      keymaps = [
-        {
-          mode = "n";
-          key = "<leader>mp";
-          action = "<Plug>MarkdownPreviewToggle";
-        }
-      ];
     })
     (mkIfEn "nix" {
       lsp.servers.nil_ls.enable = true;
@@ -199,7 +177,7 @@ in
     })
     (mkIfEn "python" {
       lsp.servers.pyright.enable = true;
-      plugins.conform-nvim.settings.formatters_by_ft.pyton = [
+      plugins.conform-nvim.settings.formatters_by_ft.python = [
         "black"
         "isort"
       ];

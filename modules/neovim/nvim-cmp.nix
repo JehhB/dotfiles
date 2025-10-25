@@ -4,7 +4,14 @@
   programs.nixvim = {
     plugins = {
       luasnip.enable = true;
-      hardtime.enable = true;
+      hardtime = {
+        enable = true;
+        settings = {
+          disable_mouse = false;
+          max_time = 7500;
+          max_count = 2;
+        };
+      };
     };
   };
 
@@ -12,12 +19,11 @@
     plugins = {
       cmp = {
         enable = true;
-        luaConfig.pre = # lua
-          ''
-            local luasnip = require("luasnip")
-            local cmp_types = require("cmp.types")
-            local cmp_compare = require("cmp.config.compare")
-          '';
+        luaConfig.pre = ''
+          local luasnip = require("luasnip")
+          local cmp_types = require("cmp.types")
+          local cmp_compare = require("cmp.config.compare")
+        '';
         settings = {
           preselect = "cmp.PreselectMode.Item";
           sources = [
@@ -32,45 +38,44 @@
                 luasnip.lsp_expand(args.body)
               end
             '';
-          mapping.__raw = # lua
-            ''
-              cmp.mapping.preset.insert({
-                ['<CR>'] = cmp.mapping(function(fallback)
-                  if cmp.visible() then
-                    if luasnip.expandable() then
-                      luasnip.expand()
-                    else
-                      cmp.confirm({
-                        select = true,
-                      })
-                    end
+          mapping.__raw = ''
+            cmp.mapping.preset.insert({
+              ['<CR>'] = cmp.mapping(function(fallback)
+                if cmp.visible() then
+                  if luasnip.expandable() then
+                    luasnip.expand()
                   else
-                    fallback()
+                    cmp.confirm({
+                      select = true,
+                    })
                   end
-                end),
+                else
+                  fallback()
+                end
+              end),
 
-                ["<Tab>"] = cmp.mapping(function(fallback)
-                  if cmp.visible() then
-                    cmp.select_next_item()
-                  elseif luasnip.locally_jumpable(1) then
-                    luasnip.jump(1)
-                  else
-                    fallback()
-                  end
-                end, { "i", "s" }),
+              ["<Tab>"] = cmp.mapping(function(fallback)
+                if cmp.visible() then
+                  cmp.select_next_item()
+                elseif luasnip.locally_jumpable(1) then
+                  luasnip.jump(1)
+                else
+                  fallback()
+                end
+              end, { "i", "s" }),
 
-                ["<S-Tab>"] = cmp.mapping(function(fallback)
-                  if cmp.visible() then
-                    cmp.select_prev_item()
-                  elseif luasnip.locally_jumpable(-1) then
-                    luasnip.jump(-1)
-                  else
-                    fallback()
-                  end
-                end, { "i", "s" }),
-                ["<C-n>"] = cmp.mapping.complete(),
-              })
-            '';
+              ["<S-Tab>"] = cmp.mapping(function(fallback)
+                if cmp.visible() then
+                  cmp.select_prev_item()
+                elseif luasnip.locally_jumpable(-1) then
+                  luasnip.jump(-1)
+                else
+                  fallback()
+                end
+              end, { "i", "s" }),
+              ["<C-n>"] = cmp.mapping.complete(),
+            })
+          '';
           completeopt = "menu,menuone,noinsert";
         };
         cmdline.":" = {
@@ -97,20 +102,19 @@
             }
             { name = "cmdline"; }
           ];
-          mapping.__raw = # lua
-            ''
-              cmp.mapping.preset.cmdline({
-                ["<C-l>"] = {
-                  c = cmp.mapping.confirm({ select = false }),
-                },
-                ["<Down>"] = {
-                  c = cmp.mapping.select_next_item({ behavior = cmp_types.cmp.SelectBehavior.Insert }),
-                },
-                ["<Up>"] = {
-                  c = cmp.mapping.select_prev_item({ behavior = cmp_types.cmp.SelectBehavior.Insert }),
-                },
-              })
-            '';
+          mapping.__raw = ''
+            cmp.mapping.preset.cmdline({
+              ["<C-l>"] = {
+                c = cmp.mapping.confirm({ select = false }),
+              },
+              ["<Down>"] = {
+                c = cmp.mapping.select_next_item({ behavior = cmp_types.cmp.SelectBehavior.Insert }),
+              },
+              ["<Up>"] = {
+                c = cmp.mapping.select_prev_item({ behavior = cmp_types.cmp.SelectBehavior.Insert }),
+              },
+            })
+          '';
           sorting = {
             comparators = [
               # lua
@@ -150,20 +154,19 @@
           sources = [
             { name = "buffer"; }
           ];
-          mapping.__raw = # lua
-            ''
-              cmp.mapping.preset.cmdline({
-                ["<C-l>"] = {
-                  c = cmp.mapping.confirm({ select = false }),
-                },
-                ["<Down>"] = {
-                  c = cmp.mapping.select_next_item({ behavior = cmp_types.cmp.SelectBehavior.Insert }),
-                },
-                ["<Up>"] = {
-                  c = cmp.mapping.select_prev_item({ behavior = cmp_types.cmp.SelectBehavior.Insert }),
-                },
-              })
-            '';
+          mapping.__raw = ''
+            cmp.mapping.preset.cmdline({
+              ["<C-l>"] = {
+                c = cmp.mapping.confirm({ select = false }),
+              },
+              ["<Down>"] = {
+                c = cmp.mapping.select_next_item({ behavior = cmp_types.cmp.SelectBehavior.Insert }),
+              },
+              ["<Up>"] = {
+                c = cmp.mapping.select_prev_item({ behavior = cmp_types.cmp.SelectBehavior.Insert }),
+              },
+            })
+          '';
         };
 
       };
