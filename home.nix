@@ -37,6 +37,7 @@ rec {
     libreoffice-qt6-fresh
     linux-wifi-hotspot
     qpwgraph
+    platformio-core
     ripgrep
     ripgrep-all
     vlc
