@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./copilot.nix
     ./conform.nix
     ./grapple.nix
     ./keymap.nix
@@ -93,5 +94,7 @@
       ripgrep.enable = true;
       fzf.enable = true;
     };
+
+    plugins.lz-n.enable = true;
   };
 }

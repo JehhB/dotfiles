@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-
+{ config, lib, ... }:
 {
   programs.nixvim = {
     plugins = {
@@ -27,11 +26,26 @@
         settings = {
           preselect = "cmp.PreselectMode.Item";
           sources = [
+            { name = "copilot"; }
             { name = "nvim_lsp"; }
             { name = "luasnip"; }
             { name = "path"; }
             { name = "buffer"; }
           ];
+          sorting = {
+            priority_weight = 2;
+            comparators = [
+              "require('copilot_cmp.comparators').prioritize"
+              "cmp_compare.offset"
+              "cmp_compare.exact"
+              "cmp_compare.score"
+              "cmp_compare.recently_used"
+              "cmp_compare.kind"
+              "cmp_compare.sort_text"
+              "cmp_compare.length"
+              "cmp_compare.order"
+            ];
+          };
           snippet.expand = # lua
             ''
               function(args)
