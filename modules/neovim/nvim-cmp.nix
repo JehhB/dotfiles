@@ -22,6 +22,12 @@
           local luasnip = require("luasnip")
           local cmp_types = require("cmp.types")
           local cmp_compare = require("cmp.config.compare")
+
+          local has_words_before = function()
+            if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+            local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+            return col ~= 0 and vim.api.nvim_buf_get_text(0, line-1, 0, line-1, col, {})[1]:match("^%s*$") == nil
+          end
         '';
         settings = {
           preselect = "cmp.PreselectMode.Item";
@@ -69,7 +75,7 @@
               end),
 
               ["<Tab>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
+                if cmp.visible() and has_words_before() then
                   cmp.select_next_item()
                 elseif luasnip.locally_jumpable(1) then
                   luasnip.jump(1)
