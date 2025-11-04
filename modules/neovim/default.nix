@@ -4,6 +4,7 @@
   imports = [
     ./copilot.nix
     ./conform.nix
+    ./git.nix
     ./grapple.nix
     ./keymap.nix
     ./lsp.nix

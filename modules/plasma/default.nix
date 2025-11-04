@@ -153,7 +153,7 @@
         ];
         "Window Maximize" = "Alt+Space";
       };
-      "services/org.kde.dolphin.dekstop"._launch = [ "Alt+F" ];
+      "services/org.kde.dolphin.desktop"._launch = [ "Alt+F" ];
       "services/firefox.desktop"._launch = [ "Alt+B" ];
       "services/kitty.desktop"._launch = [ "Alt+X" ];
       "services/org.kde.krunner.desktop"._launch = [
@@ -197,7 +197,10 @@
         naturalScroll = true;
       }
     ];
-    input.keyboard.options = [ "caps:swapescape" ];
+    input.keyboard.options = [
+      "caps:swapescape"
+      "lv3:ralt_alt"
+    ];
 
     configFile = {
       kwinrc.Desktops.Number = {
