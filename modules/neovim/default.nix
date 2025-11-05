@@ -19,7 +19,7 @@
     clang.enable = true;
     csharp.enable = true;
     css.enable = true;
-    docker.enable = true;
+    # docker.enable = true; # currently broken builds
     emmet.enable = true;
     eslint.enable = true;
     html.enable = true;
