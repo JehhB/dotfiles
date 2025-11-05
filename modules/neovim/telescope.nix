@@ -52,8 +52,10 @@
           function()
             local telescope = require("telescope.builtin")
             local handle = io.popen("git rev-parse --is-inside-work-tree 3> /dev/null")
+            local opt = {hidden = true};
+
             if handle == nil then
-              telescope.find_files({})
+              telescope.find_files(opt)
               return
             end
 
@@ -62,9 +64,9 @@
             handle:close()
 
             if string.match(result, "true") then
-              telescope.git_files({})
+              telescope.git_files(opt)
             else
-              telescope.find_files({})
+              telescope.find_files(opt)
             end
           end
         '';
