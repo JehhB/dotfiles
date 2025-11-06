@@ -8,6 +8,7 @@
     baseIndex = 1;
     keyMode = "vi";
 
+    tmuxp.enable = true;
     plugins = with pkgs.tmuxPlugins; [
       yank
       sensible

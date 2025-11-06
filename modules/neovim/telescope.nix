@@ -9,10 +9,6 @@
         ui-select.enable = true;
       };
       keymaps = {
-        "<C-p>" = {
-          mode = "n";
-          action = "find_files";
-        };
         "<leader>fg" = {
           mode = "n";
           action = "git_files";
@@ -45,6 +41,11 @@
     };
 
     keymaps = [
+      {
+        mode = "n";
+        key = "<C-p>";
+        action.__raw = "function() require('telescope.builtin').find_files({hidden = true}) end";
+      }
       {
         mode = "n";
         key = "<leader>ff";

@@ -14,5 +14,10 @@
       };
       init.defaultBranch = "main";
     };
+
+    ignores = [
+      ".tmuxp.yaml"
+      ".tmuxp.json"
+    ];
   };
 }

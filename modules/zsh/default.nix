@@ -33,28 +33,57 @@ in
       ignoreSpace = true;
     };
 
-    initContent = ''
-      ${builtins.readFile ./init-extra.zsh}
+    initContent = # sh
+      ''
+        setopt extendedglob nomatch
+        unsetopt autocd beep notify
 
-      ${lib.optionalString (isInstalled pkgs.fzf) ''
-        source ${pkgs.fzf}/share/fzf/key-bindings.zsh
-        source ${pkgs.fzf}/share/fzf/completion.zsh
-      ''}
+        zstyle ':completion:*' menu select
+        autoload edit-command-line;
+        zle -N edit-command-line
 
-      ${lib.optionalString (isInstalled pkgs.fnm) ''
-        FNM_PATH="${pkgs.fzf}/bin"
-        if [ -d "$FNM_PATH" ]; then
-          eval "`fnm env`"
-        fi
-      ''}
+        function zle-keymap-select () {
+            case $KEYMAP in
+                vicmd) echo -ne '\e[1 q';;
+                viins|main) echo -ne '\e[5 q';;
+            esac
+        }
+        zle -N zle-keymap-select
+        zle-line-init() {
+            zle -K viins
+            echo -ne "\e[5 q"
+        }
+        zle -N zle-line-init
+        echo -ne '\e[5 q'
+        preexec() { echo -ne '\e[5 q' ;}
 
-      command_not_found_handler() {
-        /run/current-system/sw/bin/command-not-found "$@"
-      }
-    '';
+        setopt PROMPT_SUBST
+        export PS1="%B[%(!.%F{red}.%F{cyan})%n@%M%f %F{blue}%1~%f] %(!.#.$)%b "
+
+        ${lib.optionalString (isInstalled pkgs.fzf) # sh
+          ''
+            source ${pkgs.fzf}/share/fzf/key-bindings.zsh
+            source ${pkgs.fzf}/share/fzf/completion.zsh
+          ''
+        }
+
+        ${lib.optionalString (isInstalled pkgs.fnm) # sh
+          ''
+            FNM_PATH="${pkgs.fzf}/bin"
+            if [ -d "$FNM_PATH" ]; then
+              eval "`fnm env`"
+            fi
+          ''
+        }
+
+        command_not_found_handler() {
+          /run/current-system/sw/bin/command-not-found "$@"
+        }
+      '';
 
     shellAliases = {
       t = "tmux";
+      tp = "tmuxp load";
       v = "nvim";
       c = "clear";
       q = "exit";
@@ -64,6 +93,9 @@ in
       l = "ll -A";
       grep = "grep --color=auto";
       diff = "diff --color=auto";
+
+      bat = "batcat";
+      pc = "podman-compose";
     };
 
     plugins = [
