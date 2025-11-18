@@ -20,7 +20,7 @@
   };
 
   outputs =
-    inputs@{
+    {
       nixpkgs,
       home-manager,
       plasma-manager,
@@ -43,6 +43,11 @@
             home-manager.nixosModules.home-manager
             {
               nixpkgs.overlays = overlays;
+              nixpkgs.config.allowUnfreePredicate =
+                pkg:
+                builtins.elem (nixpkgs.lib.getName pkg) [
+                  "copilot-language-server"
+                ];
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];

@@ -1,6 +1,9 @@
-{ config, pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 
-rec {
+{
   imports = [
     modules/firefox
     modules/git

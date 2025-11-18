@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   programs.nixvim = {
     plugins.copilot-lua = {
@@ -92,5 +92,10 @@
         action = "<cmd>CopilotChatReview<cr>";
       }
     ];
+
+    lsp.servers.copilot = {
+      enable = true;
+      package = pkgs.copilot-language-server;
+    };
   };
 }

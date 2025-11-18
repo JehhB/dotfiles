@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ ... }:
 
 {
   programs.git = {
@@ -18,6 +18,7 @@
     ignores = [
       ".tmuxp.yaml"
       ".tmuxp.json"
+      "ai.md"
     ];
   };
 }

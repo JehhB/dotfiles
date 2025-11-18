@@ -35,6 +35,10 @@ in
 
     initContent = # sh
       ''
+        if [ -f /etc/zshrc ]; then
+          source /etc/zshrc
+        fi
+
         setopt extendedglob nomatch
         unsetopt autocd beep notify
 

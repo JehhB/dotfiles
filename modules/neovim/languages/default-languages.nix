@@ -226,12 +226,14 @@ in
                 "[a-zA-Z]+ClassName"
                 "classList"
                 "[a-z-]+-class"
+                "classNames"
               ]
               ++ optIf "angular" [ "ngClass" ];
               classFunctions = [
                 "tw"
                 "clsx"
                 "tw\\.[a-z]+"
+                "twMerge"
               ];
             };
           };
