@@ -61,5 +61,11 @@
     };
 
     plugins.web-devicons.enable = true;
+    plugins.neoscroll = {
+      enable = true;
+      settings = {
+        duration_multiplier = 0.15;
+      };
+    };
   };
 }
