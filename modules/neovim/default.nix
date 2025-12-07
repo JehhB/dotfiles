@@ -15,7 +15,7 @@
   ];
 
   vim-languages = {
-    astro.enable = true;
+    astro.enable = false;
     clang.enable = true;
     csharp.enable = true;
     css.enable = true;
@@ -31,7 +31,7 @@
     sql.enable = true;
     tailwindcss.enable = true;
     typescript.enable = true;
-    vue.enable = true;
+    vue.enable = false;
     yaml.enable = true;
   };
 
