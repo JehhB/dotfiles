@@ -109,6 +109,22 @@ in
       };
     })
     (mkIfEn "eslint" {
+      lsp.servers.oxlint = {
+        enable = true;
+        config = {
+          filetypes =
+            optIf "angular" [ "htmlangular" ]
+            ++ optIf "astro" [ "astro" ]
+            ++ optIf "svelte" [ "svelte" ]
+            ++ optIf "typescript" [
+              "javascript"
+              "javascriptreact"
+              "typescript"
+              "typescriptreact"
+            ]
+            ++ optIf "vue" [ "vue" ];
+        };
+      };
       lsp.servers.eslint = {
         enable = true;
         config = {
@@ -245,9 +261,27 @@ in
       plugins.conform-nvim.settings.formatters_by_ft.twig = prettier_format;
     })
     (mkIfEn "typescript" {
-      lsp.servers.vtsls = {
-        enable = true;
+      lsp.servers.tsgo = {
+        enable = !(isEnabled "astro" || isEnabled "vue");
+        config = {
+          filetypes = [
+            "javascript"
+            "typescript"
+            "javascriptreact"
+            "typescriptreact"
+          ];
+        };
+      };
+      keymaps = [
+        {
+          action = "<cmd>LspRestart tsgo<cr>";
+          mode = "n";
+          key = "<leader>tt";
+        }
+      ];
 
+      lsp.servers.vtsls = {
+        enable = isEnabled "astro" || isEnabled "vue";
         config = {
           settings = {
             vtsls = {
