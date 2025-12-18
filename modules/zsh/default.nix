@@ -62,7 +62,7 @@ in
         preexec() { echo -ne '\e[5 q' ;}
 
         setopt PROMPT_SUBST
-        export PS1="%B[%(!.%F{red}.%F{cyan})%n@%M%f %F{blue}%1~%f] %(!.#.$)%b "
+        export PS1="%B[%(!.%F{red}.%F{cyan})%n@%M%f %F{blue}%1~%f%F{yellow}\$(git rev-parse --abbrev-ref HEAD 2>/dev/null | sed 's/^/ (/;s/$/)/')%f] %(!.#.$)%b "
 
         ${lib.optionalString (isInstalled pkgs.fzf) # sh
           ''
