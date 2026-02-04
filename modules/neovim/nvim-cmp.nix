@@ -32,7 +32,7 @@
         settings = {
           preselect = "cmp.PreselectMode.Item";
           sources = [
-            { name = "copilot"; }
+            # { name = "copilot"; }
             { name = "nvim_lsp"; }
             { name = "luasnip"; }
             { name = "path"; }
@@ -41,7 +41,7 @@
           sorting = {
             priority_weight = 2;
             comparators = [
-              "require('copilot_cmp.comparators').prioritize"
+              # "require('copilot_cmp.comparators').prioritize"
               "cmp_compare.offset"
               "cmp_compare.exact"
               "cmp_compare.score"

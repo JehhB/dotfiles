@@ -1,10 +1,11 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   programs.nixvim = {
     plugins.treesitter = {
       enable = true;
-      grammarPackages = pkgs.vimPlugins.nvim-treesitter.passthru.allGrammars;
+      packages = pkgs.vimPlugins.nvim-treesitter;
+      grammarPackages = pkgs.vimPlugins.nvim-treesitter.allGrammars;
       settings = {
         incremental_selection = {
           enable = true;

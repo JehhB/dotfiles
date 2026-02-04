@@ -2,7 +2,7 @@
 {
   programs.nixvim = {
     plugins.copilot-lua = {
-      enable = true;
+      enable = false;
       lazyLoad.settings = {
         cmd = "Copilot";
         event = [ "InsertEnter" ];
@@ -20,7 +20,7 @@
 
     };
 
-    plugins.copilot-cmp.enable = true;
+    plugins.copilot-cmp.enable = false;
 
     plugins.copilot-chat = {
       enable = true;
@@ -94,7 +94,7 @@
     ];
 
     lsp.servers.copilot = {
-      enable = true;
+      enable = false;
       package = pkgs.copilot-language-server;
     };
   };

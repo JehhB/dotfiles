@@ -112,6 +112,10 @@ in
       lsp.servers.oxlint = {
         enable = true;
         config = {
+          cmd = [
+            "oxlint"
+            "--lsp"
+          ];
           filetypes =
             optIf "angular" [ "htmlangular" ]
             ++ optIf "astro" [ "astro" ]
@@ -126,7 +130,7 @@ in
         };
       };
       lsp.servers.eslint = {
-        enable = true;
+        enable = false;
         config = {
           filetypes =
             optIf "angular" [ "htmlangular" ]

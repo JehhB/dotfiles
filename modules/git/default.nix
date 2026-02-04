@@ -18,7 +18,7 @@
     ignores = [
       ".tmuxp.yaml"
       ".tmuxp.json"
-      "ai.md"
+      "AGENTS.md"
     ];
   };
 }
