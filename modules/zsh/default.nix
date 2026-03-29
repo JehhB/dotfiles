@@ -80,6 +80,15 @@ in
           ''
         }
 
+        if [ -d "$HOME/.bun" ]; then
+          export BUN_INSTALL="$HOME/.bun";
+          export PATH="$BUN_INSTALL/bin:$PATH";
+        fi
+
+        if [ -d "$HOME/.opencode/bin" ]; then
+          export PATH="$HOME/.opencode/bin:$PATH";
+        fi
+
         command_not_found_handler() {
           /run/current-system/sw/bin/command-not-found "$@"
         }

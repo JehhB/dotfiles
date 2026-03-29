@@ -172,6 +172,16 @@ in
       lsp.servers.glsl_analyzer.enable = true;
       plugins.conform-nvim.settings.formatters_by_ft.glsl = [ "clang-format" ];
     })
+    (mkIfEn "go" {
+      lsp.servers.gopls.enable = true;
+      plugins.conform-nvim.settings.formatters_by_ft.go = [
+        "gofumpt"
+        "golines"
+      ];
+      plugins.conform-nvim.settings.formatters_by_ft.gomod = [ "gofumpt" ];
+      plugins.conform-nvim.settings.formatters_by_ft.gowork = [ "gofumpt" ];
+      plugins.conform-nvim.settings.formatters_by_ft.gotmpl = [ "gofumpt" ];
+    })
     (mkIfEn "html" {
       lsp.servers.html.enable = true;
       plugins.conform-nvim.settings.formatters_by_ft.html = prettier_format;
@@ -259,6 +269,9 @@ in
           };
         };
       };
+    })
+    (mkIfEn "terraform" {
+      lsp.servers.terraformls.enable = true;
     })
     (mkIfEn "twig" {
       lsp.servers.twiggy_language_server.enable = true;

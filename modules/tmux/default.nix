@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   programs.tmux = {
@@ -8,7 +8,7 @@
     baseIndex = 1;
     keyMode = "vi";
 
-    tmuxp.enable = true;
+    tmuxp.enable = false; # Currently breaking
     plugins = with pkgs.tmuxPlugins; [
       yank
       sensible

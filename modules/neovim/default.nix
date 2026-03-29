@@ -19,9 +19,10 @@
     clang.enable = true;
     csharp.enable = true;
     css.enable = true;
-    # docker.enable = true; # currently broken builds
+    docker.enable = true;
     emmet.enable = true;
     eslint.enable = true;
+    go.enable = true;
     html.enable = true;
     htmldjango.enable = true;
     json.enable = true;
@@ -30,6 +31,7 @@
     python.enable = true;
     sql.enable = true;
     tailwindcss.enable = true;
+    terraform.enable = true;
     typescript.enable = true;
     vue.enable = false;
     yaml.enable = true;
