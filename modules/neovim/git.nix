@@ -12,5 +12,7 @@
         action.__raw = "require('telescope').extensions.git_worktree.git_worktree";
       }
     ];
+
+    plugins.diffview.enable = true;
   };
 }

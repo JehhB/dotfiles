@@ -291,7 +291,7 @@ in
       };
       keymaps = [
         {
-          action = "<cmd>LspRestart tsgo<cr>";
+          action = "<cmd>lsp restart tsgo<cr>";
           mode = "n";
           key = "<leader>tt";
         }

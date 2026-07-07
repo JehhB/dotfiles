@@ -72,6 +72,14 @@
           end
         '';
       }
+      {
+        mode = "n";
+        key = "<leader>fd";
+        action.__raw = ''
+          function ()
+          end
+        '';
+      }
     ];
 
   };

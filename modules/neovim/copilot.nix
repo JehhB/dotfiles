@@ -23,7 +23,7 @@
     plugins.copilot-cmp.enable = false;
 
     plugins.copilot-chat = {
-      enable = true;
+      enable = false;
       luaConfig.post = ''
         vim.api.nvim_create_autocmd("BufEnter", {
           pattern = "copilot-*",

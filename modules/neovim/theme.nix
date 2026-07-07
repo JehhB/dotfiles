@@ -22,6 +22,8 @@
       };
     };
 
+    plugins.treesitter-context.enable = true;
+
     colorschemes = {
       gruvbox-material-nvim = {
         enable = true;

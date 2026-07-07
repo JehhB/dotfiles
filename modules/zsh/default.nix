@@ -13,6 +13,8 @@ in
 
     defaultKeymap = "viins";
 
+    dotDir = "${config.xdg.configHome}/zsh";
+
     enableCompletion = true;
 
     syntaxHighlighting = {
@@ -88,6 +90,8 @@ in
         if [ -d "$HOME/.opencode/bin" ]; then
           export PATH="$HOME/.opencode/bin:$PATH";
         fi
+
+        export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
 
         command_not_found_handler() {
           /run/current-system/sw/bin/command-not-found "$@"
