@@ -198,7 +198,7 @@
       }
     ];
     input.keyboard.options = [
-      "caps:swapescape"
+      #"caps:swapescape"
       "lv3:ralt_alt"
     ];
 

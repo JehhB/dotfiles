@@ -46,7 +46,8 @@
               nixpkgs.config.allowUnfreePredicate =
                 pkg:
                 builtins.elem (nixpkgs.lib.getName pkg) [
-                  "copilot-language-server"
+                  #"copilot-language-server"
+                  "cmp-fuzzy-path"
                 ];
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;

@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -41,6 +41,8 @@
     enable = true;
     viAlias = true;
     vimAlias = true;
+
+    nixpkgs.pkgs = pkgs;
 
     diagnostic.settings = {
       virtual_text = {
